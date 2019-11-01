@@ -1,0 +1,838 @@
+<meta charset="utf-8" lang="de">
+<script>window.markdeepOptions = { "tocStyle" : "auto" }</script>
+
+    **OOP-Notizen, WS 2019/20**
+    Dominikus Herzberg
+
+# Vorbemerkung
+
+!!! WARNING
+    Wenn Sie bis morgen, Mittwoch (9.10.), keinen Zuhörerstatus gewählt haben, werden Sie aus dem Moodle-Kurs gelöscht. Nach dieser Deadline wird auch niemand mehr als Ersthörer zugelassen, d.h. Sie können keine Klausurzulassung mehr erwerben, wenn sie Ihnen fehlt.
+
+Verzeihen Sie diese Unerbittlichkeit. Ohne klare Regeln und Deadlines ist eine Veranstaltung dieser Größe mit begrenzter Ausstattung an Tutoren und Zeit nicht zu bewältigen.
+
+# VW0
+
+Was in der JShell passierte:
+
+~~~ text
+System.out.println("Hello World!")
+for(int i = 0; i <= 10; i++)
+
+
+
+;
+for(int i = 0; i <= 10; i++) System.out.println(i);
+class A {}
+new A()
+/exit
+~~~
+
+# VW1
+
+In dieser Woche haben Sie schon unglaublich viel gelernt. Sie haben gute Chancen, Kap. 3.1 (Variablen), Kap. 3.2 (Elementare Datentypen) und Kap. 3.3 (Literale) im Kofler-Buch zu verstehen. Und auch Kap. 3.4 (Variablen im größeren Java-Kontext) sollte Ihnen zugänglich sein.
+
+Und weil wir uns dem Klassen als Kompositionsmechanismus für Typen genähert haben, können Sie auch mal einen Blick in Kap. 11 (Top-Level Klassen) werfen, um mit den Begrifflichkeiten in Kontakt zu kommen. Wenn Ihnen das zu schwer wird, an Kap. 2 (Java-Crashkurs) sollten Sie sich unbedingt versuchen.
+
+Werfen Sie auch schon Blicke in Kap. 4 (Operatoren) und Kap. 5 (Verzweigungen und Schleifen)!
+
+## Dienstag
+
+In Moodle sind aktuell 264 Teilnehmer eingetragen, 243 haben einen Zuhörerstatus gewählt: 224 Ersthörer, 12 Wiederholer, 7 Zaungäste (Stand 8.10., 13:30). 
+
+!!!
+    Die Veranstaltung am Mittwoch (9.10.) im 4. Block muss leider ein wenig kürzer ausfallen von 14-15:00 Uhr, da ich im Fachbereichsrat zu einem Berufungsverfahren Stellung nehmen muss.
+
+* Wie oft muss ich ins Praktikum gehen?
+* Was ist die Definition von "Ersthörer"?
+* Was ist ein Computer?
+* Was ist ein Bit?
+
+-----
+
+<details>
+    <summary>Wollen Sie sehen, was heute in der JShell geschah?</summary>
+~~~ text
+7
+7;
+$2
+int i = 7;
+int i = 7.0
+int i = (int)7.4
+i
+int i = (int)7.446464763
+int i = (int)7.9999
+$2
+true
+20s
+(short)20
+20L
+(byte)20
+char c = 'A'
+'A' + 1
+(char)65
+2
+~~~
+</details>
+
+## Mittwoch
+
+**Einzelzeichen**: Warum ergibt `'A' + 1` eine `66` und nicht das Folgezeichen `'B'`?
+
+**Float**: Das Schlüsselwort `float` steht in Java für den Zahlentyp einer Fließkommazahl aus 4 Bytes. Das Wort "float" ist im Englischen eine Kurzform für was?
+
+**Let it flow**: Beschreiben Sie, was bei der Anweisung `float f = 1.024` vor sich geht!
+
+**Typ**: Was ist ein Typ?
+
+<details>
+    <summary>Lösung: Einzelzeichen</summary>
+Der Additionsoperator `+` addiert ein Datum vom Typ `char` und ein Datum vom Typ `int`. Sie erkennen das an den Literalen: `'A'` ist das Einzelzeichen "A" vom Typ `char`, `1` eine Ganzzahl vom Typ `int`. Zur Erinnerung: Der Typ `char` gehört zu den Zahlentypen, genauer zu den Ganzzahltypen.
+
+Zwei verschiedene Zahlentypen können nicht einfach so addiert werden, dafür gibt es Anpassungsregeln. In diesem Fall wird der Wert vom Typ `char` auf einen Wert vom Typ `int` "geliftet" -- es handelt sich um eine sogenannte _widening conversion_, die den Typ anpasst, dabei aber den Wert erhält. Schlußendlich wird bei `'A' + 1` also faktisch ein `65 + 1` gerechnet. Die Addition zweier Zahlen vom Typ `int` ist wieder ein `int`. Und ein Wert vom Typ `int` wird als Dezimalzahl angezeigt.
+
+Wenn Sie die JShell mit dem Argument `-v` starten (`-v` steht für _verbose_, also für ausführlichere Interaktionsmeldungen), bekommen Sie Typinformationen angezeigt, was ein wenig hilft, diese Typumwandlung zu erahnen:
+
+~~~ text
+> jshell -v
+|  Welcome to JShell -- Version 12.0.2
+|  For an introduction type: /help intro
+
+jshell> 'A' + 1
+$1 ==> 66
+|  created scratch variable $1 : int
+~~~
+</details>
+
+<details>
+    <summary>Lösung: "float"</summary>
+Im deutschen Sprachraum schreiben wir Kommazahlen auch mit einem Komma, z.B. 1,024. Da die Anzahl der Nachkommastellen das Komma sozusagen variabel in seiner Position erscheinen lässt, spricht man von Gleitkomma- bzw. Fließkommazahlen. Im englischen Sprachraum heißt es _floating point number_, kurz _float_, was verrät, dass Kommazahlen mit einem Punkt notiert werden, z.B. 1.024. Java ist der englischsprachigen Schreibweise verpflichtet. 
+</details>
+
+<details>
+    <summary>Lösung: Let it flow</summary>
+Sie erhalten eine Fehlermeldung. Warum? `1.024` ist das Literal für die Fließkommazahl vom Typ `double` 1,024. (In der Schule haben Sie gelernt, Kommazahlen mit einem Komma und nicht mit einem Punkt zu schreiben. Im Amerikanischen werden Kommazahlen mit einem Punkt geschrieben. Sie erkennen daran, dass ). Der Zahlenwert mit 8 Bytes kann nicht einfach so in einer Variable vom Typ `float` (Fließkommazahl mit 4 Bytes) gespeichert werden. Java nimmt keine automatische Herabstufung des Typen vor (_narrowing conversion_), daher kommt es zu einer Fehlermeldung.
+
+~~~
+jshell> float f = 1.204
+|  Error:
+|  incompatible types: possible lossy conversion from double to float
+|  float f = 1.204;
+|            ^---^
+~~~
+</details>
+
+<details>
+    <summary>Lösung: Typ</summary>
+Formal gesprochen ist ein Typ eine Menge von Datenwerten. Das Konzept des Typs ist eng verwandt mit dem Konzept der Menge aus der Mengenlehre.
+
+Jeder Datenwert hat einen Typ. Anders ausgedrückt: Jeder Datenwert ist einem Typ zugeordnet. Der Typ legt fest, wie der Datenwert zu interpretieren ist (z.B. als Ganzzahl), wie die Speicherorganisation aussieht (das umfasst die Anzahl der benötigten Speicherzellen in Bytes und die Kodierung) und wie der Datenwert dargestellt wird.
+
+Für primitive Typen ist die Kenntnis der Anzahl der benötigten Bytes im Speicher und die verwendete Kodierung essenziell, um die Besonderheiten des Umgangs, vor allem des Rechnens, mit primitiven Datenwerten zu verstehen. Ein grobes Verständnis der Speicherorganisation von Arrays hilft, die Effiziens der Datenhaltung nachzuvollziehen. Für sonstige, nicht-primitive Typen (Klassen und Interfaces) organisiert Java die Datenwerte (Instanzen genannt) zwar eigenständig im Speicher, doch leitet sich die Speicherorganisation unmittelbar aus den Feldern einer Klasse ab. Sie müssen auch hier ein Verständnis entwickeln, um Datenstrukturen intellektuell zu erfassen. Wovon Java Sie konsequent befreit, ist ein Wissen darum, wo genau im Speicher Datenwerte liegen und wie es den Speicher verwaltet. 
+</details>
+
+<details>
+<summary>Sehen, was zuletzt in der JShell geschah!</summary>
+~~~ text
+'A' + 1
+float f = 1.204
+byte a = 1
+'A' + a
+byte b = 1
+byte b = 1000
+byte b = 127
+byte b = 128
+int i = 1
+byte b = i
+byte b = (byte)i
+byte a = 1
+'A' + a
+float f = 1.024
+float f = 1.024f
+float f = (float)1.024
+class Person {
+int personalnr;
+float jahresgehalt;
+}
+Person p = new Person()
+p.personalnr = 1
+p.jahresgehalt = 20.000f
+p.jahresgehalt
+p.jahresgehalt = 20_000f
+p.jahresgehalt
+/ex
+~~~
+</details>
+
+# VW2
+
+!!! WARNING
+    Sind Sie chronisch krank, leiden Sie unter Einschränkungen, die Ihnen das Studium erschweren oder besonderer Berücksichtigung bedürfen? Falls ja, wenden Sie sich unbedingt und am besten gleich beim BliZ (https://www.thm.de/bliz/). Hier sind Sie mit Ihrem Anliegen gut aufgehoben. Sie werden merken: Wir alle versuchen, Ihnen das Studium so gut wie möglich studierbar zu machen. 
+
+## Dienstag
+
+**Typfrage**: Erläutern Sie, was Sie zu dem Typ `long` alles wissen!
+
+**Literal**: Was ist ein Literal? Geben Sie drei grundlegend unterschiedliche Beispiele für Literale an.
+
+**Punkt**: Sie benötigen eine Datenstruktur, mit der Sie die Idee eines Punktes in einer Fläche abbilden können anhand seiner kartesischen Koordination _x_ und _y_. Erstellen Sie den Datentypen dazu. Legen Sie zwei Punkte namens `ursprung` und `xEins` an und belegen Sie `ursprung` mit den Werten (0,0) und `xEins` mit den Werten (1,0). 
+
+<details>
+    <summary>Lösung: Typfrage `long`</summary>
+Der Typ `long` ist ein primitiver Datentyp für Ganzzahlen ("primitiv" meint: ein einfacher, grundlegender Datentyp), der eine Ganzzahl im Zweierkomplement mit 8 Bytes kodiert. 
+</details>
+
+<details>
+    <summary>Lösung: Literal</summary>
+Ein Literal ist eine Schreibweise für Datenwerte. Die Schreibweise ist eindeutig und lässt den Typ des Datenwerts erkennen. Beispiele sind `'Z'` für einen `char`-Wert, `0.007` für einen `double`-Wert und `0b100` für den `int`-Wert 4 in binärer Schreibweise.
+</details>
+
+<details>
+    <summary>Lösung: Punkt</summary>
+Die Wahl des Typs für `x` und `y` ist an dieser Stelle nicht so entscheidend. Manchmal geben Ihnen Aufgaben Freiheitsgrade, die begründete Entscheidungen von Ihnen verlangen. Gut begründbare Typen sind `float` und `long` (das passt zu Ihrer Schulerfahrung) oder `int` für Punkte in einer diskretisierten Fläche. 
+~~~ java 
+class Punkt {
+    float x;
+    float y;
+}
+~~~
+</details>
+
+<details>
+<summary>Ja, will ich sehen, was heute in der JShell geschah!</summary>
+~~~ text
+jshell> /history
+
+class A {}
+A a
+int i
+int i = 3
+i
+class Point {
+float x;
+float y;
+}
+Point p
+p = new Point()
+p.x = 3.5f
+p.y = 0
+p.x
+Math.sqrt(9)
+Math.pow(3.0,2)
+p
+Math.sqrt(Math.pow(p.x,2) + Math.pow(p.y,2))
+~~~
+</details>
+
+
+## Mittwoch
+
+**Zweimal `long`**: Deklarieren Sie zwei Variablen namens `a` und `b` mit zwei Zahlenwerten vom Typ `long` und initialisieren Sie die Variablen. Denken Sie sich beispielhafte Werte aus.
+
+<details>
+    <summary>Lösung</summary>
+Folgende Begrifflichkeiten sind auseinander zu halten: deklarieren, initialisieren und zuweisen. Mit einer Deklaration legen Sie etwas an. Im Fall der Variablen-Deklaration legen Sie eine Variable an. Das erfordert die Angabe des Namens und des Typs der Variablen.
+
+~~~ java
+long a; // Variablen-Deklaration ohne Initialisierung
+~~~
+
+Wenn Sie der Variablen bei der Deklaration einen Wert zuweisen, dann weisen Sie der Variablen ihren initialen Wert zu (ihren "Anfangswert"); das nennt man _initialisieren_.
+
+~~~ java
+long a = 12L; // Variablen-Deklaration mit Initialisierung
+~~~
+
+Die Zuweisung kann auch nach der Deklaration erfolgen. Dann handelt es sich nicht um eine Initialisierung. Warum? Bei einer Deklaration ohne ausdrücklichen Initialwert wird ein Default-Wert (ein Standardwert) gesetzt. Bei Zahlen ist das die Null.
+
+~~~ java
+long a; // Variablen-Deklaration; a bekommt den Initialwert 0
+a = 12L; // Variable a bekommt den Wert 12 zugewiesen
+~~~
+
+Es gibt Fälle, wo eine Variable bei der Deklaration initialisiert werden muss.
+</details>
+
+**Geht das?**: Sie haben soeben `a` und `b` deklariert. Jemand tippert auf der JShell etwas ein, drückt aber noch nicht die Eingabetaste (ENTER). Was passiert, wenn Sie ENTER drücken?
+
+~~~ text
+jshell> a = b = b = a
+~~~
+
+**Farbpunkt**: Gehen Sie davon aus, dass es die Klasse `Point` von gestern bereits gibt. Legen Sie einen Datentypen an, der einen Farbpunkt (`ColorPoint`) repräsentieren soll, der sich aus einem Punkt (`Point`) und einer Zahl für den Farbwert zusammensetzt. Zeigen Sie beispielhaft, wie Sie eine Variable namens `cp` anlegen, die einen solchen Datenwert speichert; denken Sie sich Beispielwerte aus.
+
+**Vorbereitung**: Als Delegierte:r sollen Sie vorbereitet beim Delegiertentreffen erscheinen. Was heißt es, _vorbereitet_ zu sein?
+
+<details>
+    <summary>Wollen Sie wissen, was heute in der JShell geschah?</summary>
+~~~ text
+jshell> /history
+
+long a = 12
+4_000
+long a = 4_000_000_000
+long a = 4_000_000_000L
+Integer.MAX_VALUE
+Integer.MIN_VALUE
+int i = Integer.MAX_VALUE
+int i = 2147483648
+long a, b;
+long a = 3L, b;
+long a = 3L, b = 12L;
+long a = 3L,b = 12L;
+long a = 3L,
+b = 12L;
+a = 2 * b = a + a
+a
+b
+b = -12L
+a = 2 * b = a + a
+a = 2 * (b = a + a)
+class Point { float x, y; }
+Point p = new Point();
+p.x = 3.0f
+new Point()
+$24.x
+ColorPoint cp = new ColorPoint()
+class ColorPoint { Point p; int color; }
+ColorPoint cp = new ColorPoint()
+cp
+ColorPoint cp
+ColorPoint cp = new ColorPoint()
+cp.p
+cp.p = new Point()
+cp
+cp.p
+cp.p.x = 1f
+cp.p.y = 2f
+cp.color
+cp.color = 100
+cp
+p
+Point p1 = new Point()
+p1.x
+p1.y
+p.x
+p.y
+p
+p1
+p = p1
+p
+p1
+p.x = 1234f
+p1.x
+~~~
+Was wichtig ist zu unterscheiden: Die Variable `p` und die Variable `cp.p` sind verschieden. Die Variablen `p` und `cp` "leben" im Kontext der JShell. Die Variable `p` zugeriffen über `cp` (also `cp.p`) "lebt" in dem Kontext von `cp`.
+</details>
+
+# VW3
+
+## Dienstag
+
+**Zweimal A**: Was ist eine Anweisung, was ein Ausdruck, was ein Anweisungsausdruck?
+
+**String**: Was ist ein `String` in Java? Wie sieht ein `String`-Literal aus?
+
+**Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. Legen Sie Instanzen mit Beispielwerten an.
+
+**Abstand**: (a) Geben Sie den Ausdruck an, der von einem Punkt (Klasse `Point` von VW2) den Abstand vom Ursprung des Koordinatensystems berechnet. (b) Packen Sie die Berechnung des Abstands in eine Methode.
+
+<details>
+    <summary>Lösung: Abstand</summary>
+Gegeben sei die Klasse `Point` aus VW2.
+
+~~~ java
+class Point {
+    double x, y;
+}
+~~~
+
+Der Abstand zum Ursprung berechnet sich für eine Instanz `p` wie folgt:
+
+~~~ text
+jshell> Point p = new Point()
+p ==> Point@7f13d6e
+
+jshell> p.x = 2.7
+$12 ==> 2.7
+
+jshell> p.y = -0.4
+$13 ==> -0.4
+
+jshell> Math.sqrt(Math.pow(p.x, 2) + Math.pow(p.y,2))
+$14 ==> 2.7294688127912363
+~~~
+
+Es gibt mehrere Möglichkeiten, eine Methode anzulegen:
+
+**1. Variante: stand-alone Methode (geht nur in JShell)**
+
+~~~ java
+double distance(Point p) {
+    return Math.sqrt(Math.pow(p.x, 2) + Math.pow(p.y,2));
+}
+~~~
+
+~~~ text
+jshell> distance(p)
+$16 ==> 2.7294688127912363
+~~~
+
+Solche alleinstehenden Methoden müssen, wenn man nicht in der JShell ist, als Klassenmethoden realisiert werden. Methoden brauchen immer eine Klasse als Heimat, dort als Klassen- oder als Instanzmethoden. Klassenmethoden erkennt man daran, dass ihnen das Schlüsselwort `static` vorangestellt ist. Das geht dann so:
+
+~~~ java
+class PointTool {
+    static double distance(Point p) {
+        return Math.sqrt(Math.pow(p.x, 2) + Math.pow(p.y,2));
+    }
+}
+~~~
+
+~~~ text 
+jshell> PointTool.distance(p)
+$29 ==> 2.7294688127912363
+~~~
+
+**2. Variante: Instanzmethode**
+
+~~~ java
+class Point {
+    double x, y;
+
+    double distance() {
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y,2));
+    }
+}
+~~~
+
+~~~ text
+jshell> Point p = new Point()
+p ==> Point@1f7030a6
+
+jshell> p.x = 2.7
+$19 ==> 2.7
+
+jshell> p.y = -0.4
+$20 ==> -0.4
+
+jshell> p.distance()
+$21 ==> 2.7294688127912363
+~~~
+
+Was Sie auf gar keinen Fall machen dürfen:
+
+**Teufelchen 1: Werte per `print` ausgeben!**
+
+~~~ java
+class Point {
+    double x, y;
+
+    void distance() {
+        System.out.println(Math.sqrt(Math.pow(x, 2) + Math.pow(y,2)));
+    }
+}
+~~~
+
+~~~ text 
+jshell> Point p = new Point()
+p ==> Point@53f65459
+
+jshell> p.x = 2.7
+$24 ==> 2.7
+
+jshell> p.y = -0.4
+$25 ==> -0.4
+
+jshell> p.distance() // Hier passiert nicht das, was Sie zu sehen glauben!
+2.7294688127912363
+~~~
+
+Schauen Sie mal genau hin, was hier anders ist. Und dann versuchen Sie sich das zu erklären!
+
+!!! WARNING
+    In unserem Kurs gibt es eine ganz einfache Regel: Du sollst keine `print(ln)`-Anweisung benutzen! Das dürfen Sie nur dann, wenn die Aufgabenstellung Sie dazu auffordert.
+
+**Teufelchen 2: Objektorientierung aushebeln**
+
+~~~ java
+class Point {
+    double x, y;
+
+    double distance(Point p) {
+        return Math.sqrt(Math.pow(p.x, 2) + Math.pow(p.y,2));
+    }
+}
+~~~
+
+Ist Ihnen was aufgefallen? In dieser Aufgabe geht es im Kern um die Kontexte von Methoden (Klassen- oder Instanzmethode) und die Kontexte von Variablen (Klassen- oder Instanzvariablen; hier haben wir nur Instanzvariablen genutzt). Instanzmethoden können auf die Instanzvariablen unmittelbar zugreifen. Und Methoden deklarieren ebenfalls Variablen für den Rumpf der Methode.
+</details>
+
+## Mittwoch
+
+**Anweisung/Ausdruck**: Was ist eine Anweisung? Was ist ein Ausdruck? (Bitte geben Sie auch die englischen Begriffe dafür an.)
+
+**Variable**: Was ist eine Instanz-, was eine Klassenvariable?
+
+**Linie**: Die Klassen `Point` (Punkt) und `Line` (Linie) sind gegeben. Eine Linie `line` habe den Startpunkt $(1,1)$ und den Endpunkt $(-3,2)$. (1) Schreiben Sie die notwendige Folge von Anweisungen auf, um `line` mit den angegebenen Werten aufzusetzen. (2) Zeichnen Sie das Objektbild zur entstandenen Situation.
+
+~~~ java
+class Point {
+    double x, y;
+}
+
+class Line {
+    Point start;
+    Point end;
+}
+~~~
+
+**Kofler, S.215f.**: In dem folgenden Text aus dem Kofler-Buch steckt ein Fehler: Finden und erklären Sie ihn!
+
+> Normalerweise gelten in einer Klasse deklarierte Variablen für eine konkrete
+> Instanz einer Klasse – daher rührt auch der Begriff _Instanzvariable_.
+> Die in den Variablen bzw. Datenfeldern gespeicherten Daten gehören
+> also zum jeweiligen Objekt und sind vollkommen unabhängig von anderen
+> Objekten derselben Klasse. Auch in der Klasse definierte Methoden
+> können nur verwendet werden, nachdem zuerst eine Instanz der Klasse
+> erzeugt wurde.
+>
+>   Genau das trifft auf die vorhin vorgestellte Rechteck-Klasse zu: Sie können
+> mehrere Rechteck-Objekte erzeugen. Deren Daten werden vollkommen
+> unabhängig voneinander gespeichert. Die Methoden `berechneUmfang`
+> und `berechneFlaeche` können nur verwendet werden, _nachdem_ ein Rechteck-
+> Objekt erzeugt wurde. In der Fachsprache nennt man alle Klassenvariablen
+> und Methoden von `Rechteck` _nichtstatisch_. -- Kofler (2019, S. 215 f.)
+
+Anbei (aber nicht wesentlich für die Aufgabe), der Code zur Klasse `Rechteck` (Kofler, 2019, S. 211 f.):
+
+~~~ java 
+// Projekt kap11 -rechteck -intro , Datei Rechteck.java
+public class Rechteck {
+    // Instanzvariablen
+    public double laenge , breite;
+    // Methoden
+    public double berechneUmfang() {
+        return (laenge+breite)*2;
+    }
+    public double berechneFlaeche() {
+        return laenge*breite;
+    }
+}
+~~~
+
+# VW4
+
+!!! WARNING
+    Am 11./12. November, bin ich auf einer Tagung an der Hochschule Coburg. Deshalb entfällt der Dienstagstermin in VW6 (12.11.).
+
+## Dienstag
+
+**Zuweisung**: Was müssen Sie an der folgenden Zeile warum ändern, damit Sie lauffähig wird? Rechts vom Zuweisungsoperator dürfen Sie nichts löschen.
+
+~~~ java 
+int a = 3 + b = 4 + a;
+~~~
+
+**Gerade**: Schreiben Sie eine Methode namens `countEven`, die ein Array aus Ganzzahlen entgegennimmt und die Anzahl der geraden Zahlen in dem Array zurückgibt.
+
+<details>
+    <summary>Lösung: Zuweisung</summary>
+
+1. Die Variable `a` kann rechts vom Zuweisungsoperator nur verwendet werden, wenn `a` zuvor deklariert wurde; gleiches gilt für `b`. Da mehrfache Deklarationen ein und derselben Variable in Java nicht erlaubt sind (die JShell ist aus Gründen des interaktiven "Spielens" großzügiger), muss es lauten:
+
+~~~ java
+a = 3 + b = 4 + a;
+~~~
+
+2. Der Additionsoperator bindet höher als der Zuweisungsoperator. Die Ergebnisse der Additionen (seien sie beispielsweise `7` für `3 + b` und `-10` für `4 + a`) würden dann mit den Beispielwerten den Zuweisungsausdruck `a = 7 = -10` ergeben. Da die Zuweisung rechtsassoziativ ist, kann die Zuweisung `7 = -10` nicht ausgeführt werden, da links vom Zuweisungsoperator eine Variable stehen muss. Das erklärt auch die Fehlermeldung:
+
+~~~ text 
+jshell> a = 3 + b = 4 + a
+|  Error:
+|  unexpected type
+|    required: variable
+|    found:    value
+|  a = 3 + b = 4 + a
+|      ^---^
+~~~
+</details>
+
+## Mittwoch
+
+**Assoziativität**: Ist der Operator "`+`" rechts- oder linksassoziativ? Geben Sie ein Beispiel an, mit dem Sie Ihre Behauptung überprüfen können.
+
+**Gerade?**: Schreiben Sie eine Methode `isEven`, die folgendes Verfahren umsetzt: Wenn die übergebene Zahl gleich `1` ist, dann beantwortet die Methode die Frage mit `false`, wenn die Zahl gleich `0` ist, dann lautet die Antwort `true`. Ansonsten wird der an `isEven` übergebene Zahlenwert um den Wert `2` vermindert und die Frage `isEven` wird erneut gestellt.
+
+Gehen Sie davon aus, dass die an `isEven` übergebene Zahl immer positiv ist.
+
+**Abstand**: (a) Geben Sie den Ausdruck an, der von einem Punkt (Klasse `Point` von VW2) den Abstand vom Ursprung des Koordinatensystems berechnet. (b) Packen Sie die Berechnung des Abstands in eine Methode. (Wiederholung zur Aufarbeitung, siehe VW3)
+
+<details>
+<summary>Lösung: Assoziativität</summary>
+Die Frage ist, ob `a + b + c` ein Ergebnis liefert, das entweder identisch ist mit `(a + b) + c` (linkassoziativ) oder mit `a + (b + c)` (rechtsassoziativ). Wird also zuerst der linke Plus-Operator berechnet oder der rechte?
+
+Um das zu überprüfen, brauchen wir einen Trick, der bei gleichen Zahlen dennoch unterschiedliche Ergebnisse generiert, je nachdem, welches Plus man zuerst anwendet. Ich habe dafür ein wenig experimentieren müssen.
+
+~~~ text 
+jshell> float a = 0.7f, b = 0.9f, c = 0.3f;
+a ==> 0.7
+b ==> 0.9
+c ==> 0.3
+
+jshell> (a + b) + c
+$32 ==> 1.8999999
+
+jshell> a + (b + c)
+$33 ==> 1.9000001
+
+jshell> a + b + c // `+` ist linksassoziativ
+$34 ==> 1.8999999
+~~~
+
+Können Sie auch ein Beispiel für Ganzzahlen konstruieren?
+
+<details>
+<summary>Haben Sie es herausgefunden?</summary>
+Es ist eine Besonderheit bei Java, dass die verwendete Modulo-Arithmetik bei Ganzzahlen neutral gegenüber der Reihenfolge bei der Addition ist. Bei Fließkommazahlen spielt es eine entscheidende Rolle, welche Zahlen zuerst berechnet werden, weil die Ungenauigkeiten in den Nachkommastellen unterschiedlich ausfallen können -- so zeigt es auch das Beispiel.
+</details>
+</details>
+
+<details>
+    <summary>Lösung: Gerade?</summary>
+Die Aufgabe wird praktisch wörtlich durch die rekursive Lösung erfüllt.
+
+!!! 
+    Normalerweise verbiete ich Ihnen den Gebrauch von `print`-Anweisungen. Wobei ein eingestreutes `println` jedoch sehr helfen kann, ist, einen Einblick in die Abarbeitung des Codes zu gewinnen.
+
+Eine Methode heißt _rekursiv_, wenn sie in ihrem Rumpf mit einem Aufruf auf sich selbst Bezug nimmt. Aber seien Sie wachsam: Jeder Aufruf einer Methode, egal ob ein Fremd- oder Selbstaufruf, wird von einer neuen Abarbeitungseinheit bearbeitet, die einen frischen Satz an Variablen anlegt. Beim Selbstaufruf wird lediglich Bezug auf den gleichen Code genommen. Grundsätzlich unterscheidet sich das Vorgehen und der Aufbau einer Aufrufkette (Stichwort _callstack_) nicht von dem bei Fremdaufrufen.
+
+~~~ java 
+boolean isEven(int n) {
+    // System.out.println("n = " + n);
+    if (n == 1) return false;
+    if (n == 0) return true;
+    return isEven(n - 2);
+}
+~~~
+
+Die nachfolgende Variante ist _iterativ_, weil sie sich zur Lösung eines Wiederholungskonstrukts bedient. Vom Code her ist der Unterschied in der inneren Abarbeitung minimal.
+
+~~~ java 
+boolean isEven(int n) {
+    while (true) {
+        if (n == 0) return true;
+        if (n == 1) return false;
+        n -= 2;
+    }
+}
+~~~
+
+Mit der `while`-Schleife kann man sich auch andere Varianten erdenken:
+
+~~~ java
+boolean isEven(int n) {
+    while (n > 1) n -= 2;
+    return n == 0;
+}
+~~~
+
+Oder, fast noch besser, so dass niemand mehr darüber nachdenken muss, ob die Bedingung `(n > 1)` wirklich das ausschließt, was sie ausschließen soll:
+
+~~~ java 
+boolean isEven(int n) {
+    while (n != 0 && n != 1) n -= 2;
+    return n == 0;
+}
+~~~
+
+Überlegen Sie sich selbst mögliche Umsetzungen mit der `for`-Schleife! (Die hier, nebenbei gesagt, nicht das beste Mittel der Wahl ist. Jede Schleifenart hat ihre eigenen kleinen Vorzüge und kleinen Nachteile.)
+</details>
+
+# VW5
+
+## Dienstag
+
+**Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
+
+## Mittwoch
+
+# VW6
+
+!!! WARNING
+    Zur Erinnerung: Der Dienstagstermin entfällt diese Woche.
+
+
+# Gruppenarbeit und Delegiertentreffen
+
+Es gibt viele Arten des Lernens: Man kann selber tüfteln, bis man die Lösung hat. Dann hätte man gerne vielleicht einen Lösungsvorschlag zum Vergleich. (Ich scheue das Wort "Musterlösung", weil es in der Programmierung oft mehrere Möglichkeiten der Lösung gibt, was auch abhängt von den Programmierkonstrukten, die sie beherrschen.) Manchmal ist es auch sinnvoll, frühzeitig in die Lösung zu schauen, damit man sich abgucken kann, wie das Programmieren funktioniert. Es ist nicht sinnvoll, wenn man über Stunden auf dem Schlauch steht. Das "Spicken" in die Lösung kann eine große Hilfe und eine sehr effektive Lernstrategie sein. Mit jeder weiteren Aufgaben kommt man so eigenständig voran und probiert es alleine.
+
+Eines möchte ich besonders betonen: Die Lerneffekte können enorm sein, wenn Sie in der Gruppe arbeiten. Sie diskutieren, probieren, geben sich gegenseitig Hilfestellung und Anregung und können Lösungen oder Lösungsideen vergleichen. Wenn Sie es schaffen, eine gute Programmiergruppe zu sein, dann ist das gleichzeitig eine hervorragende Lerngruppe. In der Praxis ist Entwicklungsarbeit längst zu einem "Teamsport" geworden -- dafür sind die Aufgaben und Herausforderungen, vor denen die Entwickler:innen stehen, einfach zu groß als dass man alleine zum Ziel käme.
+
+## Vom Sinn der Gruppenarbeit
+
+Sie haben eine Vielzahl an Java-Aufgaben zur Bearbeitung vor sich. Und in vielen Fällen wird Ihnen sogar die Musterlösung mitgeliefert. Wozu in aller Welt bedarf es da der Gruppenarbeit?
+
+Eine gute Frage -- und eine wichtige Frage, weil sich dahinter eine grundlegende Annahme verbirgt: Wenn ich alle Informationen habe, dann kann ich alleine lernen. Stimmt, können Sie! Wenn man Ihnen alles zur Verfügung stellt, dann sind die Voraussetzungen gegeben, alles alleine zu bearbeiten und mich sich selbst zu klären.
+
+Mit den Aufgaben und den Lösungen sind also gute Voraussetzungen zum Lernen geschaffen. Aber damit ist das Problem des Lernens nicht gelöst. Lernen heißt, sich Zeit freizuschaufeln, sich hinzusetzen, sich zu konzentrieren, Ablenkungen und Störungen auszuschalten -- und dann lernt man immer noch nicht, sondern hat für sich nur die Rahmenbedingungen dafür geschaffen, dass das Lernen stattfinden kann. Das Lernen selbst ist ein Tun und ein Machen: Man muss die Aufgabe lesen, sie verstehen, was sie von einem will, in der Vorlesung/Übung kennengelernte Konzepte versuchen anzuwenden, eine Lösung ausprobieren, sie in der JShell eintippen, die Frustration ertragen, wenn es nicht gleich klappt, sich neu mit der Aufgabe befassen, neue Wege einschlagen, experimentieren. Es ist zu erwarten, dass Ihnen diese Denkarbeit arg zu schaffen macht. Das Programmieren ist nichts, was dem menschlichen Gehirn als Fähigkeit angeboren wurde. In Ihnen wird sich rasch eine innere Stimme breit machen, die den Sinn und Zweck der ganzen Aktion hinterfragt, Ihre Motivationslage wird brüchig -- und das Handy als Ablenkung ist nicht fern.
+
+Ahnen Sie, dass das Lernen wenig mit damit zu tun hat, ob Ihnen alle Informationen zur Verfügung stehen? Sie müssen sich zwingen, sich disziplinieren, Widerstände aushalten, eine Frustrationstoleranz entwickeln. Und wenn Sie wenig an Selbstwirksamkeitserfahrungen haben, dann wird es nicht leichter. Das hat nicht viel mit Spaß am Lernen zu tun.
+
+Das Ganze kann sich sehr leicht auflösen, wenn Menschen ihrer sozialen Ader folgen und sich für Klatsch, Tratsch aber auch zur Bewältigung von Problemen, Aufgaben und Herausforderungen treffen. Wenn Sie sich einigen Regeln des Zusammenseins unterwerfen (z.B. eine feste Gruppenzeit zum Lernen an einem bestimmten Ort), dann spielen all die Punkte wie Selbstdisziplinierung, Konzentration usw. keine Rolle. Wer miteinander an einer harten Aufgabe brütet, ist konzentriert. Schwierigkeiten lassen sich lösen, indem man Ideen austauscht und sich hilft. Das Smartphone lässt sich vergessen, Frustrationen lassen sich ertragen, Probleme finden viel eher Lösungen.
+
+Es ist an Ihnen, aus Ihrer Zufallszuweisung zu einer Gruppe eine fruchtbare Zweckgemeinschaft entstehen zu lassen. Niemand verlangt von Ihnen, dass Sie Freunde werden. Aber auch eine Zweckgemeinschaft wächst nur zusammen, wenn sie sich trifft, wenn man sich begegnet und einander im Interesse eines gemeinsamen Anliegens offen und aufgeschlossen zuwendet. Wenn Sie eine Gruppe werden, eröffnet sich auch die Chance, dass Sie sich online, z.B. über Slack, helfen können. Es ist was schönes, die Lernpartner in digitaler Nähe zu wissen!
+
+Wir versuchen durch verschiedenste Interventionen (sie könnte es auch "Maßnahmen" nennen), Sie als Gruppe zusammenzubringen. Wir erwarten, dass Sie dabei mitmachen! Ein Punkt ist zum Beispiel das regelrechte Überschütten mit Aufgaben. In der Gruppe können Sie sich Strategien überlegen, wie man damit umgeht. Was man durch Arbeitsteilung und gegenseitiges Erklären erreichen kann, reicht weit über das hinaus, wenn man versucht, sich mühsam alles selbst zu erschließen. Sie müssen die Sachen zwar alle selber können, aber das heißt nicht, dass Sie alles alleine erarbeiten müssen.
+
+## Was erwartet Sie als Delegierte:r beim Delegiertentreff?
+
+Was wird eigentlich beim Delegiertentreff gemacht? Wir haben am Dienstag Punkte an der Tafel gesammelt, die skizzieren, was alles möglich und denkbar ist:
+
+* Wir können mit Ihnen Probleme und Lösungswege besprechen
+* Gibt es Probleme in der Gruppe? Brauchen Sie unsere Hilfe und/oder Moderation?
+* Wir können gegenseitig unser Wissen testen
+* Sie können Fragen stellen
+* Sie sind Botschafter ihrer Gruppe: Was haben Sie uns interessanter mitzuteilen? Sollen Sie im Auftrag eines Gruppenmitglieds etwas erfragen oder erbitten?
+* Lassen Sie uns gemachte Erfahrungen teilen und Feedback z.B. zu Aufgaben geben
+* Gibt es Sachen oder Aufgaben aus der Vorlesung/Übung, bei der es Probleme gab. Für mich sind solche Rückmeldungen sehr wichtig, die Tutoren melden mir das zurück und ich kann in künftigen Veranstaltungen darauf eingehen.
+* Sie können Kontakte knüpfen
+* Sie überlegen sich mit uns Aufgabenvarianten
+* Braucht jemand individuelle Förderung? Wir versuchen Hilfe anzubieten, die dann im Rahmen der Tutoren-Sprechstunde geleistet werden kann
+
+## Was ist Vorbereitung?
+
+Als Delegierte:r sollen Sie vorbereitet beim Delegiertentreffen erscheinen. Was heißt es, _vorbereitet_ zu sein?
+
+In Wikipedia heißt es unter dem Eintrag "[Vorbereitung (Kochen)]("https://de.wikipedia.org/wiki/Vorbereitung_(Kochen)")" im Abschnitt "Bedeutung": "Die Vorbereitung von Lebensmitteln ist die Voraussetzung für das Kochen und Backen." (Abruf am 17.10.2019) Wenn wir das auf die Vorbereitung zum Delegiertentreff übertragen: Ihre Vorbereitung ist die Voraussetzung für einen fruchttragenden Gesprächsaustausch und einen Lernfortschritt, den Sie und Ihr Team machen können.
+
+Vorbereitet zu sein heißt:
+
+* Sie haben sich mit den Aufgaben beschäftigt. Das heißt nicht, dass Sie alle Aufgaben selber bearbeitet und gelöst haben -- dafür arbeiten Sie ja im Team und haben sich die Arbeit möglicherweise aufgeteilt. Aber Sie kennen die Aufgabenstellungen, niemand müsste sie Ihnen noch einmal erläutern.
+* Sie kennen den Status Ihres Teams. Sie wissen, wer an welcher Aufgabe gearbeitet hat, wer was gelöst hat, welche Probleme aufgetaucht sind. Wo konnte die Gruppe helfen, wo sind offene Fragen. Holen Sie die Infos von Ihren Teammitgliedern ein.
+* Sie haben sich ein Bild von Ihrer Gruppe gemacht: Funktioniert unsere Zusammenarbeit? Was läuft gut? Was könnte besser laufen? Ist wer aus unserem Team abgehängt oder prescht jemand zu sehr vor und überfordert mit ihrem oder seinem Verhalten die Gruppe?
+* Welche Fragen soll ich für einzelne Teammitglieder klären? Das können neben Fragen zu Aufgaben auch Fragen zu Vorlesung oder Übung sein.
+* Ich habe das notwendige Material dabei: Laptop, Stift, Papier, Unterlagen (eventuell z.B. das Kofler-Buch)
+
+## Aufgabenrhythmus
+
+Wenn Sie im Git-Repository zu einem Aufgabenpaket den Eintrag "VW3" sehen (als Beispiel), dann ist damit Folgendes gemeint: Dieses Aufgabenpaket wird am Freitag in der dritten Vorlesungswoche das neue Arbeitspaket ihrer Gruppe. Die Delegierte bzw. der Delegierte bringt die Arbeitsergebnisse zu diesem Arbeitspaket am Freitag in der Folgewoche (im Beispiel also in VW4) mit zum Delegiertentreffen.
+
+# Spaß mit Processing
+
+Einige von Ihnen möchten sich schon mit Processing befassen. Gerne, tun Sie das -- vernachlässigen Sie aber bitte nicht, sich auch mit den regulären Inhalten unserer Veranstaltung zu befassen. Die Projektwoche ist für die Arbeit mit Processing vorgesehen.
+
+Processing ([](https://processing.org)) ist eine Java-Programmbibliothek vor allem für die graphische Programmierung und eine Entwicklungsumgebung, um solche graphisch-orientierten Programme zu erstellen. Man programmiert mit Processing in Java, allerdings hat die Entwicklungsumgebung geringfügige Änderungen an der Syntax von Java vorgenommen, so dass sich die Programmierung im ersten Moment gar nicht nach Java anfühlt. Processing ist so beliebt geworden, dass es auch Implementierungen für die Programmiersprachen Python ([](https://py.processing.org/)) und JavaScript ([](https://p5js.org)) gibt.
+
+!!! WARNING
+    Wir arbeiten in diesem Kurs nicht mit der Entwicklungsumgebung, die Processing selber mitliefert. Grund ist, dass dort die Sprachversion von Java auf dem Stand von Java 8 stehen geblieben ist. Wir wollen aber modern bleiben! Zum Glück kann man die Processing-Bibliothek ganz leicht in Java 13 importieren, um mit ihr zu arbeiten.
+
+## Voraussetzungen
+
+Wenn wir auf die Programmierumgebung von Processing verzichten, dann brauchen wir die Java-Programmbibliothek. Die Kernbibliothek zu Processing (_Processing Core_) finden Sie in den Maven-Verzeichnissen:
+
+https://mvnrepository.com/artifact/org.processing/core
+
+Wählen Sie die jüngste Version aus (im Moment ist es Version 3.3.7) und laden Sie die `jar`-Datei (`core-3.3.7.jar`) herunter in das Verzeichnis, in dem Sie Ihre Programme entwickeln wollen, die mit der Kern-Bibliothek von Processing arbeiten sollen.
+
+## Ein Beispielprogramm
+
+Erstellen Sie mit einem Editor eine Datei namens `GrabBall.java` mit folgendem Inhalt:
+
+~~~ java
+// Original source code: https://gist.github.com/denkspuren/86e2132b6563d609902e
+// Minor adaptations were required for a Java 13 environment.  
+
+import processing.core.PApplet;
+import processing.core.PGraphics;
+
+public class MySketch extends PApplet {
+    public static void main(String[] args) {
+        String[] appArgs = {"Grab Ball"};
+		MySketch mySketch = new MySketch();
+		PApplet.runSketch(appArgs, mySketch);
+    }
+
+    int THMGreen = color(128, 186, 36);
+    int THMGrey  = color(74, 92, 102);
+    int THMRed   = color(184, 0, 64);
+
+    float x, y;
+    int time;
+    int count = 0;
+
+    public void settings() {
+        size(400, 300);
+      }
+
+    public void setup() {
+        background(THMGreen);
+        noStroke();
+        paintNewEllipse(THMGrey);
+    }
+
+    void paintNewEllipse(int color) {
+        x = random(0+20, 400-20);
+        y = random(0+20, 300-20);
+        fill(color);
+        ellipse(x, y, 40, 40);
+    }
+
+    public void draw() {
+        if (count == 0) {
+            time = millis();
+        } else {
+            fill(THMGreen);
+            rect(0, 0, 60, 20);
+            fill(THMGrey);
+            text((20000f+time-millis())/1000f, 10, 15);
+        }
+        if (get(mouseX, mouseY) == THMGrey) {
+            fill(THMRed);
+            ellipse(x, y, 40, 40);
+            paintNewEllipse(THMGrey);
+            count++;
+        }
+    }
+}
+~~~
+
+Das ist übrigens die Anpassung eines kleinen Beispielprogramms, das ich mal geschrieben habe in der Entwicklungsumgebung von Processing, [hier](https://gist.github.com/denkspuren/86e2132b6563d609902e) ist der originale Code dazu. Da die Entwicklungsumgebung (wie gesagt) ein bissel von Java abweicht, läuft der Code nicht direkt mit Java 12 oder Java 13.
+
+Starten Sie die Anwendung! Denken Sie daran, `core.jar` und `GrabBall.java` müssen dafür im selben Verzeichnis abgelegt sein.
+
+~~~ text
+> java -cp core.jar GrabBall.java
+~~~
+
+Voila! "Berühren" Sie mit der Maus den grauen Kreis und er wird seine Farbe wechseln. Ein neuer Kreis erscheint. Der Timer ist nur zu Demozwecken eingebaut, er ist ohne Funktion.
+
+![Ein einfaches Demospiel mit der Processing-Bibliothek](pics/GrabBall.png)`
+
+Sie können die Anwendung auch mit der JShell laden und starten.
+
+~~~ text
+> jshell --class-path core.jar GrabBall.java
+|  Welcome to JShell -- Version 12.0.2
+|  For an introduction type: /help intro
+
+jshell> MySketch.main(new String[]{})
+~~~
+
+## Von Processing zu reinem Java
+
+Um Processing-Programme in reine Java-Programme umzuwandeln, muss man ein paar Details wissen. Wird zum Beispiel eine Variable mit dem Typ `color` ausgezeichnet, dann ist das eigentlich der primitive `int`-Typ; `color` ist ein Pseudotyp in der Entwicklungsumgebung von Processing, man wollte Anfänger*innen das Programmieren ein wenig verständlicher machen.
+
+Die in Processing zur Verfügung stehenden Sprachkonstrukte und "Befehle" (es sind eigentlich Java-Methoden), finden Sie unter
+
+https://processing.org/reference/
+
+Diese Referenz ist Ihr wichtigstes Hilfsmittel bei der Erstellung von Processing-Programmen in "reinem" Java. Aus diesem Grund müssen Sie manchmal wissen, in welchen Paket sich eine Methode aus der Referenz befindet, um sie nutzen zu können. Da hilft Ihnen die Code-Dokumentation zu `core.jar`:
+
+http://processing.github.io/processing-javadocs/core/
+
+Über den "Index" sind rasch die Methoden und darüber die Pakete gefunden. Zum Beispiel ist die `text`-Methode eine Methode der Klasse `processing.core.PGraphics`. Deshalb finden Sie oben auch die entsprechende `import`-Anweisung, um die Methode aus der Kernbibliothek von Processing unkompliziert nutzen zu können.
+
+Das klingt alles etwas schwierig? Keine Sorge, das ist es nicht. Noch sind wir ja nicht soweit, wir greifen hier vor.
+ 
+
+<!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
