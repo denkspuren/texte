@@ -697,7 +697,16 @@ Diese Aufgabe möchte eine bestimmte Lösung von Ihnen sehen. Hier zeige ich Ihn
         - Ich bin nicht mein eigener Rückgabewert (Methode ist z.B. `void`)
         - Ich bin mein eigener Rückgabewert (`return this;`)
 
-Traditionell versteht sich die Objektorientierung als Veränderlichkeitserzählung: Objekte können die Werte ihrer Instanzvariablen ändern. Man sagt, ein Objekt hat einen Zustand. Unter dem Zustand sind formal gesprochen all die Werte der Instanzvariablen gemeint, die nicht ableitbar sind und die sich über die Zeit ändern können. Die traditionellen Veränderlichkeitserzählung deklariert Methoden, die den Zustand eines Objekts ändern, typischerweise als `void`. Eine Methode, die `void` als Rückgabetyp hat, muss einen Seiteneffekt haben, also z.B. den Zustand eines Objekts ändern. (Aus Gründen der Übersicht habe ich die Methode `negiere` weggelassen.)
+!!! 
+    Der Fachbegriff für "unveränderlich" lautet _immutabel_, der für "veränderlich" _mutabel_.
+    
+Im Kern geht es darum, ob man ein Objekt als _mutabel_ (veränderlich) oder _immutabel_ (unveränderlich) auslegt und ob man den Umgang mit den Objekten als Klassen- oder Instanzmethoden implementiert. 
+
+### Die Veränderlichkeitserzählung (1. Variante)
+
+Traditionell versteht sich die Objektorientierung als Veränderlichkeitserzählung: Objekte können die Werte ihrer Instanzvariablen ändern. Man sagt, ein Objekt hat einen Zustand. Unter dem Zustand sind -- formal gesprochen -- all die Werte derjenigen Instanzvariablen gemeint, die nicht ableitbar sind (heißt: nicht berechenbar aus anderen Werten) und die sich über die Zeit ändern können. Die traditionelle Veränderlichkeitserzählung deklariert die Methoden, die den Zustand eines Objekts ändern, typischerweise als `void`. Eine Methode, die `void` als Rückgabetyp hat, muss einen (Seiten)Effekt haben. Ein häufiger Effekt ist die Änderung des Zustands eines Objekts.
+
+(Aus Gründen der Übersicht habe ich im nachstehenden Code die Methode `negiere` weggelassen.)
 
 ~~~ java 
 class Zahl {
@@ -707,6 +716,9 @@ class Zahl {
     }
     void addiere(Zahl z) {
         this.value = value + z.value;
+    }
+    void negiere() {
+        value = -value;
     }
     public String toString() {
         return "Zahl(" + value + ")";
@@ -722,18 +734,120 @@ z ==> Zahl(13)
 
 jshell> z.addiere(new Zahl(5))
 
-jshell> z.addiere(new Zahl(-4))
+jshell> z.negiere()
+
+jshell> z.addiere(new Zahl(-2))
 
 jshell> z
-z ==> Zahl(14)
+z ==> Zahl(-20)
 ~~~
 
-Mittlerweile ist die Unveränderlichkeitserzählung sehr modern geworden, da sie softwaretechnisch einige Vorteile mit sich bringt. Um anzuzeigen, dass eine Variable nur einmal eine Wertzuweisung erhalten kann, deklariert man sie als `final`.
+### Die Unveränderlichkeitserzählung
 
+Mittlerweile ist die Unveränderlichkeitserzählung sehr modern geworden, da sie softwaretechnisch einige Vorteile mit sich bringt. Um anzuzeigen, dass eine Variable nur einmal eine Wertzuweisung erhalten kann, deklariert man sie als `final`. Da eine Instanz von `Zahl` den Wert `value` gar nicht mehr ändern kann, bleibt einem gar nichts anderes mehr übrig als eine neue Instanz von `Zahl` mit einem neuen Zahlenwert zu erzeugen.
 
-!!! 
-    Der Fachbegriff für "unveränderlich" lautet _immutabel_, der für "veränderlich" _mutabel_.  
+~~~ java 
+class Zahl {
+    final int value;
 
+    Zahl(int value) {
+        this.value = value;
+    }
+    Zahl addiere(Zahl z) {
+        return new Zahl(value + z.value);
+    }
+    Zahl negiere() {
+        return new Zahl(-value);
+    }
+    public String toString() {
+        return "Zahl(" + value + ")";
+    }
+}
+~~~
+
+Der sich daraus ergebende Programmierstil ist ausdrucksorientiert. Man kann die Methodenaufrufe hintereinander ketten.
+
+~~~ text 
+jshell> Zahl z = new Zahl(13)
+z ==> Zahl(13)
+
+jshell> z.addiere(new Zahl(5)).negiere().addiere(new Zahl(-2))
+$55 ==> Zahl(-20)
+
+jshell> z
+z ==> Zahl(13)
+~~~
+
+### Die Veränderlichkeitserzählung (2. Variante)
+
+Die Eleganz der Verkettung von Methodenaufrufen kann man auch bei der Programmierung mit mutablen Objekten nutzen.
+
+~~~ java 
+class Zahl {
+    int value;
+    Zahl(int value) {
+        this.value = value;
+    }
+    Zahl addiere(Zahl z) {
+        this.value = value + z.value;
+        return this;
+    }
+    Zahl negiere() {
+        value = -value;
+        return this;
+    }
+    public String toString() {
+        return "Zahl(" + value + ")";
+    }
+}
+~~~
+
+Man muss genau hinschauen, um den Unterschied zur Umsetzung mit immutablen Objekten zu bemerken. Alles wirkt gleich, tatsächlich ändert sich der Zustand, d.h. der Zahlenwert von `z`.
+
+~~~ text 
+jshell> Zahl z = new Zahl(13)
+z ==> Zahl(13)
+
+jshell> z.addiere(new Zahl(5)).negiere().addiere(new Zahl(-2))
+$60 ==> Zahl(-20)
+
+jshell> z
+z ==> Zahl(-20)
+~~~
+
+### Die Klassenerzählung
+
+Man kann die Methoden `addiere` und `negiere` als Klassenmethoden auslegen, dann notwendigerweise mit zwei bzw. einem `Zahl`-Parameter. Es macht bei diesem Programmierstil nur begrenzt Sinn mutabel zu programmieren. Soll das Ergebnis bei der Addition den Wert von `z1` oder `z2` verändern? Egal, wie die Antwort ausfällt, wenn man eines der Objekte mutieren möchte, dann bietet sich ganz klar die Veränderlichkeitserzählung an -- die erzählt dann, was man tatsächlich vorhat, statt den Vorgang über die Klassenerzählung zu verschleiern. 
+
+~~~ java
+class Zahl {
+    static Zahl addiere(Zahl z1, Zahl z2) {
+        return new Zahl(z1.value + z2.value);
+    }
+    static Zahl negiere(Zahl z) {
+        return new Zahl(-z.value);
+    }    
+    int value;
+    Zahl(int value) {
+        this.value = value;
+    }
+    public String toString() {
+        return "Zahl(" + value + ")";
+    }
+}
+~~~
+
+Die Konsequenz dieses Ansatzes ist keine Verkettung, sondern eine Verschachtelung von Ausdrücken.
+
+~~~ text 
+jshell> Zahl.addiere(Zahl.negiere(Zahl.addiere(new Zahl(13), new Zahl(5))), new Zahl(-2))
+$65 ==> Zahl(-20)
+~~~
+
+Bei der Implementierung von `addiere` als Klassenmethode bringt die Klasse zwei Objekte zusammen und berechnet das Ergebnis der Verknüpfung, hier der Addition. Bei der Implementierung als Instanzmethode ist eine Instanz bereits im Kontext der Methode und benötigt nur noch das andere Objekt, um die Verknüpfung zu realisieren.
+
+!!! WARNING
+    Gehen Sie als Anfänger:in in der Programmierung bitte sehr sparsam mit Klassenmethoden um. Noch deutlicher: Vermeiden Sie sie schlicht, da Sie objektorientiert, d.h. mit Instanzmethoden arbeiten sollen. Sonst trainieren Sie die Objektdenke nicht.
 </details>
 
 
