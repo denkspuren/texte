@@ -652,9 +652,43 @@ boolean isEven(int n) {
 
 ## Dienstag
 
-**Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
+**Zuweisung**: Sie sehen in einem Java-Programm folgende Codezeile. Begründen Sie, was Sie davon halten!
+
+~~~ java
+int i = j % 1;
+~~~
+
+**`doit`**: Sie sehen die folgende Implementierung einer Methode namens `doit`. Was macht die Methode und was wäre folglich ein besserer Name für sie?
+
+~~~ java
+boolean doit(int n) { return (n & 1) > 0; }
+~~~
+
+**Zahl**: Erstellen Sie eine Klasse namens `Zahl`. Eine Instanz von Zahl steht für eine Ganzzahl und kann mit einem `int`-Wert initialisiert werden. Implementieren Sie neben dem Konstruktor eine Methode `addiere`, um zwei Zahlen addieren zu können; das Ergebnis soll eine neue Zahl sein. Ergänzen Sie ein Methode `negiere`, um eine neue Zahl mit dem negierten Zahlenwert zu generieren. Implementieren Sie die `toString`-Methode, um Zahlen in der Form `Zahl(3)` oder `Zahl(-17)` darzustellen. 
+
+<details>
+    <summary>Lösung: doit</summary>
+Die Implementierung zielt auf die interne Kodierung von Ganzzahlen im Zweierkomplement ab. Eine ungerade Zahl hat an der Bitstelle ganz rechts (dem _Least Significant Bit_, LSB) immer eine `1` stehen, bei einer geraden Zahl immer eine `0`. Der `&`-Operator "filtert" über das binäre Und das LSB einer beliebigen Ganzzahl heraus. Ist es `1` (also größer Null), dann liegt eine ungerade Zahl vor, das Ergebnis ist `true`. Ansonsten zeigt ein `false` eine gerade Zahl an. Die Methode hieße also besser `isOdd` (im Sinne von "Bist Du ungerade?").
+
+In der Regel trennt man in der Programmiertechnik strikt die Repräsentation eines Datums von seiner Kodierung. Oder anders ausgedrückt: Es sollte einer Nutzerin bzw. eines Nutzers von Ganzzahlen vollkommen egal sein, wie die Zahlen intern kodiert werden. Der `&`-Operator eröffnet einem jedoch einen Zugang zu der Kodierung einer Ganzzahl in Bits -- das ist eigentlich überflüssig. Möchte man die Trennung aufrecht erhalten, dann ist es angebracht, den Modulo-Operator zu verwenden. Die Modulo-Operation ist für Ganzzahlen definiert, eine Kenntnis der Kodierung ist dafür nicht notwendig.
+
+~~~
+boolean isOdd(int n) { return n % 2 != 0; }
+~~~
+
+<details>
+    <summary>Warum habe ich nicht `return n % 2 == 1` geschrieben?</summary>
+Weil z.B. `-17 % 2` den Wert `-1` ergibt und nicht `1`. Die Ergebnisse für Modulo 2 können also `-1`, `0` und `+1` sein. Und wir wollen nur wissen, ob es sich entweder um eine `0` (gerade) oder um eine `-1` bzw. `+1` (ungerade) handelt. 
+</details>
+
+Man kann an diesem kleinen Programm einen weiteren interessanten Aspekt der Programmierung diskutieren. Wir haben aus der Aufgabe der letzten Woche gesehen, dass man über die wiederholte Subtraktion von `-2` feststellen kann, ob eine Zahl gerade bzw. ungerade ist. Das ist nichts anderes als die Simulation der Division bezüglich des Restwertes als Prozess, d.h. als sehr kleinschrittigen Vorgang. Man sucht bei der Programmierung immer wieder nach Alternativen, die solche Prozesse abkürzen. In diesen Sinne kann es für die Realisierung spezieller Modulo-Werte (wie bei Modulo 2) sehr effizient sein, auf die Kodierung einer Ganzzahl per `&`-Operator zuzugreifen, wenn die Kodierung selber nicht erst errechnet werden muss. So sieht sich bisweilen die absichtsvolle Ausblendung von Kodierungungsdetails, die keine Rolle spielen sollten, einem Bedarf nach effizienter Umsetzung von Rechenprozessen gegenüber, wo Kodierungswissen ausgenutzt wird.
+
+In diesem speziellen Fall sollten Sie nicht ohne sehr trifftige Gründe bei der Verwendung des Modulo-Operators bleiben. Die `%`-Operation kostet die Hardware genauso viel Zeit, wie die `&`-Operation.
+</details>
 
 ## Mittwoch
+
+**Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
 
 # VW6
 
