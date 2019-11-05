@@ -1,0 +1,312 @@
+<meta charset="utf-8" lang="de">
+<script>window.markdeepOptions = { "tocStyle" : "auto" }</script>
+
+    **Processing in Java nutzen (WS 2019/20)**
+    Dominikus Herzberg
+
+# Ein Schnelleinstieg
+
+Einige von Ihnen möchten sich schon mit Processing befassen. Gerne, tun Sie das -- vernachlässigen Sie aber bitte nicht, sich auch mit den regulären Inhalten unserer Veranstaltung zu befassen. Die Projektwoche ist für die Arbeit mit Processing vorgesehen.
+
+Processing ([](https://processing.org)) ist eine Java-Programmbibliothek vor allem für die graphische Programmierung und eine Entwicklungsumgebung, um solche graphisch-orientierten Programme zu erstellen. Man programmiert mit Processing in Java, allerdings hat die Entwicklungsumgebung geringfügige Änderungen an der Syntax von Java vorgenommen, so dass sich die Programmierung im ersten Moment gar nicht nach Java anfühlt. Processing ist so beliebt geworden, dass es auch Implementierungen für die Programmiersprachen Python ([](https://py.processing.org/)) und JavaScript ([](https://p5js.org)) gibt.
+
+!!! 
+    Wir arbeiten in diesem Tutorial nicht mit der Entwicklungsumgebung, die Processing selber mitliefert. Grund ist, dass dort die Sprachversion von Java auf dem Stand von Java 8 stehen geblieben ist. Wir wollen aber modern bleiben! Zum Glück kann man die Processing-Bibliothek ganz leicht in aktuelle Java-Versionen importieren, um mit ihr zu arbeiten.
+
+## Voraussetzungen
+
+Wenn wir auf die Programmierumgebung von Processing verzichten (das sogenannte PDE, _Processing Development Environment_), dann brauchen wir die Java-Programmbibliothek. Die Kernbibliothek zu Processing (_Processing Core_) finden Sie in den Maven-Verzeichnissen; Maven selbst (ein Build-Werkzeug) brauchen Sie dafür nicht.
+
+https://mvnrepository.com/artifact/org.processing/core
+
+Was zu tun ist:
+
+1. Wählen Sie die jüngste Version aus (während ich das schreibe ist es Version 3.3.7).
+2. Laden Sie die `jar`-Datei (`core-3.3.7.jar`) herunter in das Verzeichnis, in dem Sie Ihre Programme entwickeln wollen, die mit der Kern-Bibliothek von Processing arbeiten sollen.
+3. Benennen Sie die Datei um in `core.jar`.
+
+## Ein Beispielprogramm: Kreise "fangen"
+
+Erstellen Sie mit einem Editor eine Datei namens `GrabBall.java` mit folgendem Inhalt:
+
+~~~ java
+// Original source code: https://gist.github.com/denkspuren/86e2132b6563d609902e
+// Minor adaptations were required for a Java 13 environment.  
+
+import processing.core.PApplet;
+import processing.core.PGraphics;
+
+public class MySketch extends PApplet {
+    public static void main(String[] args) {
+        String[] appArgs = {"Grab Ball"};
+		MySketch mySketch = new MySketch();
+		PApplet.runSketch(appArgs, mySketch);
+    }
+
+    int THMGreen = color(128, 186, 36);
+    int THMGrey  = color(74, 92, 102);
+    int THMRed   = color(184, 0, 64);
+
+    float x, y;
+    int time;
+    int count = 0;
+
+    public void settings() {
+        size(400, 300);
+      }
+
+    public void setup() {
+        background(THMGreen);
+        noStroke();
+        paintNewEllipse(THMGrey);
+    }
+
+    void paintNewEllipse(int color) {
+        x = random(0+20, 400-20);
+        y = random(0+20, 300-20);
+        fill(color);
+        ellipse(x, y, 40, 40);
+    }
+
+    public void draw() {
+        if (count == 0) {
+            time = millis();
+        } else {
+            fill(THMGreen);
+            rect(0, 0, 60, 20);
+            fill(THMGrey);
+            text((20000f+time-millis())/1000f, 10, 15);
+        }
+        if (get(mouseX, mouseY) == THMGrey) {
+            fill(THMRed);
+            ellipse(x, y, 40, 40);
+            paintNewEllipse(THMGrey);
+            count++;
+        }
+    }
+}
+~~~
+
+Das ist übrigens die Anpassung eines kleinen Beispielprogramms, das ich mal geschrieben habe in der Entwicklungsumgebung von Processing, [hier](https://gist.github.com/denkspuren/86e2132b6563d609902e) ist der originale Code dazu. Da die Entwicklungsumgebung, die PDE, den Umgang mit Java ein bissel verändert, läuft der Code nicht direkt mit einer modernen Java-Version (also Java 9 oder größer). Darum sind ein paar Anpassungen nötig.
+
+Starten Sie die Anwendung! Denken Sie daran, `core.jar` und `GrabBall.java` müssen dafür im selben Verzeichnis abgelegt sein.
+
+~~~ text
+> java -cp core.jar GrabBall.java
+~~~
+
+Voila! "Berühren" Sie mit der Maus den grauen Kreis und er wird seine Farbe wechseln, ein neuer Kreis erscheint. Der Timer ist nur zu Demozwecken eingebaut, er ist ohne Funktion.
+
+![Ein einfaches Demospiel mit der Processing-Bibliothek](pics/GrabBall.png width="50%")
+
+Sie können die Anwendung auch mit der JShell laden und starten.
+
+~~~ text
+> jshell --class-path core.jar GrabBall.java
+|  Welcome to JShell -- Version 13.0.1
+|  For an introduction type: /help intro
+
+jshell> MySketch.main(new String[]{})
+~~~
+
+## Von Processing zu reinem Java
+
+Um Processing-Programme in reine Java-Programme umzuwandeln, muss man ein paar Details wissen. Wird zum Beispiel eine Variable mit dem Typ `color` ausgezeichnet, dann ist das eigentlich der primitive `int`-Typ; `color` ist ein Pseudotyp in der Entwicklungsumgebung von Processing, man wollte Anfänger*innen das Programmieren ein wenig verständlicher machen.
+
+Die in Processing zur Verfügung stehenden Sprachkonstrukte und "Befehle" (es sind eigentlich Java-Methoden), finden Sie unter
+
+https://processing.org/reference/
+
+Diese Referenz ist Ihr wichtigstes Hilfsmittel bei der Erstellung von Processing-Programmen in "reinem" Java. Aus diesem Grund müssen Sie manchmal wissen, in welchen Paket sich eine Methode aus der Referenz befindet, um sie nutzen zu können. Da hilft Ihnen die Code-Dokumentation zu `core.jar`:
+
+http://processing.github.io/processing-javadocs/core/
+
+Über den "Index" sind rasch die Methoden und darüber die Pakete gefunden. Zum Beispiel ist die `text`-Methode eine Methode der Klasse `processing.core.PGraphics`. Deshalb finden Sie oben auch die entsprechende `import`-Anweisung, um die Methode aus der Kernbibliothek von Processing unkompliziert nutzen zu können.
+
+Das klingt alles etwas schwierig? Keine Sorge, das ist es nicht. Noch sind wir ja nicht soweit, wir greifen hier vor.
+ 
+# Die Anatomie einer Processing-Anwendung
+
+Die ganze Infrastruktur und Logik einer Processing-Anwendung ist in der Klasse `PApplet` untergebracht. Ohne einen Import dieser Klasse ist nichts zu machen. Das englische Wort _applet_ heißt in der Informatik soviel wie "kleine Anwendung" oder "kleines Programm". Es gehört zu der Philosophie von Processing, mit wenig Programmcode und einfach zu verwendenden Mitteln eindrucksvolle graphische Kleinanwendung schreiben zu können.
+
+!!!
+    Die Doku zur Klasse `PApplet` schreckt auf den ersten Blick ganz schön ab. Ignorieren Sie die Java-Dokumentation gerne. Wenn Sie etwas fortgeschritten sind mit Ihrem Wissen, hier finden Sie die Details:
+
+    http://processing.github.io/processing-javadocs/core/processing/core/PApplet.html
+
+Wenn man eine eigene Processing-Anwendung schreiben möchte, erweitert (`extends`) man schlicht die Klasse `PApplet`. Eine Instanz von `PApplet` läuft in einem eigenen Thread. Alle auftretenden Ereignisse (_events_) wie z.B. Bewegungen der Maus oder Mausklicks werden vom Event Dispatch Thread (EDT) behandelt. Diese Infrastruktur wird vollständig durch `PApplet` geliefert.
+
+~~~ java
+import processing.core.PApplet;
+
+public class MySketch extends PApplet {
+    // Hier kommen Implementierungen einiger Methoden dazu
+}
+~~~
+
+Der Name der abgeleiteten Klasse, hier `MySketch`, erscheint als Name des Fensters der Processing-Anwendung.
+
+## Grundlegende Methoden von `PApplet`
+
+Ein paar Methoden sind essenziell für eine Anwendung mit Processing. Ihre Aufgabe ist es, Implementierung für diese Methoden zu liefern, d.h. den Methodenrumpf für die Methoden in Ihrem Processing-Programm auszuprogrammieren.
+
+### `public static void main()`
+
+Keine Java-Anwendung ohne eine Klasse mit einer Klassenmethode namens `main`. Entscheidend ist der Aufruf der Applikation mit `runSketch`.
+
+`public static void runSketch(String[] args, PApplet sketch)`
+:   Startet die Instanz von `PApplet` (die "Programmskizze" `sketch`) und übergibt ihr die Argumente `args`. Der Name der abgeleiteten Klasse, hier `MySketch`, erscheint als Anwendungsname oben im Fenster der Processing-Anwendung.
+
+Eine Standard-Implementierung der `main`-Methode sieht wie folgt aus:
+
+~~~ java 
+public class MySketch extends PApplet {
+    public static void main(String[] args) {
+        String[] appArgs = {"Grab Ball"};
+		MySketch mySketch = new MySketch();
+		PApplet.runSketch(appArgs, mySketch);
+    }
+}
+~~~
+
+Die an `main` übergebenen Argumente kann man selbstverständlich an `runSketch` übergeben, was jedoch nur Sinn macht, wenn die Angabe der Argumente zum Start der Anwendung notwendige Pflicht ist -- ein durchgereichtes `args` an `runSketch` ohne Argumentwerte erzeugt ansonsten einen Abbruch des Anwendungsstarts. Die an `runSketch` übergebenen Argumente sind mit über die Variable `args` abrufbar.
+
+Man kann die `main`-Methode auch ein wenig kürzer halten und auf einen Einzeiler beschränken. Ich empfehle Ihnen, damit zu arbeiten.
+
+~~~ java 
+public class MySketch extends PApplet {
+    public static void main(String[] args) {
+		PApplet.runSketch(new String[]{""}, new MySketch());
+    }
+}
+~~~
+
+### `public void settings()`
+
+Diese Methode brauchen Sie praktisch immer, um darin die Methode `size` oder `fullscreen` und eventuell `smooth` aufzurufen. Wenn Sie `settings` nicht nutzen, um `size` aufzurufen, wird eine relativ kleine und meist unbrauchbare Fenstergröße für Sie aufgesetzt.
+
+`public void size(int width, int height)`
+:   Mit dem Aufruf dieser Methode konfigurieren Sie die Größe des Anwendungsfensters in Pixeln. Wenn Sie `size` nicht aufrufen, hat das Fenster die Standardgröße von $100\times 100$ Pixeln.
+
+`public void fullscreen()`
+:   Dieser Aufruf konfiguriert die Anwendung im Vollbildschirm-Modus.
+
+`public void smooth(int level)`
+:   Damit können Sie den Grad der Kantenglättung für Zeichenbefehle festlegen; man nennt das [Antialiasing]("https://de.wikipedia.org/wiki/Antialiasing_(Computergrafik)"). Erlaubte Werte für `level` sind `2`, `3`, `4` oder `8`.
+
+
+### `public void setup()`
+
+Die `setup`-Methode wird einmal zu Beginn aufgerufen. Mit ihr kann man initiale Konfigurationen vornehmen oder Anfangsaufgaben erledigen.
+
+!!! Warning
+    Die Methode `setup` niemals selber aufrufen, Processing kümmert sich darum.
+
+`public void frameRate(float fps)`
+:   Die Bildwiederholungsrate (_frames per second_, fps) setzen Sie mit dieser Methode. Wenn die `draw`-Methode zuviel Rechenzeit verbraucht, kann die Wiederholungsrate natürlich nicht eingehalten werden. Es hängt von der Leistungsfähigkeit Ihres Rechners ab, was möglich ist.
+
+### `public void draw()`
+
+Diese Methode wird automatisch unmittelbar nach `setup()` aufgerufen. Sie wird von da an regelmäßig mehrfach pro Sekunde neu aufgerufen, in der Grundeinstellung 60 Mal die Sekunde. Sie können den Wert mit `frameRate()` ändern. Die Methode `draw` ist der Dreh- und Angelpunkt der Animationsfähigkeit von Processing, sie stellt die Animationsschleife. Aus diesem Grund findet sich meist ein Aufruf von `background()` am Anfang des Methodenrumpfs von `draw`, um das Animationsfenster zu "löschen" und neu zu zeichnen. Am Ende von `draw` aktualisiert Processing den Bildschirm.
+
+Falls nötig kann mit `noLoop()` die kontinuierliche Ausführung von `draw` beendet werden; `redraw()` erlaubt dann die einmalige Ausführung von `draw`, `loop()` setzt die kontinuierliche Ausführung von `draw` fort.
+
+!!! Warning
+    Die Methode `draw` niemals selber direkt aufrufen! Processing (bzw. `PApplet`) verwaltet das Handling selber und erlaubt Ihnen mit `noLoop()`, `redraw()` und `loop()` den Umgang mit `draw` zu beeinflussen.
+
+Ohne den Aufruf von `draw()` werden keine Events verarbeitet. Die `draw`-Methode sollte in Ihrem Programm immer vorhanden sein, eventuell eben mit einem leeren Methodenrumpf.
+
+## Beispiel: Ein "Malprogramm"
+
+Das folgende Beispiel realisiert ein überaus einfaches Mailprogramm. Jede der vorgestellten Methoden enthält nur eine Codezeile zur Implementierung. In `settings` wird die Größe des Anwendungsfensters gesetzt, im `setup` wird der Hintergrund auf die Farbe Schwarz eingestellt und `draw` zeichnet eine Ellipse, dort wo sich die Maus befindet. Da sich die Werte der Ellipsenachsen gleichen, ist ein Kreis zu sehen.
+
+~~~ java
+import processing.core.PApplet;
+
+public class MySketch extends PApplet {
+    public static void main(String[] args) {
+		PApplet.runSketch(new String[]{""}, new MySketch());
+    }
+
+    public void settings() {
+        size(600,600);
+    }
+
+    public void setup() { 
+        background(0);
+    }
+
+    public void draw() {
+        ellipse(mouseX,mouseY,20,20);
+    }
+}
+~~~
+
+Je schneller man die Maus bewegt, desto weiter liegen die Kreise auseinander. Das liegt an der Wiederholungsrate des Aufrufs der Methode `draw`.
+
+![Einfacher geht's kaum: ein simples "Malprogramm"](pics/SimplePaint.png width="50%")
+
+Das kleine Programm ist ein schönes Beispiel, wie einfach eine Anwendung mit Processing umgesetzt ist. Sie ist interaktiv, ohne dass es dazu viel Code bedurft hätte.
+
+# Mit geometrischen Formen zeichnen
+
+Ein bestimmte Klasse von Animationen lebt davon, mit jedem Aufruf der `draw`-Methode das Zeichenfenster mittels `background` einzufärben, um dann auf dieser Hintergrundfarbe das Zeichenfenster neu zu gestalten. Fügen Sie im letzten Beispielprogramm ein `background(0)` vor `ellipse` ein und Sie werden sehen, wie das das "Malprogramm" komplett verändert: Jetzt folgt ein Kreis ihrer Maus.
+
+## Das Koordinatensystem
+
+Die Zeichenfläche in Processing setzt sich aus einem Raster an Pixeln (Bildpunkten) zusammen. Der Bildpunkt ganz links oben in der Ecke ist der Punkt mit den Koordinaten $(0, 0)$, d.h. mit dem Wert 0 für die $x$-Koordinate (horizontale Ausrichtung) und dem Wert 0 für die $y$-Koordinate (vertikale Ausrichtung). Wie das so üblich ist in der Informatik, beginnt die Adressierung mit dem Index 0. Das nachstehende Bild veranschaulicht die Adressierung der Bildpunkte über die Bildfläche.
+
+*************************************************************************************************
+*          x  ---->
+*
+*          0   1   2   3   4   ..
+*        .---+---+---+---+---+--   
+*  y   0 |   |   |   |   |   |  
+*        +---+---+---+---+---+--   
+*  |   1 |   |   |   | ▉ |   |   
+*  |     +---+---+---+---+---+--  
+*  v   2 |   |   |   |   |   |  
+*        +---+---+---+---+---+--
+*      3 |   |   |   |   |   |  
+*        +---+---+---+---+---+--  
+*      4 |   |   |   |   |   |  
+*        +---+---+---+---+---+--   
+*      : |   |   |   |   |   |  
+*                              
+*************************************************************************************************
+
+Jeder Bildpunkt hat eine Farbe. Im Bildbeispiel sind alle Pixel weiß, nur der Pixel $(3,1)$ ist von schwarzer Farbe.
+
+Die Größe der Bildfläche setzt man in der Methode `settings` mit dem Aufruf der Methode `size`. Anschließend sind die Werte für die Breite (_width_) und die Höhe (_height_) über die Variablen `width` und `height` abrufbar. Wenn `width` zum Beispiel auf 400 gesetzt ist, dann liegen die sichtbar adressierbaren Pixel im Bereich von 0 bis 399 -- das sind genau 400 Bildpunkte.
+
+`public int width`<br>`public int height`
+: Die Anzahl der Bildpunkte, die die Breite bzw. Höhe des Anzeigebereichs ausmachen.
+
+Adressiert man Bildpunkte außerhalb des sichtbaren Bereichs, so ist das an sich unproblematisch. Zum Beispiel kann eine Zeichenanweisung (wie z.B. `ellipse`) außerhalb des sichtbaren Bereichs positioniert werden. Dennoch sieht man all die Anteile der Ellipse, die im sichtbaren Bereich liegen.
+
+## Variablen mit Ergebnissen der Interaktion
+
+Einer Anwendung ist leicht interaktives Leben eingehaucht, weil jeder automatische Aufruf der Methode `draw` einige der folgenden Variablenwerte setzt.
+
+`public int mouseX`<br>`public int mouseX`
+: Die aktuelle horizontale und vertikale Pixelposition der Maus im Anzeigebereich.
+
+
+`public int pmouseX`<br>`public int pmouseX`
+: Die vorhergehende (_previous_) horizontale und vertikale Pixelposition der Maus.
+
+`public boolean mousePressed`<br>`public int mouseButton`
+: Wenn eine Maustaste gedrückt ist, dann hat `mousePressed` den Wert `true`, ansonsten `false`. Die gedrückte Maustaste kennt `mouseButton`, der Wert ist entweder `LEFT`, `CENTER` oder `RIGHT`.
+
+`public char key`<br> `public int keyCode`
+: Das Zeichen der zuletzt gedrückten Taste. Wenn `key` den Wert `CODED` enthält (`if (key == CODED) ...`) handelt es sich um Steuertasten, dann enthält `keyCode` den Tastenwert wie z.B. `UP`, `DOWN`, `LEFT`, `RIGHT`, `ALT`, `CONTROL` und `SHIFT`.
+
+# Refactoring
+
+Was Processing so verführerisch einfach macht, ist eben seine Nicht-Objektorientierung im Umgang. Sie haben eine Vielzahl von Methoden zur Verfügung, die Effekte auf der Zeichenfläche bewirken. (Das sieht man daran, dass all diese Methoden keine Rückgabe haben und vom "Typ" `void` sind.) Die Kunst ist, die Methoden mit den richtigen Parametern in der richtigen Reihenfolge aufzurufen. Das einzige, was Sie irgendwie hinbekommen müssen, ist, den Zustand ihrer Anwendung in irgendeiner Form abzubilden. Für einfache Anwendungen reichen ein paar Variablen.
+
+Das wird in vielen anderen graphischen Umgebungen ganz anders gemacht. Statt direkt auf der Zeichenfläche zu "malen", konfigurieren Sie sich eine Zeichenwelt aus Zeichenobjekten, die Sie teils gruppieren und schichten können. Im Hintergrund wird diese Zeichenwelt für Sie automatisch "gemalt". Sie brauchen nur in ihrer Zeichenwelt zu sagen, dass z.B. das Kreisobjekt nun rot sei -- und sogleich wird die graphische Anzeige daraufhin aktualisiert.
+
+
+
+<!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
