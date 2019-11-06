@@ -706,8 +706,6 @@ Im Kern geht es darum, ob man ein Objekt als _mutabel_ (veränderlich) oder _imm
 
 Traditionell versteht sich die Objektorientierung als Veränderlichkeitserzählung: Objekte können die Werte ihrer Instanzvariablen ändern. Man sagt, ein Objekt hat einen Zustand. Unter dem Zustand sind -- formal gesprochen -- all die Werte derjenigen Instanzvariablen gemeint, die nicht ableitbar sind (heißt: nicht berechenbar aus anderen Werten) und die sich über die Zeit ändern können. Die traditionelle Veränderlichkeitserzählung deklariert die Methoden, die den Zustand eines Objekts ändern, typischerweise als `void`. Eine Methode, die `void` als Rückgabetyp hat, muss einen (Seiten)Effekt haben. Ein häufiger Effekt ist die Änderung des Zustands eines Objekts.
 
-(Aus Gründen der Übersicht habe ich im nachstehenden Code die Methode `negiere` weggelassen.)
-
 ~~~ java 
 class Zahl {
     int value;
