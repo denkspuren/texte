@@ -706,8 +706,6 @@ Im Kern geht es darum, ob man ein Objekt als _mutabel_ (veränderlich) oder _imm
 
 Traditionell versteht sich die Objektorientierung als Veränderlichkeitserzählung: Objekte können die Werte ihrer Instanzvariablen ändern. Man sagt, ein Objekt hat einen Zustand. Unter dem Zustand sind -- formal gesprochen -- all die Werte derjenigen Instanzvariablen gemeint, die nicht ableitbar sind (heißt: nicht berechenbar aus anderen Werten) und die sich über die Zeit ändern können. Die traditionelle Veränderlichkeitserzählung deklariert die Methoden, die den Zustand eines Objekts ändern, typischerweise als `void`. Eine Methode, die `void` als Rückgabetyp hat, muss einen (Seiten)Effekt haben. Ein häufiger Effekt ist die Änderung des Zustands eines Objekts.
 
-(Aus Gründen der Übersicht habe ich im nachstehenden Code die Methode `negiere` weggelassen.)
-
 ~~~ java 
 class Zahl {
     int value;
@@ -850,10 +848,6 @@ Bei der Implementierung von `addiere` als Klassenmethode bringt die Klasse zwei 
     Gehen Sie als Anfänger:in in der Programmierung bitte sehr sparsam mit Klassenmethoden um. Noch deutlicher: Vermeiden Sie sie schlicht, da Sie objektorientiert, d.h. mit Instanzmethoden arbeiten sollen. Sonst trainieren Sie die Objektdenke nicht.
 </details>
 
-
-
-
-
 ## Mittwoch
 
 **Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
@@ -862,7 +856,6 @@ Bei der Implementierung von `addiere` als Klassenmethode bringt die Klasse zwei 
 
 !!! WARNING
     Zur Erinnerung: Der Dienstagstermin entfällt diese Woche.
-
 
 # Gruppenarbeit und Delegiertentreffen
 
