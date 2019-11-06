@@ -850,19 +850,202 @@ Bei der Implementierung von `addiere` als Klassenmethode bringt die Klasse zwei 
     Gehen Sie als Anfänger:in in der Programmierung bitte sehr sparsam mit Klassenmethoden um. Noch deutlicher: Vermeiden Sie sie schlicht, da Sie objektorientiert, d.h. mit Instanzmethoden arbeiten sollen. Sonst trainieren Sie die Objektdenke nicht.
 </details>
 
-
-
-
-
 ## Mittwoch
 
-**Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
+**Array**: Gegeben sei die folgende Folge von Anweisungen:
+
+~~~ text 
+int[] a = {1,2,3,4};
+int[] b = a;
+b[3] = 17;
+~~~
+
+Welchen Wert hat `a`?
+
+-[ ] `3`
+-[ ] `{1,2,3,4}`
+-[ ] `{1,2,17,4}`
+-[ ] `{1,2,3,17}`
+-[ ] `17`
+-[ ] `b`
+
+**Nibble**: Eine Folge von vier Bits nennt man Nibble. Schreiben Sie eine Klasse `Nibble`, die ihre vier Bits in einer Variablen namens `bits` durch ein Array aus vier Ganzzahlen repräsentiert; jede dieser Ganzzahlen hat entweder den Wert 0 oder 1. Ein Hinweis: `bits[0]` repräsentiere das _Most Significant Bit_ (MSB), `bits[3]` das _Least Significant Bit_ (LSB).
+
+1. Implementieren Sie die Konstruktoren und eine `toString`-Methode, so dass die folgenden Verwendungen möglich sind:
+
+~~~ text
+jshell> Nibble n = new Nibble(new int[]{1,0,0,1})
+n ==> Nibble("1001")
+
+jshell> n = new Nibble("1101")
+n ==> Nibble("1101")
+
+jshell> n = new Nibble(new Nibble("0011"))
+n ==> Nibble("0011")
+~~~
+
+2. Realisieren Sie die binäre Addition und die binäre Invertierung. (Klären Sie zuvor, welcher Programmierstil vorliegt!)
+
+~~~ text
+jshell> n = new Nibble("0110")
+n ==> Nibble("0110")
+
+jshell> n.add(new Nibble("0011"))
+
+jshell> n
+n ==> Nibble("1001")
+
+jshell> n.inv()
+
+jshell> n
+n ==> Nibble("0110")
+~~~
+
+3. Das Zweierkomplement (_two's complement_) ist definiert als Invertierung und Addition mit Eins. Setzen Sie die Methode um. (Die zweifache Anwendung des Zweierkomplements führt zum Ausgangswert zurück, siehe Beispiel.)
+
+~~~ text
+jshell> n
+n ==> Nibble("0110")
+
+jshell> n.twosComplement()
+
+jshell> n
+n ==> Nibble("1010")
+
+jshell> n.twosComplement()
+
+jshell> n
+n ==> Nibble("0110")
+~~~
+
+4. Die binäre Subtraktion lässt sich zurückführen auf die Addition. Der übergebene Wert wird zuvor über das Zweierkomplement "negiert" und kann dann addiert werden.
+
+~~~ text
+jshell> n
+n ==> Nibble("0100")
+
+jshell> n.sub(new Nibble("0011"))
+
+jshell> n
+n ==> Nibble("0001")
+~~~
+
+5. Gegen Sie den über das Nibble kodierten dezimalen Zahlenwert einmal als natürliche Zahl, einmal als Ganzzahl zurück.
+
+~~~ text
+jshell> new Nibble("0101").toNatNum()
+$54 ==> 5
+
+jshell> new Nibble("0101").toIntNum()
+$55 ==> 5
+
+jshell> new Nibble("1101").toNatNum()
+$56 ==> 13
+
+jshell> new Nibble("1101").toIntNum()
+$57 ==> -3
+~~~
+
+!!! 
+    Ihre Hausaufgabe: Schreiben Sie den Code so um, dass die `Nibble`-Objekte immutabel sind.
+
+<details>
+    <summary>Lösung: Nibble</summary>
+Ich verwende die `assert`-Anweisung einerseits um auszudrücken, dass der Code bestimmte Erwartungen hat, um funktionsfähig zu sein. Zum anderen verwende ich `assert`-Anweisungen am Ende zum Testen des Code. Normalerweise ignoriert Java `assert`-Anweisungen. Um sie zu aktivieren, müssen Sie die JShell starten mit `jshell -R-ea`; das `-ea` ist eine Compiler-Option und ist eine Abkürzung für _enable assertions_, "aktiviere die `assert`-Anweisungen".
+
+~~~ java
+class Nibble {
+    int[] bits = {0, 0, 0, 0}; // MSB ... LSB
+    Nibble(int[] bits) {
+        assert bits != null && bits.length == this.bits.length;
+        for(int i = 0; i < this.bits.length; i++) 
+            this.bits[i] = bits[i] == 0 ? 0 : 1;
+    }
+    Nibble(String s) {
+        assert s != null && s.length() >= this.bits.length;
+        for(int i = 0; i < bits.length; i++)
+            bits[i] = s.charAt(i) == '0' ? 0 : 1;
+    }
+    Nibble(Nibble n) {
+        for(int i = 0; i < bits.length; i++) bits[i] = n.bits[i];
+    }
+    int add(Nibble n, int carry) {
+        assert carry == 0 || carry == 1;
+        int sum = 0;
+        for(int i = bits.length - 1; i >= 0; i--) {
+            sum = bits[i] + n.bits[i] + carry;
+            bits[i] = sum % 2;
+            carry = sum / 2;
+        }
+        return carry;
+    }
+    void add(Nibble n) {
+        add(n, 0);
+    }
+    void inv() { // invert
+        for(int i = 0; i < bits.length; i++)
+            bits[i] = 1 - bits[i];
+    }
+    void twosComplement() {
+        inv();
+        add(new Nibble("0001"));
+    }
+    void sub(Nibble n) {
+        Nibble temp = new Nibble(n);
+        temp.twosComplement();
+        add(temp);
+    }
+    int toNatNum() {
+        int base = 1;
+        int sum = 0;
+        for(int i = bits.length - 1; i >= 0; i--) {
+            sum += base * bits[i];
+            base *= 2;
+        }
+        return sum;
+    }
+    int toIntNum() {
+        /* Alternative:
+        int nat = toNatNum();
+        return -8 * (nat / 8) + nat % 8;
+        */
+        int nat = toNatNum();
+        return nat <= 7 ? nat : -16 + nat;
+    }
+    public String toString() {
+        String s = "Nibble(\"";
+        for(int bit : bits) s += bit;
+        return s + "\")"; 
+    }
+}
+
+assert new Nibble("0000").toIntNum() == 0;
+assert new Nibble("0001").toIntNum() == 1;
+assert new Nibble("0010").toIntNum() == 2;
+assert new Nibble("0011").toIntNum() == 3;
+assert new Nibble("0100").toIntNum() == 4;
+assert new Nibble("0101").toIntNum() == 5;
+assert new Nibble("0110").toIntNum() == 6;
+assert new Nibble("0111").toIntNum() == 7;
+assert new Nibble("1000").toIntNum() == -8;
+assert new Nibble("1001").toIntNum() == -7;
+assert new Nibble("1010").toIntNum() == -6;
+assert new Nibble("1011").toIntNum() == -5;
+assert new Nibble("1100").toIntNum() == -4;
+assert new Nibble("1101").toIntNum() == -3;
+assert new Nibble("1110").toIntNum() == -2;
+assert new Nibble("1111").toIntNum() == -1;
+~~~
+</details>
 
 # VW6
 
 !!! WARNING
     Zur Erinnerung: Der Dienstagstermin entfällt diese Woche.
 
+## Mittwoch
+
+**Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
 
 # Gruppenarbeit und Delegiertentreffen
 
