@@ -1048,6 +1048,81 @@ Ich informiere Sie noch kurz über Moodle und Slack.
 
 # VW7
 
+**Identität und Gleichheit**: Gegeben sei die folgende Klasse namens `Point`:
+
+~~~ java
+class Point {
+    double x, y;
+    Point(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+~~~
+
+Erklären Sie anhand der Beispielklasse, was es bedeutet, wenn zwei Instanzen der Klasse `Point` identisch sind! Und was bedeutet es, wenn sie gleich sind?
+
+**Trinkflasche**: Eine Flasche (_bottle_) kann ein bestimmtes Volumen haben. Eine Flasche kann man befüllen, man kann auch einen Teil ihres Inhalts oder den gesamten Inhalt ausschütten. Außerdem ist eine Flasche mit einem Deckel verschließbar. Ihre Aufgabe ist es, die Flasche, ihre Eigenschaften und das, was man mit ihr tun kann, in Form eines Java-Programms zu modellieren und abzubilden. 
+
+<details>
+    <summary>Lösung: Identität und Gleichheit</summary>
+Es gibt in den Java den `instanceof`-Operator, um festzustellen, ob ein Objekt eine Instanz einer Klasse ist.
+
+!!! Tip
+    Der `instanceof`-Operator wird typischerweise in Implementierungen der `equals`-Methode benötigt. Wenn Sie außerhalb von `equals` den `instanceof`-Operator benötigen, dann haben Sie in 99,9% der Fälle ihren Code nicht objektorientiert organisiert, sondern versuchen, Objektorientierung nachzubilden. Der Witz an OO ist, dass Sie vor allem die Methoden mit einem Typ (einer Klasse oder einem Interface) verknüpfen, dass abhängig vom Typ die entsprechende Instanzvariable bzw. Instanzmethode ausgewählt wird. Wenn Sie aktiv den Typ testen, um daran das Verhalten des Code auszurichten, rüsten Sie manuell nach, was Ihnen die Objektorientierung "schenkt".
+
+~~~ text
+jshell> class K {}
+|  created class K
+
+jshell> K k = new K()
+k ==> K@458c1321
+
+jshell> k instanceof K
+$54 ==> true
+
+jshell> null instanceof K
+$55 ==> false
+~~~
+
+Der Wert `null` ist keine Instanz irgendeiner Klasse.
+
+Ganz viel von dem Denken in Objekten als Instanzen von Klassen lässt sich auf die [Mengenlehre](https://de.wikipedia.org/wiki/Mengenlehre) zurückführen -- jedenfalls ist das eine sehr gute Annäherung an die formale Betrachtung von Objekten und Klassen. Klassen entsprechen in dem Sinn den Mengen und Objekte entsprechen als Instanzen einer Klasse den Elementen der Menge, die durch die Klasse abgebildet wird.
+
+[Reflexivität](https://de.wikipedia.org/wiki/Reflexive_Relation)
+: Für alle Instanzen `obj` der Klasse `K` gilt: `obj.equals(obj) == true` (`obj != null`)
+
+
+Wichtige Quellen zu `equals`:
+
+* Kapitel 9.3.1 ("Objektgleichheit mit equals(…) und Identität") aus "Java ist auf eine Insel": http://openbook.rheinwerk-verlag.de/javainsel/09_001.html#u9.1.3
+* Die Dokumentation zu `equals` der Klasse `Object`: https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)
+* Die Dokumentation zu `hashCode` der Klasse `Object`: https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#hashCode()
+
+
+</details>
+
+
+<details>
+    <summary>Lösung: Trinkflasche</summary>
+Wenn Sie so eine Aufgabe lesen und ich von der Modellierung spreche, dann fordert Sie das heraus, Entscheidungen zu treffen darüber, in welcher Art und Weise die Flasche eine Funktion oder Aufgabe in welchem Art von Weltausschnitt für welchen Zweck erfüllt. Es ist alles andere als trivial, sich die folgenden Gedanken zu machen, um sich einer bestimmten Modellvorstellung von einer Flasche zu nähern: 
+
+* Welche Funktion hat eine Trinkflasche? -- Sie dient der Aufbewahrung und dem Transport von Flüssigkeiten. Das ist nicht notwendigerweise die einzig mögliche Verwendungszweck einer Flasche. Man kann darin auch einen Zettel unterbringen und als Flaschenpost auf Reisen schicken. Oder man bewahrt Sand oder ein Gewürz darin auf. Sie kennen aber auch z.B. die Gasflasche. Die Aufgabe verengt die Perspektive auf eine Flasche eines eigentlich unklaren Typs und betrachtet sie für einen bestimmten Zweck und schreibt ihr eine klar umschriebene Verwendung zu. 
+* Welche Funktion hat der Deckel einer Trinkflasche? -- Er sorgt dafür, dass Aufbewahrung und Transport verlustfrei geschehen können: Die Flüssigkeit kann weder verdunsten noch auflaufen. Wir gehen in der Aufgabe automatisch davon aus, dass ein Deckel immer passt und seine Funktion als Verschluss tadellos erfüllt.
+* Was ist der Grund, bei einer Flasche ihr Volumen anzugeben? -- Das Volumen gibt das Fassungsvermögen der Flasche an. Die Volumenangabe dient oft auch als Abstraktion von der Form. Zwar haben wir alle eine Vorstellung davon, wie eine "Flasche" aussieht, doch ist uns in dieser Aufgabe weder die Form, noch das Material, noch ihre Farbe wichtig. Der Begriff der Reduktion ist hier also so gemeint, dass wir uns loslösen von materiellen Eigenschaften und die Flasche lediglich im Aspekt ihrer Funktion der Aufnahme einer Flüssigkeit betrachten. In Informatikmodellen und in Programmiercode vernichten wir oft sogar gänzlich unbewusst bestimmte Informationen über die Welt und arbeiten teils mit extrem vereinfachten Vorstellungsmodellen.
+* Was kommt in die Flasche hinein? -- Was die Volumenangabe nicht "wegdenkt", ist die Art des Inhalts. Das gilt auch dann, wenn man sich nur auf Flüssigkeiten beschränkt: Geht es um Wasser, Cola, Öl, Farbe? Wenn man den Anteil des genutzten Flaschenvolumens mit einer Zahl abbildet, dann drückt sich darin aus, wie groß der Anteil der verbrauchten Kapazität der Flasche ist -- unabhängig vom konkreten Inhalt. Das ist wieder eine Reduktion, die bemerkenswert ist.
+
+Diese Fragen zum Verständnis einer Flache sind das eine. Das andere ist der Kontext, in dem wir eine Flasche sehen: Welche Anteile der Umwelt interagieren wie mit der Flasche? Die Aufgabenstellung deutet es an: Es gibt die Handlung, die Flasche zu befüllen (_fill_, _pour in_), und die Handlung, etwas mit der Flasche auszugießen oder auszuschenken (_pour out_). Die Annahme in der Objektorientierung ist, dass diese Handlungen derart gekoppelt sind an eine Flasche, dass man die Flasche zum Kontext der Handlung macht (sie ist sowas wie ein Bezugspunkt der Handlung), d.h. `pourIn` und `pourOut` betrachtet man als Methoden der Klasse Flasche, also `Bottle`.
+</details>
+
+
+
+
+
+
+
+# Ablage und Verschiebebahnhof
+
 **Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
 
 # Gruppenarbeit und Delegiertentreffen
