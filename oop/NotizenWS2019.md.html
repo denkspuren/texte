@@ -1048,6 +1048,8 @@ Ich informiere Sie noch kurz über Moodle und Slack.
 
 # VW7
 
+## Dienstag
+
 **Identität und Gleichheit**: Gegeben sei die folgende Klasse namens `Point`:
 
 ~~~ java
@@ -1115,6 +1117,19 @@ Wenn Sie so eine Aufgabe lesen und ich von der Modellierung spreche, dann forder
 Diese Fragen zum Verständnis einer Flache sind das eine. Das andere ist der Kontext, in dem wir eine Flasche sehen: Welche Anteile der Umwelt interagieren wie mit der Flasche? Die Aufgabenstellung deutet es an: Es gibt die Handlung, die Flasche zu befüllen (_fill_, _pour in_), und die Handlung, etwas mit der Flasche auszugießen oder auszuschenken (_pour out_). Die Annahme in der Objektorientierung ist, dass diese Handlungen derart gekoppelt sind an eine Flasche, dass man die Flasche zum Kontext der Handlung macht (sie ist sowas wie ein Bezugspunkt der Handlung), d.h. `pourIn` und `pourOut` betrachtet man als Methoden der Klasse Flasche, also `Bottle`.
 </details>
 
+## Mittwoch
+
+**Datum**: Erstellen Sie eine Klasse `Date`, um Datumsangaben zu repräsentieren. Der Konstruktor erfordert zur Initialisierung die Angabe des Jahrs (_year_), des Monats (_month_), des Tags (_day_) und des Wochentags (_weekday_); der Wochentag ist als Aufzählungstyp realisiert mit den Werten `MO` bis `SU` (englisch abgekürzt auf zwei Buchstaben).
+
+Es gilt folgende Methoden zu implementieren:
+
+* `boolean isLeapYear()` -- Ermittelt, ob das gegebene Jahr ein Schaltjahr ist (`true`) oder nicht (`false`).
+* `Date nextDay()` -- Gibt eine `Date`-Instanz vom Folgetag zurück.
+* `Date previousDay()` -- Gibt eine `Date`-Instanz vom Vortag zurück.
+* `int compareTo(Date date)` -- Gibt `+1` zurück, wenn `date` größer ist (d.h. in einer Abfolge von Folgetagen zu finden wäre), `0`, wenn die Daten gleich sind und `-1`, wenn `date` kleiner ist (d.h. in einer Abfolge von Vortagen zu finden wäre).
+* `int difference(Date date)` -- Gibt die Anzahl der Tage an, die `date` größer ist (positiver Rückgabewert) bzw. die Anzahl der Tage, die `date` kleiner ist (negativer Rückgabewert). Sind die Tage gleich, ist der Unterschied in Tagen `0`. Implementieren Sie die Methode als Suche: Sie iterieren so lange in die Zukunft (`nextDay`) bzw. in die Vergangenheit `previousDay`, bis `date` erreicht ist ist zählen dabei die Iterationsschritte.
+
+Für diese Aufgabe verwenden Sie Ihren Rechner und nutzen alle nötigen Hilfsmittel, die Sie brauchen, um die Aufgabe zu lösen.
 
 
 
