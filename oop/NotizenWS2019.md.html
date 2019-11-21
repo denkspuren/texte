@@ -1288,7 +1288,44 @@ assert today.compareTo(today.add(100_000).add(-100_000)) == 0;
 assert Date.of(2019,11,21).getWeekday() == Weekday.THU;
 ~~~
 
-Lassen Sie uns kurz aufzählen, was hier alles an Können und an Sprachkonstrukten vorkommt, das zu Ihrem Skillset gehören sollte -- die oben erwähnten Neuigkeiten lasse ich hier außen vor: Die Modulo-Arithmetik ist ein immer wiederkehrendes Thema; Enumerationen; `assert`; Arrays; `if`; Trick, ein Datum als Zahl zu kodieren, um rasch eine Entscheidung für `compareTo` herbeizuführen (wieder ist die Modulo-Rechnung sehr hilfreich); Programmierung im Stil der "Unveränderlichkeitserzählung"; eine `for`-Schleife mit `Date d` als Laufvariable; eine `while`-Schleife; `String.format`.  
+Lassen Sie uns kurz aufzählen, was hier alles an Können und an Sprachkonstrukten vorkommt, das zu Ihrem Skillset gehören sollte -- die oben erwähnten Neuigkeiten lasse ich hier außen vor: Die Modulo-Arithmetik ist ein immer wiederkehrendes Thema; Enumerationen; `assert`; Arrays; `if`; Trick, ein Datum als Zahl zu kodieren, um rasch eine Entscheidung für `compareTo` herbeizuführen (wieder ist die Modulo-Rechnung sehr hilfreich); Programmierung im Stil der "Unveränderlichkeitserzählung"; eine `for`-Schleife mit `Date d` als Laufvariable; eine `while`-Schleife; `String.format`.
+
+Mit diesem Code können Sie einige nette Fragen beantworten:
+
+* Welcher Wochentag fällt auf Neujahr?
+
+    ~~~ text
+    jshell> Date.of(2020,1,1).getWeekday()
+    $713 ==> WED
+    ~~~
+
+* In 10 Tagen ist eine Deadline: Welcher Tag ist das?
+
+    ~~~ text
+    jshell> Date.of(2020,11,21).add(10)
+    $714 ==> 2020-12-01 (TUE)
+    ~~~
+
+* Sie planen einen Urlaub im nächsten Sommer vom 10. Juni bis zum 14. Juli. Wieviele Tage sind das?
+
+    ~~~ text
+    jshell> Date.of(20200610).difference(Date.of(20200714))
+    $715 ==> 34
+    ~~~
+
+* Angenommen, es wäre sinnvoll diese Frage zu stellen: Was für ein Tag war der 1. Januar im Jahr 0?
+
+    ~~~ text
+    jshell> Date.of(0,1,1)
+    $716 ==> 0-01-01 (SAT)
+    ~~~
+
+Das hat schon einen gewissen Funfaktor, wie ich finde!
+
+!!!
+    Das Besondere an dem Code ist, dass Sie ein relativ einfaches Problem gelöst haben: Den Folge- bzw. Vortrag zu einem gegebenen Datum zu bestimmen. Wenn das geschafft ist, lassen sich anspruchsvollere Methoden mit Hilfe dieser Lösungen umsetzen -- es bedarf einzig Rechenkraft, um Schleifen der fortwährenden Ausführung von `nextDay` bzw. `previousDay` zügig abarbeiten zu können. Man kann selbstverständlich effizientere Lösungen umsetzen. Es gibt immer ein Spektrum an Umsetzungsmöglichkeiten, das von einer einfachen Lösung mit Rechenkraft reicht bis hin zur cleveren Lösungen, die effizient mit den Rechenressourcen umgehen. Oft braucht man die einfache Lösung, um eine bessere damit auf Herz und Nieren testen zu können.
+
+Manch einer von Ihnen mag den Code zur Bestimmung eines Folge- oder Vortags unglaublich kompliziert finden. Das stimmt, das ist es auch. Aber das Problem ist menschengemacht. Datumsangaben und Kalender sind eine Kulturerfindung. Dass wir unsere Uhren am höchsten Sonnenstand eines Tages und unsere Jahre an der Umlaufbahn der Erde um die Sonne ausrichten, das sind Entscheidungen, die Menschen getroffen haben, um ihre Lebenswirklichkeit an diesen physikalischen Naturphänomenen auszurichten. Und das erfordert Korrekturen, wie z.B. Schaltjahre. Der Code ist in gewisser Weise eine Reflektion kultureller Gegebenheiten. Und Sie als Informatikerin bzw. Informatiker müssen für solche Sachen z.B. die Modulo-Arithmetik beherrschen. So ist das nun einmal `;-)`.
 
 Finden Sie Fehler im Code? -- Falls ja, schreiben Sie mich auf Slack oder per Email an.
 </details>
