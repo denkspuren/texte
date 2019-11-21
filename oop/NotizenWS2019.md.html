@@ -1119,19 +1119,179 @@ Diese Fragen zum Verständnis einer Flache sind das eine. Das andere ist der Kon
 
 ## Mittwoch
 
-**Datum**: Erstellen Sie eine Klasse `Date`, um Datumsangaben zu repräsentieren. Der Konstruktor erfordert zur Initialisierung die Angabe des Jahrs (_year_), des Monats (_month_), des Tags (_day_) und des Wochentags (_weekday_); der Wochentag ist als Aufzählungstyp realisiert mit den Werten `MO` bis `SU` (englisch abgekürzt auf zwei Buchstaben).
+**Datum**: Erstellen Sie eine Klasse `Date`, um Datumsangaben zu repräsentieren. Der Konstruktor erfordert zur Initialisierung die Angabe des Jahrs (_year_), des Monats (_month_), des Tags (_day_) und des Wochentags (_weekday_); der Wochentag ist als Aufzählungstyp realisiert mit den Werten `MON` bis `SUN` (englisch abgekürzt auf drei Buchstaben).
+
+!!! WARNING
+    Ich habe die Aufgabe ein klein wenig überarbeitet. Das ist nur relevant, wenn Sie am Mittwoch, 20. Nov. 2019 in der OOP-Veranstaltung waren: Der Enumerationstyp hat Werte, die drei Buchstaben lang sind; `isLeapYear` ist `static`, `compareTo` habe ich angepasst von den Rückgabewerten an die Methode des Interfaces `Comparable`; die Methode `add` ist dazugekommen.
 
 Es gilt folgende Methoden zu implementieren:
 
-* `boolean isLeapYear()` -- Ermittelt, ob das gegebene Jahr ein Schaltjahr ist (`true`) oder nicht (`false`).
+* `static boolean isLeapYear()` -- Ermittelt, ob das gegebene Jahr ein Schaltjahr ist (`true`) oder nicht (`false`).
 * `Date nextDay()` -- Gibt eine `Date`-Instanz vom Folgetag zurück.
 * `Date previousDay()` -- Gibt eine `Date`-Instanz vom Vortag zurück.
-* `int compareTo(Date date)` -- Gibt `+1` zurück, wenn `date` größer ist (d.h. in einer Abfolge von Folgetagen zu finden wäre), `0`, wenn die Daten gleich sind und `-1`, wenn `date` kleiner ist (d.h. in einer Abfolge von Vortagen zu finden wäre).
-* `int difference(Date date)` -- Gibt die Anzahl der Tage an, die `date` größer ist (positiver Rückgabewert) bzw. die Anzahl der Tage, die `date` kleiner ist (negativer Rückgabewert). Sind die Tage gleich, ist der Unterschied in Tagen `0`. Implementieren Sie die Methode als Suche: Sie iterieren so lange in die Zukunft (`nextDay`) bzw. in die Vergangenheit `previousDay`, bis `date` erreicht ist ist zählen dabei die Iterationsschritte.
+* `int compareTo(Date date)` -- Gibt `-1` zurück, wenn `date` größer ist (d.h. in einer Abfolge von Folgetagen zu finden wäre), `0`, wenn die Daten gleich sind und `+1`, wenn `date` kleiner ist (d.h. in einer Abfolge von Vortagen zu finden wäre). (Wenn Sie von Ihren Kenntnissen soweit sind, dann lassen Sie die Klasse `Date` das Interface `Comparable` implementieren!)
+* `int difference(Date date)` -- Gibt die Anzahl der Tage an, die `date` größer ist (positiver Rückgabewert) bzw. die Anzahl der Tage, die `date` kleiner ist (negativer Rückgabewert). Sind die Tage gleich, ist der Unterschied in Tagen `0`. Implementieren Sie die Methode als Suche: Sie iterieren so lange in die Zukunft (`nextDay`) bzw. in die Vergangenheit `previousDay`, bis `date` erreicht ist; zählen Sie dabei die Anzahl der Iterationsschritte.
+* `Date add(int days)` -- Liefert den Nachfolger für `days > 0` bzw. den Vorgänger für `days < 0`, der die angegebene Anzahl an Tagen voraus bzw. zuvor liegt. Auch hier ist eine iterative Implementierung gefordert, die sich der Methoden `nextDay` bzw. `previousDay` bedient.
 
 Für diese Aufgabe verwenden Sie Ihren Rechner und nutzen alle nötigen Hilfsmittel, die Sie brauchen, um die Aufgabe zu lösen.
 
+<details>
+    <summary>Lösung: Datum</summary>
+Mich hat es bei der Programmierung der Musterlösung gepackt, die Lösung kann ein wenig mehr als gefordert. Bei mir gibt es z.B. die statische Methode `of`, mit der Sie ein Datum ohne Angabe Werktag instanziieren können. Der Werktag wird mit Bezug auf ein Referenzdatum erreichnet, ich habe dafür den 1.1.2000 gewählt, einen Samstag.
 
+~~~ text
+jshell> Date.of(2019,11,21).getWeekday()
+$712 ==> THU
+~~~
+
+Gleichen Sie Ihre Lösung mit der Musterlösung ab. Was habe ich anders gemacht? Was können Sie mit Blick auf die Musterlösung lernen? In der Musterlösung kommt unglaublich viel von dem vor, was wir und vor allem Sie sich selbst bislang so alles erarbeitet haben -- und ein wenig Neues lernen Sie auch dazu. Zum Beispiel kann man einer Enumeration auch Methoden verpassen und `values()` und `ordinal()` sind Methoden, die man braucht, wenn man mit den Enumerationswerten arbeiten möchte. Sie sehen in dem Code auch wie man Werte in einer Datenstruktur (hier das Array mit den Tagen pro Monat) abhängig von einer Bedingung berechnen kann, und Interface sind auch eine feine Sache. Manchmal machen statische Methoden Sinn, wie bei `isLeapYear` oder auch `daysPerMonth`, weil hier Berechnungen unabhängig von einer konkreten Instanz durchgeführt werden können, einzig die Jahresangabe ist interessant. (Aber denken Sie daran: Für statische Methoden müssen Sie sich ausdrücklich meine Erlaubnis einholen, wenn die Aufgabe Ihnen das nicht vorgibt ;-)
+
+~~~ java
+// Das ist neu für Sie: enums sind wie Klassen und können Methoden haben.
+// Damit werden enums zu einem mächtigen Werkzeug.
+enum Weekday { MON, TUE, WED, THU, FRI, SAT, SUN;
+    Weekday next() {
+        return Weekday.values()[(this.ordinal() + 1) % 7];
+    }
+    Weekday previous() {
+        return Weekday.values()[(this.ordinal() + 6) % 7];
+    }
+}
+
+class Date implements Comparable<Date> {
+    // https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Comparable.html
+    int year, month, day;
+    Weekday weekday;
+
+    static boolean isLeapYear(int year) {
+        assert year >= 0;
+        if (year % 4 == 0) {
+            if (year % 100 == 0)
+                return year % 400 == 0;
+            return true;
+        }   
+        return false;
+    }
+
+    static int[] daysPerMonth(int year) {
+        assert year >= 0;
+        return new int[]{31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30,
+                     31,                         31, 30, 31, 30, 31};
+    }
+
+    Date(int year, int month, int day, Weekday weekday) {
+        assert year >= 0;
+        assert month >= 1 && month <= 12;
+        assert day >= 1 && day <= 31;
+        if (month == 2) assert isLeapYear(year) ? day <= 29 : day <= 28;
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        this.weekday = weekday;
+    }
+    Date(int dateAsInt, Weekday weekday) {
+        this(dateAsInt / 10_000, dateAsInt / 100 % 100, dateAsInt % 100, weekday);
+    }
+
+    public static Date of(int year, int month, int day) {
+        Date dummy = new Date(year, month, day, Weekday.MON);
+        Date twothousand = new Date(2000, 1, 1, Weekday.SAT);
+        return twothousand.add(twothousand.difference(dummy));
+    }
+
+    public static Date of(int dateAsInt) {
+        return Date.of(dateAsInt / 10_000, dateAsInt / 100 % 100, dateAsInt % 100);
+    }
+
+    private int getDateAsInt() {
+        return year * 10_000 + month * 100 + day;
+    }
+    Weekday getWeekday() {
+        return weekday;
+    }
+    Date nextDay() {
+        int nextDay = day == daysPerMonth(year)[month - 1] ? 1 : day + 1;
+        int nextMonth = nextDay == 1 ? month % 12 + 1 : month;
+        int nextYear = nextDay == 1 && nextMonth == 1 ? year + 1 : year;
+        return new Date(nextYear, nextMonth, nextDay, weekday.next());
+    }
+    Date previousDay() {
+        int prevDay = day == 1 ? daysPerMonth(year)[(month - 1 + 11) % 12] : day - 1;
+        int prevMonth = day == 1 ? (month - 1 + 11) % 12 + 1 : month;
+        int prevYear = day == 1 && month == 1 ? year - 1 : year;
+        return new Date(prevYear, prevMonth, prevDay, weekday.previous());
+    }
+    public int compareTo(Date date) { 
+        return (int)Math.signum(this.getDateAsInt() - date.getDateAsInt());
+    }
+    int difference(Date date) {
+        int count = 0;
+        int direction = -this.compareTo(date);
+        for(Date d = this; date.compareTo(d) != 0; d = direction == 1 ? d.nextDay() : d.previousDay())
+            count++;
+        return direction * count;
+    }
+    Date add(int days) {
+        int direction = (int)Math.signum(days);
+        Date d = this;
+        while(days != 0) {
+            d = direction == 1 ? d.nextDay() : d.previousDay();
+            days -= direction; 
+        }
+        return d;
+    }
+    public String toString() {
+        return String.format("%d-%02d-%02d (%s)", year, month, day, weekday);
+    }
+}
+
+// Testing enum Weekday
+// Frage: Warum darf man Enum-Werte mit `==` vergleichen
+//        und kann auf `equals` verzichten?
+//     -- Weil die Werte einer Enumeration immer die gleiche Referenz haben.
+assert Weekday.MON.next() == Weekday.TUE;
+assert Weekday.SAT.next() == Weekday.SUN;
+assert Weekday.SUN.next() == Weekday.MON;
+assert Weekday.SUN.previous() == Weekday.SAT;
+assert Weekday.TUE.previous() == Weekday.MON;
+assert Weekday.MON.previous() == Weekday.SUN;
+assert Weekday.WED.next().previous() == Weekday.WED;
+assert Weekday.THU.previous().next() == Weekday.THU;
+
+assert !Date.isLeapYear(1700);
+assert !Date.isLeapYear(1800);
+assert !Date.isLeapYear(1900);
+assert Date.isLeapYear(2000); 
+assert !Date.isLeapYear(2100);
+assert !Date.isLeapYear(2018)
+assert !Date.isLeapYear(2019);
+assert Date.isLeapYear(2020);
+assert !Date.isLeapYear(2021);
+assert !Date.isLeapYear(2022);
+assert !Date.isLeapYear(2023);
+assert Date.isLeapYear(2024);
+
+Date today = new Date(2019,11,20,Weekday.WED);
+Date tomorrow = today.nextDay();
+Date yesterday = today.previousDay();
+Date firstOf2019 = new Date(2019,01,01, Weekday.TUE);
+assert today.toString().equals("2019-11-20 (WED)");
+assert tomorrow.toString().equals("2019-11-21 (THU)");
+assert yesterday.toString().equals("2019-11-19 (TUE)");
+assert firstOf2019.toString().equals("2019-01-01 (TUE)");
+assert today.compareTo(tomorrow) == -1;
+assert today.compareTo(today) == 0;
+assert today.compareTo(yesterday) == +1;
+assert tomorrow.compareTo(today) == +1;
+assert yesterday.compareTo(today) == -1;
+assert today.compareTo(today.add(100_000).add(-100_000)) == 0;
+assert Date.of(2019,11,21).getWeekday() == Weekday.THU;
+~~~
+
+Lassen Sie uns kurz aufzählen, was hier alles an Können und an Sprachkonstrukten vorkommt, das zu Ihrem Skillset gehören sollte -- die oben erwähnten Neuigkeiten lasse ich hier außen vor: Die Modulo-Arithmetik ist ein immer wiederkehrendes Thema; Enumerationen; `assert`; Arrays; `if`; Trick, ein Datum als Zahl zu kodieren, um rasch eine Entscheidung für `compareTo` herbeizuführen (wieder ist die Modulo-Rechnung sehr hilfreich); Programmierung im Stil der "Unveränderlichkeitserzählung"; eine `for`-Schleife mit `Date d` als Laufvariable; eine `while`-Schleife; `String.format`.  
+
+Finden Sie Fehler im Code? -- Falls ja, schreiben Sie mich auf Slack oder per Email an.
+</details>
 
 
 
