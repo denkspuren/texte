@@ -7,4 +7,4 @@ Auf dieser Seite finden sich Texte zu meinen Programmierveranstaltungen:
 
 Viel Erfolg,
 
-Dominikus Herzberg, www.thm.de/mni
+Dominikus Herzberg, [www.thm.de/mni](https://www.thm.de/mni/)
