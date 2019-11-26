@@ -1330,6 +1330,30 @@ Manch einer von Ihnen mag den Code zur Bestimmung eines Folge- oder Vortags ungl
 Finden Sie Fehler im Code? -- Falls ja, schreiben Sie mich auf Slack oder per Email an.
 </details>
 
+# VW8
+
+## Dienstag
+
+**Ausführung Codezeile**: Erklären Sie so detailliert wie möglich die Ausführung der folgenden Codezeile; die Zeile stammt aus der Klasse `Date` der letzten Woche.
+
+~~~ java
+int nextDay = day == daysPerMonth(year)[month - 1] ? 1 : day + 1;
+~~~
+
+**Ausführung `Date`**: Erklären Sie, wie der folgende Code ausgeführt wird -- es geht hier um das Ausführungsverhalten. Seien Sie so detailliert wie möglich in den Beschreibungen der Details. Der Code setzt die Kenntnis der Klasse `Date` der letzten Woche voraus und geht davon aus, dass der Code in der JShell geladen ist. Gehen Sie bei Ihren Erläuterungen bis zur Ebene der Implementierung der Methode `add`.
+
+~~~ text
+jshell> Date d = new Date(20191126, Weekday.TUE)
+d ==> 2019-11-26 (TUE)
+
+jshell> d.add(5)
+$39 ==> 2019-12-01 (SUN)
+~~~
+
+<!--
+Anweisungen, Schlüsselwörter, Kontrollstrukturen, Operatoren, Namen, Typen, Literale (Datenwerte)
+-->
+
 # Ablage und Verschiebebahnhof
 
 **Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
