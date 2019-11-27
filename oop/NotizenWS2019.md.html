@@ -1360,6 +1360,21 @@ Anweisungen, Schlüsselwörter, Kontrollstrukturen, Operatoren, Namen, Typen, Li
 
 ![Baum-Darstellung eines Ausdrucks](pics/nextDay.Ausdrucksbaum.jpg with="80%")
 
+**`while`-Ausführung**: Gegeben sei das folgende Codefragment einer `while`-Anweisung, wobei die Details von `BooleanExpression` und `StatementA` bis `StatementD` nicht interessieren. Angenommen, die Schleife werde genau 3x durchlaufen. Und weiter angenommen, `BooleanExpression` und `StatementA` bis `StatementD` würden während der Ausführung protokolliert. Wie sieht das Protokoll aus?  
+
+~~~ text
+StatementA;
+while(BooleanExpression) {
+    StatementB;
+    StatementC;
+}
+StatementD;
+~~~
+
+**`for` mit `while`**: Angenommen, Java würde nur die `while`-Anweisung kennen und die `for`-Anweisung intern in eine `while`-Anweisung übersetzen. Wie würde die Übersetzung der `for`-Anweisung aussehen, wenn Sie von folgendem Aufbau der `for`-Anweisung ausgehen?
+
+    `for(`_VarDeklaration_ `=` _InitExpression_ `;` _BooleanExpression_ `;` _Update_) _ForBody_
+
 # Ablage und Verschiebebahnhof
 
 **Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
