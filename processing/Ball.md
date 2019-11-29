@@ -115,7 +115,8 @@ class Ball {
     }
 }
 ```
- 
+
+> Anmerkung: Die beiden Bälle `b1` und `b2` werden in `setup()` initialisiert, da die Fenstergröße erst in `settings()` festgelegt wird und diese bei der Erzeugung der Bälle für deren Begrenzungen feststehen muss.
 
 
 
