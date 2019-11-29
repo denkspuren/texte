@@ -67,6 +67,54 @@ public class MySketch extends PApplet {
 ```
 
 Ihre Bälle sollen im Gegensatz zu dieser Flickeroptik ansehlich über den "Tisch" rollen. Wie wäre es beispielsweise mit einer Kollisionserkennung? Dann wird das Programm zu einer kleinen Herausforderung!
+
+Eine geringfügig andere Strukturierung des Codes verzichtet auf `Ball` als eingeschachtelte Klasse und den Komfort, auf diese Weise leichter auf die Umgebung von `PApplet` zurückzugreifen. Softwaretechnisch ist die Trennung der Anwendung in zwei separate Klassen "sauberer":
+
+``` java
+import processing.core.PApplet;
+import processing.core.PGraphics;
+public class MySketch extends PApplet {
+    public static void main(String[] args) {
+        PApplet.main(MySketch.class);
+    }
+    Ball b1;
+    Ball b2;
+    public void settings() {
+        super.size(600, 600);
+    }
+    public void setup() {
+        super.background(0);
+        this.b1 = new Ball(color(17, 50, 230), super.width, super.height);
+        this.b2 = new Ball(color(230, 50, 17), super.width, super.height);
+    }
+    public void draw() {
+        super.background(0);
+        this.b1.randomPos();
+        this.b1.draw(super.g);
+        this.b2.randomPos();
+        this.b2.draw(super.g);
+    }
+}
+class Ball {
+    int x, y;
+    int color;
+    int widthBound, heightBound;
+    Ball(int color, int widthBound, int heightBound) {
+        this.color       = color;
+        this.widthBound  = widthBound;
+        this.heightBound = heightBound;
+        this.randomPos();
+    }
+    void randomPos() {
+        this.x = (int)(Math.random() * this.widthBound);
+        this.y = (int)(Math.random() * this.heightBound);
+    }
+    void draw(PGraphics g) {
+        g.fill(this.color);
+        g.ellipse(this.x, this.y, 40, 40);
+    }
+}
+```
  
 
 
