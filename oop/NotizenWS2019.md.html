@@ -1391,8 +1391,6 @@ Welche Ausgabe sehen Sie, wenn überhaupt? Welche Antwort trifft zu?
 -[ ] `ABCABCAD`
 -[ ] `ABCABCABC...` (unendliche Wiederholung von `ABC`)
 
-
-
 **`while`-Ausführung**: Gegeben sei das folgende Codefragment einer `while`-Anweisung, wobei die Details von `BooleanExpression` und `StatementA` bis `StatementD` nicht interessieren. Angenommen, die Schleife werde genau 3x durchlaufen. Und weiter angenommen, `BooleanExpression` und `StatementA` bis `StatementD` würden während der Ausführung protokolliert. Wie sieht das Protokoll aus?  
 
 ~~~ text
@@ -1407,6 +1405,41 @@ StatementD;
 **`for` mit `while`**: Angenommen, Java würde nur die `while`-Anweisung kennen und die `for`-Anweisung intern in eine `while`-Anweisung übersetzen. Wie würde die Übersetzung der `for`-Anweisung aussehen, wenn Sie von folgendem Aufbau der `for`-Anweisung ausgehen?
 
     `for(`_VarDeklaration_ `=` _InitExpression_ `;` _BooleanExpression_ `;` _Update_) _ForBody_
+
+# VW9
+
+!!! WARNING
+    Die Veranstaltung am Mittwoch (4. Block) muss krankheitsbedingt leider ausfallen.
+
+## Dienstag
+
+**Syntaxbaum: `while`**: Zeichnen Sie den Syntaxbaum zu dem folgenden Codefragment.
+
+~~~ java
+while(days != 0) {
+    d = direction == 1 ? d.nextDay() : d.previousDay();
+    days -= direction; 
+}
+~~~
+
+**Vererbt**: Luise ist das Kind von Julia. Luise kann alles, was ihre Mutter kann, z.B. tanzen. Was ihre Mutter nicht kann, ist, ein gegebenes Wort rückwärts wiederzugeben. Luise hingegen gelingt das mühelos. Schreiben Sie die entsprechenden Klassen und Methoden. Setzen Sie das Tanzen als Methode um, die die Zeichenkette `"Ich tanze"` zurückgibt. Und setzen Sie das Rückwärtssprechen so um, dass eine gegebene Zeichenkette in ein `char`-Array gewandelt wird, in dem die Buchstabenfolge umgekehrt wird; die entsprechende Methode gibt das Array zurück.
+
+## Mittwoch
+
+!!!
+    Auch wenn ich heute den Termin nicht wahrnehmen kann: Üben Sie ein wenig mit den folgenden Aufgaben!
+
+**Anonyme Klasse**: Erstellen Sie ein Interface namens `ArithmeticOperation` mit der Methode `double square(double x)`. Erzeugen Sie eine Instanz dieses Interfaces mit einer Implementierung von `square`, ohne sich des Schlüsselworts `class` zu bedienen. Demonstrieren Sie die Verwendung der Methode an einem Beispiel.
+
+**Syntaxbaum: `for`**: Zeichnen Sie den Syntaxbaum zu dem folgenden Codefragment.
+
+~~~ java
+for(Date d = this;
+    date.compareTo(d) != 0;
+    d = direction == 1 ? d.nextDay() : d.previousDay())
+    count++;
+~~~
+
 
 # Ablage und Verschiebebahnhof
 
