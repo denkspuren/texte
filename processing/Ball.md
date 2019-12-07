@@ -66,7 +66,7 @@ public class MySketch extends PApplet {
 }
 ```
 
-Ihre Bälle sollen im Gegensatz zu dieser Flickeroptik ansehlich über den "Tisch" rollen. Wie wäre es beispielsweise mit einer Kollisionserkennung? Dann wird das Programm zu einer kleinen Herausforderung!
+Ihre Bälle sollen im Gegensatz zu dieser Flickeroptik ansehnlich über den "Tisch" rollen. Wie wäre es beispielsweise mit einer Kollisionserkennung? Dann wird das Programm zu einer kleinen Herausforderung!
 
 Eine geringfügig andere Strukturierung des Codes verzichtet auf `Ball` als eingeschachtelte Klasse und den Komfort, auf diese Weise leichter auf die Umgebung von `PApplet` zurückzugreifen. Softwaretechnisch ist die Trennung der Anwendung in zwei separate Klassen "sauberer":
 
@@ -118,5 +118,10 @@ class Ball {
 
 > Anmerkung: Die beiden Bälle `b1` und `b2` werden in `setup()` initialisiert, da die Fenstergröße erst in `settings()` festgelegt wird und diese bei der Erzeugung der Bälle für deren Begrenzungen feststehen muss.
 
+## Weihnachtliches
+
+Schrumpfen Sie die Bälle aus der vorherigen Aufgabe auf das Format kleiner Sterne, die sich langsam über den Bildschirm bewegen und vielleicht zwischendurch kurz funkeln. Im Vordergrund, in der Mitte des unteren Bildschirmrands, steht ein Tannenbaum. Den Tannenbaum kann man mit den Pfeiltasten auf der Tastatur senkrecht hochfliegen und landen lassen.
+
+Das mag erst einmal genügen. Wenn Sie das ausbauen wollen: Der Tannenbaum soll fliegend mit seiner Spitze einen Stern berühren und dann wieder sicher landen, bevor es aufgeht zum nächsten Sternenflug. Sie können die Steuermöglichkeiten beim Tannenbaumflug dafür erweitern.
 
 
