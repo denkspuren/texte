@@ -1431,6 +1431,30 @@ while(days != 0) {
 
 **Anonyme Klasse**: Erstellen Sie ein Interface namens `ArithmeticOperation` mit der Methode `double square(double x)`. Erzeugen Sie eine Instanz dieses Interfaces mit einer Implementierung von `square`, ohne sich des Schlüsselworts `class` zu bedienen. Demonstrieren Sie die Verwendung der Methode an einem Beispiel.
 
+<details>
+    <summary>Lösung: Anonyme Klasse</summary>
+Ich habe `ArithmeticOperation` im folgenden Code abgekürzt mit `AOp`.
+
+~~~ text
+jshell> new AOp() { public double square(double x) { return x * x; }}
+$17 ==> $0@1ed4004b
+
+jshell> $17.square(23)
+$18 ==> 529.0
+~~~
+
+Hier ist ein schöner Einstieg in die Lambda-Ausdrücke möglich. Wenn ein Interface nur eine Methode ohne default-Implementierung hat, dann spricht man von einem funktionalen Interface und kann den Rumpf der Methode per Lambda-Ausdruck konfigurieren.
+
+~~~ text
+jshell> (AOp) x -> x * x
+$19 ==> $Lambda$24/0x0000000800bb7c40@5025a98f
+
+jshell> $19.square(23)
+$20 ==> 529.0
+~~~
+
+</details>
+
 **Syntaxbaum: `for`**: Zeichnen Sie den Syntaxbaum zu dem folgenden Codefragment.
 
 ~~~ java
@@ -1443,7 +1467,11 @@ for(Date d = this;
 # VW10
 
 !!! WARNING
-    Wer in die Projektwoche ohne lauffähige Processing-Bibliothek kommt, wird von der Teilnahme ausgeschlossen. Die erfolgreiche Teilnahme an der Projektwoche ist Voraussetzung für die Teilnahme an der OOP-Klausur. 
+    Wer in die Projektwoche ohne lauffähige Processing-Bibliothek kommt, wird von der Teilnahme ausgeschlossen. Die erfolgreiche Teilnahme an der Projektwoche ist Voraussetzung für die Teilnahme an der OOP-Klausur.
+
+## Dienstag
+
+**Zahlenstapel**: Es geht um den Entwurf eines Zahlenstapels von `int`-Werten. Auf dem Stapel kann man eine Zahl mit `push` ablegen, mit `pop` entfernen und mit `top` abrufen. Das Prädikat `isEmpty` verrät, ob der Stapel leer ist oder nicht. Entwerfen Sie ein dazu passendes Interface namens `Stackable`. Implementieren Sie das Interface in Form einer Klasse namens `IntStack`. 
 
 # Ablage und Verschiebebahnhof
 
