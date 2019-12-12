@@ -1,0 +1,463 @@
+<meta charset="utf-8" lang="de">
+<script>window.markdeepOptions = { "tocStyle" : "auto" }</script>
+
+    **Informatische Modellbildung und objektorientiertes Denken**
+    Dominikus Herzberg, 2018-11-21
+
+# Objektorientiertes Denken
+
+Woraus besteht die Denkwelt eines Informatikers bzw. einer Informatikerin? Oder anders gefragt: Was sind die Werkstoffe, die Konstrukte, mit denen man eine Welt im Rechner entstehen lassen kann?
+
+Die Informatik hat sich einige sehr unterschiedliche Gestaltungmittel für die Erschaffung von Programmierwelten ausgedacht. Eine davon ist die sogenannte Objektorientierung, die sehr verbreitet und populär ist. Ich will versuchen, Ihnen eine sehr anschauliche Idee davon zu vermitteln. Sie müssen nicht Programmieren können und auch sonst keine Ahnung von Informatik haben. Sie brauchen sich nur auf eine Welt mit Kästchen und Pfeilen einzulassen.
+
+## Kästchen sind Objekte, Pfeile sind Verweise
+
+Was auch immer ein Objekt sein soll. Stellen Sie sich vor, dass Sie auf einem Papier mit einem Stift Kreise zeichnen -- oder, wenn Sie das bevorzugen, Ellipsen, "Eier" oder Kästchen; ich selbst zeichne meist Kästchen mit abgerundeten Ecken. Diese Kreise oder Kästchen nennen wir Objekte; wichtig ist, dass sich die Kreise nicht überschneiden und auch nicht ineinander verschachtelt sind. Einfach viele Kreise auf einem Blatt Papier.
+
+Die Kreise können wir mit Pfeilen verbinden. Ein Pfeil beginnt am Kreisrand des einen Kreises und endet mit einer Pfeilspitze am Kreisrand eines anderen Kreises; grundsätzlich denkbar ist aber auch, dass ein Pfeil vom gleichen Kreis ausgeht und auch wieder bei ihm endet. Diese Pfeile nennen wir Verweise oder auch Referenzen.
+
+Wenn wir einen Pfeil ausnahmsweise _nicht_ bei einem anderen Kreis enden lassen wollen, dann lassen wir den Pfeil ein wenig ins Leere laufen und bringen an der Pfeilspitze einen kleinen, dicken Knubbel an. Diesen ins Leere laufenden Pfeil nennen wir einen "Null-Verweis" oder auch "Null-Referenz".
+
+*******************************
+*   .-.            .-.
+*  |   +--------->|   |<--.
+*   '+'            '+'     |
+*    |              |      |
+*    |               '----'
+*    v             
+*    *
+*******************************
+
+Es macht übrigens nichts, wenn sich die Linien der Pfeile überschneiden. Was wir aber unbedingt werden tun müssen: wir müssen an die Pfeile Namen schreiben, sonst wissen wir nicht, welcher Pfeil wofür ist. Aber dazu gleich mehr.
+
+## Klassen definieren Objektarten
+
+Wir haben Kreise und Pfeile, sprich Objekte und Verweise, wobei die Pfeile entweder von einem Kreis auf einen anderen Kreis zeigen oder, was auch vorkommt, Pfeile ohne Ziel sind, also Null-Verweise. Was nun noch hinzukommt, ist, dass wir verschiedene Arten von Objekten unterscheiden -- der Fachmensch spricht von Klassen. Diesen verschiedenen Objektarten geben wir Namen. Und damit wir wissen, von welcher Art ein Objekt ist, schreiben wir den Namen in das Objekt hinein.
+
+Eine Objektart, eine Klasse, hat nicht nur einen Namen. Mit der Objektart ist festgelegt, wieviele Pfeile von einem Objekt dieser Art ausgehen (es ist eine feste Anzahl), wie diese Pfeile heißen -- darum müssen wir die Pfeile beschriften -- und bei was für einer Art von Objekt der Pfeil enden muss, wenn er kein Null-Verweis sein möchte. Außerdem kann man noch mehr oder minder komplizierte Regeln angeben, was darüber hinaus für ein gültiges Pfeilziel erfüllt sein muss -- das ist oft sogar notwendig.
+
+Ein Beispiel: Wir legen für Objekte der Art, also der Klasse "X" fest, dass jedes Objekt dieser Klasse einen Pfeil haben muss, der den Namen "a" hat und auf ein Objekt der Klasse "X" zeigt. Wenn man wollte, könnte man das sehr schematisch wie folgt aufschreiben:
+
+> Objektart "X" hat einen Pfeil namens "a", der bei einem Objekt der Art "X" enden muss, sofern der Pfeil kein Null-Verweis ist. 
+> 
+
+Oder noch kürzer und formaler:
+
+~~~ Java
+class X {
+    X a;
+}
+~~~
+
+Wie könnten mögliche Objektbilder dazu aussehen? Versuchen Sie, ein paar Objekt-Pfeil-Diagramme zu zeichnen!
+
+<details>
+    <summary>Lösung</summary>
+****************************************************************************
+*                                            .---.
+*                                          a|     |            a
+*                                           v     |   .-----------------.
+*  .-. a       .-. a   .-. a   .-. a       .-.    |  |     .-. a   .-.   |
+* | X +-->*   | X +-->| X +-->| X +-->*   | X +--'    '-->| X +-->| X +-'
+*  '-'         '-'     '-'     '-'         '-'             '-'     '-'
+****************************************************************************
+
+Angenommen wir hätten eine Zusatzregel definiert: Für Objekte der Klasse `X` muss außerdem gelten, dass ein `a`-Pfeil niemals auf das eigene Objekt oder einen Vorgänger verweisen darf. Welche der Bilder würden dann übrig bleiben?
+
+<details>
+    <summary>Lösung</summary>
+Nur noch die beiden linken Beispiele sind mit solch einer Beschränkung vereinbar. Im dritten Fall von links verletzt der Selbstverweis die Beschränkung, im Fall ganz rechts verweist das rechte Objekt auf seinen Vorgänger.
+</details>
+</details>
+
+## Zwei vorgegebene Klassen: Zahlen und Texte
+
+Neben der Möglichkeit, frei Klassen zu definieren, gibt es zwei spezielle, vorgegebene Objektarten: Zahlen und Texte -- auf Englisch _Number_ und _String_. Für beide Objektarten gilt, dass sie keine ausgehenden Pfeile haben. Zahlenobjekte sind dadurch gekennzeichnet, dass in den Kreis oder das Kästchen direkt der Zahlenwert geschrieben wird. Bei Textobjekten schreiben wir den Text durch Anführungszeichen markiert in das Kästchen; die Anführungszeichen machen deutlich, dass es sich nicht um den Namen einer Objektart handelt.
+
+Zum Beispiel habe die Objektart `Person` zwei Pfeile. Der eine Pfeil heißt `age` und verweist auf ein Zahlenobjekt, der andere `name` und verweist auf ein Textobjekt.
+
+~~~ Java
+class Person {
+    Number age;
+    String name;
+}
+~~~
+
+Ein beispielhaftes Objektbild dazu ist:
+
+*******************************************
+*  .--.   age .------. name  .-------.
+* | 19 |<----+ Person +---->| "Siggi" |
+*  '--'       '------'       '-------'
+*******************************************
+
+!!! Tip
+    Wenn die in einer Klasse definierten Pfeile eindeutig auf unterschiedliche Objektarten verweisen, dann kann auf die explizite Erwähnung des Namens im Objektdiagramm verzichtet werden.
+
+## Definition einer Sicht
+
+Wenn wir als Menschen die Objektdiagramme sehen, dann wandert unser Blick umher und wir erfassen die Gesamtsituation. Das ist, wenn man so möchte, "unfair", weil wir gleichsam aus einer Adlerperspektive auf die gesamte dargestellte Welt blicken. Ganz korrekt ist das nicht -- auch unseren Blick auf die Objektstruktur müssen wir festlegen und definieren.
+
+Den Blick auf eine Objektstruktur definieren wir mit einer ganz eigenen Art von Objekten der Klasse `View`. Für diese `View` können wir uns einen beliebigen Satz von Pfeilen definieren, die bestimmen, was wir alles in einem Diagramm "sehen" -- hierbei bestimmt die Pfeilrichtung, wohin unser Blick wandern darf und was wir damit sehen.
+
+Da in aller Regel ein `View`-Objekt genügt, vereinbaren wir, diese `View`-Objekt nicht zu zeichnen, sondern nur die Pfeile zu diesem `View`-Objekt einzutragen. Damit sich die Pfeile der `View` klar ausmachen lassen, lassen wir sie an einem kleinen Kreis entstehen.  
+
+Wieder ein Beispiel. Wir definieren die Klasse `View` für zwei "Einblicke" in die Objektstruktur der Art `X`. Es ist die Klasse `X` gemeint, die wir zuvor definiert haben.
+
+~~~ Java
+class View {
+    X first;
+    X second;
+}
+~~~
+
+Sie sehen im folgenden Bild drei Objektstrukturen der Klasse `X` und zwei Einblicke in diese Strukturen mit Hilfe der Pfeile `first` und `second`.
+
+****************************************************************************
+*                       o first                           o second
+*                       |                            a    |
+*                       v                   .-------------v---.
+*  .-. a       .-. a   .-. a   .-. a       |     .-. a   .-.   |
+* | X +-->*   | X +-->| X +-->| X +-->*     '-->| X +-->| X +-'
+*  '-'         '-'     '-'     '-'               '-'     '-'
+****************************************************************************
+
+Folgendes ist festzustellen:
+
+1. Das Erste was auffällt, ist, dass wir die ganz linke Objektstruktur nicht sehen. Sie könnte genauso gut nicht in dem Bild existieren, es würde keinen Unterschied machen.
+2. Unser Blick kann immer nur in Richtung der Pfeile verlaufen. In der mittleren Objektstruktur sehen wir mit `first` das linke Objekt nicht, auch das ist für uns nicht existent.
+3. In der rechten Objektstruktur ist `second` unser Einstieg. Wir sehen den Verweis auf das linke Objekt und dann den Verweis auf den Ausgangspunkt unseres Einblicks. In dem Fall erfassen wir vollständig die Objektstruktur.
+
+Wir können das Diagramm unbeschadet um einige Anteile bereinigen, ohne dass sich etwas aus Sicht der eingetragenen `View` ändert.
+
+****************************************************************************
+*   o first                           o second
+*   |                            a    |
+*   v                   .-------------v---.
+*  .-. a   .-. a       |     .-. a   .-.   |
+* | X +-->| X +-->*     '-->| X +-->| X +-'
+*  '-'     '-'               '-'     '-'
+****************************************************************************
+
+Wir arbeiten fortan ausschließlich mit bereinigten Objektstrukturen, es sei denn, es würde aus Gründen der Verständlichkeit helfen, die Überbleibsel einer Aktion vor ihrer Bereinigung zu sehen.
+
+!!! 
+    Es gibt eine einfache Regel zur Bereinigung eines Diagramms. Ein Objekt, auf das nicht mindestens ein Pfeil zeigt, kann samt seiner ausgehenden Pfeile entfernt werden. In der Informatik nennt man diesen Vorgang _Garbage Collection_ (Müllabfuhr).
+
+## Zusammenfassung
+
+Fassen wir zusammen: 
+
+!!! Tip
+    Eine Objektwelt besteht aus Objekten und Verweisen. Jedes Objekt ist einer Objektart zugeordnet. Eine Objektart wird durch eine Klasse definiert. Eine Klasse legt fest, welche Verweise ein Objekt dieser Objektart hat und welche Objektart der jeweilige Verweis adressiert. Grundsätzlich kann jeder Verweis auch ein Null-Verweis sein. Darüber hinaus haben wir zwei besondere Objektarten eingeführt, Zahlen und Texte, die selber keine Verweise haben.
+
+    Der Einblick in eine Objektwelt ist bestimmt durch ein Objekt der `View`-Klasse, deren Verweise man frei definieren kann. Der Blick läuft über die Verweise des Viewobjekts entlang der in Pfeilrichtung erreichbaren Bezugsstrukturen. Alles, was auf diese Weise nicht gesehen wird, existiert faktisch nicht und wird vom _Garbage Collector_ entfernt. 
+
+# Objektstrukturen erstellen
+
+Jetzt haben Sie das Rüstzeug, um in objektorientierten Strukturen zu denken. Diese Strukturen sind das, was Programmierer*innen objektorientierter Sprachen erzeugen und nutzen. Die Schwierigkeit ist weniger, eine Programmiersprache zu erlernen -- so intellektuell anspruchsvoll moderne objektorientierte Sprachen auch sind. Die Herausforderung liegt vielmehr darin, sein Denken auf diese Strukturen auszurichten. Diese Denkwelt kennt nur Objekte verschiedenster Klassen und Pfeile. Es gibt keine Schwerkraft, keinen Luftdruck, kein Licht, keine Atome -- nichts an dieser Denkwelt ist physikalischen Gesetzen unterworfen. Es gibt nur die zwei Basisgrößen von Raum und Zeit: die Zeit, die man benötigt, um Objektstrukturen zu verändern, und ein großes weißes Blatt, den zweidimensionalen Raum, in dem Objekte und Pfeile existieren.
+
+Da wir nicht der Physik verpflichtet sind, ist es an uns, Objektwelten zu bauen, die konsistent und nicht komplizierter als nötig sind und gute Kodierungen sind für Phänomene und Sachverhalte, die wir ausdrücken wollen. Und genau an dieser Stelle beginnt das wirkliche Problem. Unsere Erfahrungen und unsere Sprache haben einen starken Bezug zu unserer Welt, in der wir leben und handeln. Wir können kaum anders, als Vorstellungen und Begriffe aus unserer Welt zu nehmen und sind dann in der Not, einerseits eine Übertragung in die Kunstwelt der Objekte und Pfeile vorzunehmen (man kann das als Kodierungvorgang bezeichnen) und andererseits diese Kunstwelt rückzuübertragen in unsere Vorstellungen, Anschauungen und Begriffe (was man als die Erzeugung einer Repräsentation bezeichnen kann). Wir widmen uns dazu ausführlich einem Beispiel.
+
+## Ein Beispiel: Der Stapel
+
+![Quelle: [Pixabay](https://pixabay.com/de/buch-b%C3%BCcher-studie-belletristik-148200)](Stapelbild.png width=110) Sie wissen, was ein Stapel (engl. _stack_) ist. Nehmen wir einen Bücherstapel. Ein Buch liegt auf dem anderen, die Bücher schichten sich aufeinander. Das unmittelbar zugreifbare Buch liegt obenauf. Möchte man auf ein Buch darunter zugreifen, muss man mehrere Bücher von oben entfernen.
+
+Der Stapel ist eine beliebte Metapher für eine Objektstruktur, die das Organisationsprinzip übernehmen soll. Damit stellt sich aber die Frage: Was ist ein Stapel?
+
+!!!
+    In den folgenden Unterkapiteln geht es darum, einen Stapel mit ein, zwei oder drei Büchern oder sogar mit keinem Buch darzustellen und das ausschließlich mit den Hilfsmitteln von Kästchen und Pfeilen und der Definition geeigneter Klassen zu tun. Es geht um Schnappschüsse solcher Stapelaufbauten. Wie wir solche Strukturen schrittweise entstehen lassen, ist Thema eines eigenen Kapitels.
+
+## Modellbildung, 1. Teil: Das Stapel-Prinzip
+
+Den Stapel an sich gibt es nicht. Es ist ein Konzept, das eine Organisationsform beschreibt: Dinge liegen aufeinander. So einfach ist es dann aber doch wieder nicht. Eine Bretterwand würde kaum jemand als Stapel bezeichnen, selbst wenn die Bretter hochkant aufeinander gesetzt sind und links und rechts mit Hilfe einer Führungsschiene aufeinander gehalten werden. Von einem Stapel erwartet man, dass die aufeinander gelegten Dinge sich selber tragen und mit zunehmender Höhe einem Turm zu gleichen beginnen. Dennoch will der Stapel nichts konstruieren, er will keine Wand und er will kein Turm sein. Es geht mehr um die praktische Ausnutzung von wenig verfügbarem Platz.
+
+Man sieht, man kommt mit der Metapher schnell an seine Grenzen. Es ist schwer zu klären, was ein Stapel genau ist. Erinnern wir uns also an unser Vorhaben: Wir wollen den Stapel als Organisationsprinzip aufgreifen und nutzbar machen. Der Duden bringt es auf den Punkt:
+
+> "Menge [ordentlich] übereinandergelegter gleicher Dinge" (Quelle: [Duden](https://www.duden.de/rechtschreibung/Stapel))
+>
+
+Das Übereinanderlegen funktioniert dank Schwerkraft und dank geeigneter Form der aufeinander liegenden Dinge. In unseren Objektwelten spielt beides keine Rolle. Wir können einen Pfeil für das Verhältnis _on top of_ nutzen.
+
+Starten wir einen ersten Versuch und wenden das Organisationsprinzip auf Objekte von der Art `Book` (Buch) an.
+
+~~~ Java
+class Book {
+    Book onTopOf;
+}
+
+class View {
+    Book stack;
+}
+~~~
+
+Mit der `View` kommt schön zum Ausdruck, dass wir einen Stapel sehen, es aber kein Konstrukt der Idee eines Stapels gibt, nur eine Nachbildung der Eigenschaft eines Buchs auf einem anderen Buch liegen zu können. Der mit `stack` gezeigte Blick sieht das oberste Buch und kann entlang der Pfeile die aufeinander verweisenden Bücher "sehen".
+
+****************************************************
+*       .----.      .----.      .----.
+* *<---+ Book |<---+ Book |<---+ Book |<---o stack
+*       '----'      '----'      '----'
+****************************************************
+
+Wir haben diese Struktur so ähnlich schon mit der Klasse `X` gehabt. Streng genommen fehlt uns hier eine Beschränkung: es sind keine Zyklen von `onTopOf` erlaubt, die die Idee des Aufeinanderliegens _ad absurdum_ führen.
+
+Was ist der Nachteil dieser Struktur? Jede neue Objektart, die man stapeln möchte, muss den `onTopOf`-Pfeil haben. Wäre es nicht angebracht, die gestapelte Organisationsform zu isolieren von der Art der Objekte, die gestapelt werden?
+
+Ein neuer Versuch:
+
+~~~ Java
+class Book { }
+
+class Stack {
+    Stack onTopOf;
+    Book item;
+}
+
+class View {
+    Stack stack;
+}
+~~~
+
+In dem Beispiel kann man sehen, dass die `Stack`-Objekte so etwas wie die Trägerstruktur für den Stapel bilden, hier wird das "Aufeinanderliegen" abgebildet. Wie schon das Bild zeigt, hat die Darstellung in ihrer Ausrichtung von rechts nach links längst das Thema Schwerkraft und die Raumorganisation von "oben" und "unten" eingebüßt und modelliert das als eine Kette von `onTopOf`-Pfeilen. Die Bücher sind als Dinge (_items_) an die organisierende Trägerstruktur "angehängt".
+
+*******************************************************
+*       .-----.      .-----.      .-----.
+* *<---+ Stack |<---+ Stack |<---+ Stack |<---o stack
+*       '--+--'      '--+--'      '--+--'
+*          |            |            |
+*          v            v            v 
+*        .----.       .----.       .----.
+*       | Book |     | Book |     | Book |
+*        '----'       '----'       '----'
+*******************************************************
+
+Noch gibt es einen kleinen Haken: Zwar müssen wir nicht den Dingen an sich die `onTopOf`-Pfeile zumuten, was ein großer Gewinn ist, aber der Stapel ist einzig angepasst für Bücher. Geht das auch generisch, d.h. allgemeiner für beliebige Objektarten für `item`?
+
+## Flexibilität durch generische Klassen
+
+Ja, das geht. Informatiker haben die Idee der Generizität schon in den Anfangstagen der Programmierung entwickelt. In der Objektorientierung macht man eine Klasse generisch mit Hilfe eines Konfigurationsparameters. Dieser Parameter wird direkt hinter dem Namen der Klasse in spitzen Klammern vermerkt; man kann dort auch mehrere Konfigurationsparameter angeben. Jeder der aufgelisteten Parameter kann bei Verweisen anstelle einer konkreten Klassenangabe verwendet werden.  
+
+~~~ Java
+class Stack&ltT&gt {
+    Stack&ltT&gt onTopOf;
+    T item;
+}
+~~~
+
+Der Parameter `T` ist keine Klasse, sondern -- wenn man so möchte -- ein Platzhalter für eine Klasse. Konfiguriert man den generischen Stapel `Stack&ltT&gt` mit `Book`, dann wird daraus `Stack&ltBook&gt` und folglich ist an allen Stellen, wo in der Klasse ein `T` steht, die Klasse `Book` einzusetzen. Gleiches gilt, man den Stapel z.B. mit `Number` konfigurierte. Dann wären alle `T`s durch `Number` zu ersetzen.
+
+Die generische Klasse `Stack&ltT&gt` erlaubt es, Objektstrukturen aufzuseten, wo z.B. `Book`-Objekte von der `Stack`-Struktur referenziert werden. Das obige Bild braucht weder geändert noch angepasst zu werden. Man kann aus dem Bild mit Blick auf die generische Klasse ableiten, dass die `Stack`-Objekte von der Objektart `Stack&ltBook&gt` sein müssen. 
+
+!!!
+    Die Generizität von Klassen ist ein mächtiges Feature, um flexibel einsetzbare Verweise zu definieren. 
+
+<!-- Der Einfachheit zuliebe lassen wir es mit diesem Hinweis auf die Möglichkeit der generischen Konfiguration einer Klasse beruhen. Nachfolgend arbeiten wir weiterhin mit dem bereits auf Bücher angepassten Stapel. -->
+
+## Modellbildung, 2. Teil: Was ist ein leerer Stapel?
+
+Es gibt sie nicht wirklich, die Idee des leeren Stapels. Wenn jemand mit dem Finger auf eine freie Stelle auf einem Tisch zeigt und sagt: "Da ist ein leerer Bücherstapel", dann ist das sehr irritierend. Es ist eine merkwürde Aussage, etwas als "leer" zu bezeichnen, was genau aus dem Grund nicht da ist. Das hat etwas von der Qualität "Da ist ein unsichtbarer Hund auf dem Tisch". Es gibt eine unendliche Vielfalt an Aussagen darüber, was _nicht_ da ist. Andererseits: "Das leere Glas" hört sich vernünftig an, da das Glas ein Aufnahmebehältnis ist, das auch _Nichts_ beinhalten kann. Wenn man von einem leeren Stapel spricht, dann ist das eher mit einem leeren Parkplatz vergleichbar, der unbesetzt ist. Der Parkplatz ist eine Fläche, die zur Besetzung durch ein Auto reserviert ist. So in etwa kann man sich die Idee des leeren Stapels vorstellen: eine Fläche, die für einen Stapel reserviert ist. Und dann ist auch klar, dass mit nur einem Buch auf dieser Fläche der Anfang eines Bücherstapels gemacht ist.
+
+In diesem Sinne stellt der leere Stapel lediglich einen Anfang dar: Seht her, ich bin der Ort, an dem man Bücher aufeinander stapeln kann. Diese Signalwirkung kann man darüber erreichen, das wir eine Vereinbarung treffen: Die Existenz eines Stapels ist damit angelegt, indem wir ein `Stack`-Objekt anlegen, das weder `onTopOf` irgendwas ist, noch ein `item` hat. Sprich: Die beiden Pfeile sind `null`-Verweise. So stellt sich das nachstehende Bild dar als ein Stapel mit zwei Büchern, die auf einem Ausgangspunkt zum Stapeln (das `Stack`-Objekt ganz links) aufgesetzt sind. Der `stack`-Verweis schaut auf das oberste Element des Stapels.
+
+*******************************************************
+*       .-----.      .-----.      .-----.
+* *<---+ Stack |<---+ Stack |<---+ Stack |<---o stack
+*       '--+--'      '--+--'      '--+--'
+*          | item       |            |
+*          v            v            v 
+*          *          .----.       .----.
+*                    | Book |     | Book |
+*                     '----'       '----'
+*******************************************************
+
+Auf diese Weise haben wir zwar ein Stapel-Objekt zur Aufnahme eines Buchs verschenkt, sind aber nun in der Lage, mit einem einfachen Stapel-Objekt den Ansatzpunkt einzuführen, an dem ein Stapel entstehen kann. Isoliert und für sich genommen sieht der "Parkplatz" für einen Stapel wie folgt aus:
+
+*******************************************************
+*       .-----.    
+* *<---+ Stack |<---o stack
+*       '--+--' 
+*          | item
+*          v 
+*          *
+*******************************************************
+
+Diese Beschreibung eines Stapels in der Kunstwelt der Objekte ist eine extreme Kondensation eines Organisationsprinzips, wie ihn ein Stapel bietet. Wir benötigen dazu eine einzige Objektart namens `Stack`, die das Rückgrat eines Stapels bildet. Mit einem Stapel, so wie wir ihn aus der "Echtwelt" kennen, hat das nur rudimentär zu tun. Als Essenz haben sich drei Aspekte herauskristallisiert:
+
+1. Der Stapel findet seinen Anfangspunkt (gleichsam seinen Entstehungsort im digitalen Raum) in der Idee des leeren Stapels, was wir mit einem `Stack`-Objekt mit jeweils einem Null-Verweis für `onTopOf` und für `item` markieren -- das ist eine Vereinbarung! 
+2. Ausgehend vom leeren Stapel wird eine Trägerstruktur errichtet aus `Stack`-Objekten, die sich per `onTopOf`-Verweisen in eine verkettende Beziehung bringen, die das Aufschichten modelliert.
+3. Mit jedem Trägerelement wird ein `item`-Verweis auf ein Objekt angebracht, das mit dieser Trägerstruktur in Manier eines Stapels arrangiert wird.
+
+## Die Freiheiten der Objektmodellierung
+
+Man muss sich im Klaren darüber sein, dass man mit der `Stack`-Klasse Szenarien konstruieren kann, die sich nur schwer mit unserer Erfahrung vertragen. Schauen wir uns die folgende Stapelstruktur an:
+
+********************************************************************
+*       .-----.      .-----.      .-----.      .-----.
+* *<---+ Stack |<---+ Stack |<---+ Stack |<---+ Stack |<---o stack
+*       '--+--'      '--+--'      '--+--'      '--+--'
+*          | item       |            |            |
+*          v            |            v            |
+*          *            |          .----.         |
+*                        '------->| Book |<------'
+*                                  '----'
+********************************************************************
+
+Hier stapelt man dreimal ein und dasselbe `Book`-Objekt. Wohlgemerkt, es geht nicht um drei gleiche Bücher, sondern dreimal um ein und dasselbe Buch! Ich wüsste nicht, wie ich Ihnen das in der Realwelt anschaulich erklären sollte. Jetzt, wo wir in die Objektwelt eingetaucht sind, müssen wir akzeptieren, dass solch eine Modellbildung möglich geworden ist, vielleicht ist sie sogar für bestimmte Sachverhalte sinnhaft. Ein Abbild der Realität ist es nicht. Der Stapel wird mehr und mehr zu Metapher, die die Schichtung von Dingen als Anhaltspunkt zur Erinnerung an ein Organisationsprinzip nimmt -- mehr nicht. Darin liegt die große Chance aber auch der oft ungewollte Falschgebrauch informatischer Modellierung: Mit Kästchen und Pfeilen lässt sich allerhand zeichnen, allein die Klassendefinitionen erlegen den Objektarten bestimmte Pfeile und Pfeilziele auf. Die Freiheitsgrade sind so groß, dass man sich oft nicht einmal darüber bewusst ist, wie sehr man in Bezug auf eine Metapher oder in Anlehnung an Szenarien aus der Realwelt davon abweichen kann. Man muss Disziplin walten lassen im Gebrauch von Objektstrukturen oder sehr aufwendig versuchen, Strukturüberprüfungen einzubauen.
+
+<!--
+# Vererbung
+
+Es gibt in der Objektorientierung neben der Generizität von Klassen ein weiteres, mächtiges Feature, das sich "Vererbung" nennt. Die Vererbung hat weniger mit Objekten zu tun als vielmehr mit der Gestaltung von Klassen. Sobald es ein wenig komplizierter wird, stellt man fest, dass sich die Klassen in den Verweisarten zu ähneln beginnen. Das will man gezielt ausnutzen über die Bildung von Hierarchien von Klassen.
+
+## Top-down
+
+Eine Klasse kann eine andere Klasse (die sogenannte Oberklasse) über das Schlüsselwort `extends` beerben.
+
+~~~ Java
+class A extends B {
+    // ...
+}
+~~~
+
+Das hat folgende Auswirkungen: Ein Objekt einer Objektart hat all die Verweise der die Objektart beschreibenden Klasse -- so kennen Sie das bereits. Dazu kommen weitere Verweise, nämlich all die der Oberklasse, die nicht namensgleich mit den bisherigen Verweisen sind. Die Verweise, die eine Oberklasse hat, bestimmt sich nach dem gleichen Verfahren; auch eine Oberklasse kann ein `extends` haben.
+
+
+Sollte die Oberklasse ihrerseits ein `extends` haben, Sie wissen jetzt, wie Sie zuvor die Verweise der Oberklasse bestimmen.
+
+
+Sollte die Oberklasse ihrerseits eine Oberklasse haben, kommen nach dem gleichen Verfahren weitere Verweise dazu, ...
+
+
+******************************************************************
+*   .-.
+*  | A |
+*   '+'
+*    |
+*   .+.
+*  | B |
+*   '-'
+******************************************************************
+
+
+## Bottom-up
+
+Konstruieren wir ein Beispiel. Die Klassen `A` und `B` haben eine Verweisart gemeinsam, den Verweis auf die Objektart `X`; bei Klasse `A` ist es der `a`-Verweis, bei Klasse `B` der `c` Verweis. In dieser Gemeinsamkeit liegt das Potenzial einer Generalisierung.
+
+~~~ Java
+class A {
+    X a;
+    Y b;
+}
+
+class B {
+    X c;
+    Z d;
+}
+~~~
+
+Da die Namen der Klassen und die der Verweise nichtssagend sind, ist schwer entscheidbar, ob eine Verallgemeinerung Sinn macht. Mit den Namen ist eine Bedeutung verbunden, ein Zuschreibung, was die Objekte der Klasse abbilden sollen und welches Verhältnis über die Verweise realisiert wird. Das ist wichtig, um zu entscheiden, ob eine Verallgemeinerung oder eine Merkmalsextraktion passend ist. Auch die generalisierende Klasse sollte einen Namen tragen, der dazu passt.
+
+Ein neues, besseres und beliebtes Beispiel. Die Objektart `Student` und die Objektart `Teacher`.
+
+~~~ Java
+class Student {
+    String name;
+    Number matriculationNumber;
+}
+
+class Teacher {
+    String name;
+    Number status;
+}
+~~~
+
+Die Gemeinsamkeit liegt im Namen. Im Zweifel müsste man genau hinschauen, ob im einen Fall nicht grundsätzlich der Vorname, im anderen der Nachname gemeint ist. Dann wäre die Gemeinsamkeit nicht gegeben. Es kommt immer darauf an, was man wie in einer Objektwelt abbilden möchte. Unterstellen wir hier, dass der vollstände Name gemeint ist aus Nachname und Vorname.
+
+Deutlicher ist es bei der Matrikelnummer und dem Lehrer-Status. Obwohl beides auf ein `Number`-Objekt verweist, ist das eine schwache Form der Gemeinsamkeit. Von der Bedeutung der Namen weist nichts auf eine gemeinsames Merkmal hin.
+
+~~~
+class Person {
+    String name;
+}
+
+class Student extends Person {
+    Number matriculationNumber;
+}
+
+class Teacher extends Person {
+    Number status;
+}
+~~~
+
+!!!
+    Vererbung bedingt 
+
+
+
+-->
+<!--
+
+Statt mit der Signalwirkung zweier Null-Verweise zu arbeiten, könnte man die Signalwirkung explizit machen: ein Objekt der Klasse `EmptyStack` (im Bild abgekürzt als `EmS`) und eine Kette von Objekten der Klasse `StackWithElements` (im Bild abgekürzt als `SwE`).
+
+*******************************************************
+*       .---.      .---.      .---.
+*      | EmS |<---+ SwE |<---+ SwE |<---o stack
+*       '---'      '-+-'      '-+-'
+*                    |          |
+*                    v          v 
+*                  .----.     .----.
+*                 | Book |   | Book |
+*                  '----'     '----'
+*******************************************************
+
+Das Problem ist, dass wir das mit unseren bisherigen Ausdruckmitteln als Klassen nicht abbilden können, ohne Inkonsistenzen zu erzeugen.
+
+~~~ Java
+class EmptyStack { }
+
+class StackWithElements {
+    StackWithElements onTopOf;
+    Book item;
+}
+
+class View {
+    StackWithElements stack;    
+}
+~~~
+
+Ein `StackWithElements` kann mit `onTopOf` nicht auf einen `EmptyStack` verweisen. Gleiches gilt für `stack` der `View`.
+
+Auch dieses Problem wurde frühzeitig in der Programmierung erkannt. In der Objektorientierung hat man sich das Konzept der Oberklasse einfallen lassen. Die Idee sei hier nur kurz skizziert: Im Beispiel definieren wir die Objektart `Stack` -- in dem Fall ohne weitere Pfeile. Die Objektart `EmptyStack` erweitert (_extends_) die Objektart `Stack`, `Stack` ist für `EmptyStack` die sogenannte Oberklasse. Man sagt: "`EmptyStack` ist ein `Stack`." Hätte `Stack` Pfeile gehabt, so wären diese auch automatisch Pfeile von `EmptyStack` geworden. Genauso ist es bei `StackWithElements`. Diese Klasse hat ebenfalls `Stack` als Oberklasse (und würde die Pfeile von `Stack` ebenfalls sein eigen nennen) und bringt zwei Pfeile ein. Die `View` kann nun den Pfeil `stack` als einen Verweis auf die Objektart `Stack` angeben. Gültig ist nun sowohl der Verweis auf ein `Stack`-Objekt wie auch ein `EmptyStack`-Objekt als auch ein Objekt von `StackWithElements`. Da wir gar keine Absicht haben, Objekte der Art `Stack` zu zeichnen, weisen wir die Klasse als abstrakt aus, d.h. es darf kein Kästchen geben, in dem die Objektart `Stack` vorkommt.
+
+~~~ Java
+abstract class Stack { }
+
+class EmptyStack extends Stack { }
+
+class StackWithElements {
+    Stack onTopOf;
+    Book item;
+}
+
+class Book { }
+
+class View {
+    Stack stack;
+}
+~~~
+
+Machen wir die Definition der Klassen generisch, dann lässt sich die Stapelorganisation allgemein für Objekte einer Objektart aufsetzen!
+
+~~~ Java
+abstract class Stack< T > { }
+
+class EmptyStack< T > extends Stack< T > { }
+
+class StackWithElements< T > {
+    Stack< T > onTopOf;
+    T item;
+}
+~~~
+-->
+
+<!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>
