@@ -77,13 +77,9 @@ char c = 'A'
 
 ## Mittwoch
 
-**Einzelzeichen**: Warum ergibt `'A' + 1` eine `66` und nicht das Folgezeichen `'B'`?
+### Einzelzeichen
 
-**Float**: Das Schlüsselwort `float` steht in Java für den Zahlentyp einer Fließkommazahl aus 4 Bytes. Das Wort "float" ist im Englischen eine Kurzform für was?
-
-**Let it flow**: Beschreiben Sie, was bei der Anweisung `float f = 1.024` vor sich geht!
-
-**Typ**: Was ist ein Typ?
+Warum ergibt `'A' + 1` eine `66` und nicht das Folgezeichen `'B'`?
 
 <details>
     <summary>Lösung: Einzelzeichen</summary>
@@ -104,10 +100,18 @@ $1 ==> 66
 ~~~
 </details>
 
+### Float
+
+Das Schlüsselwort `float` steht in Java für den Zahlentyp einer Fließkommazahl aus 4 Bytes. Das Wort "float" ist im Englischen eine Kurzform für was?
+
 <details>
     <summary>Lösung: "float"</summary>
 Im deutschen Sprachraum schreiben wir Kommazahlen auch mit einem Komma, z.B. 1,024. Da die Anzahl der Nachkommastellen das Komma sozusagen variabel in seiner Position erscheinen lässt, spricht man von Gleitkomma- bzw. Fließkommazahlen. Im englischen Sprachraum heißt es _floating point number_, kurz _float_, was verrät, dass Kommazahlen mit einem Punkt notiert werden, z.B. 1.024. Java ist der englischsprachigen Schreibweise verpflichtet. 
 </details>
+
+### Let it flow
+
+Beschreiben Sie, was bei der Anweisung `float f = 1.024` vor sich geht!
 
 <details>
     <summary>Lösung: Let it flow</summary>
@@ -122,6 +126,10 @@ jshell> float f = 1.204
 ~~~
 </details>
 
+### Typ
+
+Was ist ein Typ?
+
 <details>
     <summary>Lösung: Typ</summary>
 Formal gesprochen ist ein Typ eine Menge von Datenwerten. Das Konzept des Typs ist eng verwandt mit dem Konzept der Menge aus der Mengenlehre.
@@ -130,6 +138,8 @@ Jeder Datenwert hat einen Typ. Anders ausgedrückt: Jeder Datenwert ist einem Ty
 
 Für primitive Typen ist die Kenntnis der Anzahl der benötigten Bytes im Speicher und die verwendete Kodierung essenziell, um die Besonderheiten des Umgangs, vor allem des Rechnens, mit primitiven Datenwerten zu verstehen. Ein grobes Verständnis der Speicherorganisation von Arrays hilft, die Effiziens der Datenhaltung nachzuvollziehen. Für sonstige, nicht-primitive Typen (Klassen und Interfaces) organisiert Java die Datenwerte (Instanzen genannt) zwar eigenständig im Speicher, doch leitet sich die Speicherorganisation unmittelbar aus den Feldern einer Klasse ab. Sie müssen auch hier ein Verständnis entwickeln, um Datenstrukturen intellektuell zu erfassen. Wovon Java Sie konsequent befreit, ist ein Wissen darum, wo genau im Speicher Datenwerte liegen und wie es den Speicher verwaltet. 
 </details>
+
+### Was in der JShell geschah
 
 <details>
 <summary>Sehen, was zuletzt in der JShell geschah!</summary>
@@ -171,21 +181,27 @@ p.jahresgehalt
 
 ## Dienstag
 
-**Typfrage**: Erläutern Sie, was Sie zu dem Typ `long` alles wissen!
+### Typfrage
 
-**Literal**: Was ist ein Literal? Geben Sie drei grundlegend unterschiedliche Beispiele für Literale an.
-
-**Punkt**: Sie benötigen eine Datenstruktur, mit der Sie die Idee eines Punktes in einer Fläche abbilden können anhand seiner kartesischen Koordination _x_ und _y_. Erstellen Sie den Datentypen dazu. Legen Sie zwei Punkte namens `ursprung` und `xEins` an und belegen Sie `ursprung` mit den Werten (0,0) und `xEins` mit den Werten (1,0). 
+Erläutern Sie, was Sie zu dem Typ `long` alles wissen!
 
 <details>
     <summary>Lösung: Typfrage `long`</summary>
 Der Typ `long` ist ein primitiver Datentyp für Ganzzahlen ("primitiv" meint: ein einfacher, grundlegender Datentyp), der eine Ganzzahl im Zweierkomplement mit 8 Bytes kodiert. 
 </details>
 
+### Literal
+
+Was ist ein Literal? Geben Sie drei grundlegend unterschiedliche Beispiele für Literale an.
+
 <details>
     <summary>Lösung: Literal</summary>
 Ein Literal ist eine Schreibweise für Datenwerte. Die Schreibweise ist eindeutig und lässt den Typ des Datenwerts erkennen. Beispiele sind `'Z'` für einen `char`-Wert, `0.007` für einen `double`-Wert und `0b100` für den `int`-Wert 4 in binärer Schreibweise.
 </details>
+
+### Punkt
+
+Sie benötigen eine Datenstruktur, mit der Sie die Idee eines Punktes in einer Fläche abbilden können anhand seiner kartesischen Koordination _x_ und _y_. Erstellen Sie den Datentypen dazu. Legen Sie zwei Punkte namens `ursprung` und `xEins` an und belegen Sie `ursprung` mit den Werten (0,0) und `xEins` mit den Werten (1,0). 
 
 <details>
     <summary>Lösung: Punkt</summary>
@@ -197,6 +213,8 @@ class Punkt {
 }
 ~~~
 </details>
+
+### Was heute geschah!
 
 <details>
 <summary>Ja, will ich sehen, was heute in der JShell geschah!</summary>
@@ -224,10 +242,11 @@ Math.sqrt(Math.pow(p.x,2) + Math.pow(p.y,2))
 ~~~
 </details>
 
-
 ## Mittwoch
 
-**Zweimal `long`**: Deklarieren Sie zwei Variablen namens `a` und `b` mit zwei Zahlenwerten vom Typ `long` und initialisieren Sie die Variablen. Denken Sie sich beispielhafte Werte aus.
+### Zweimal `long`
+
+Deklarieren Sie zwei Variablen namens `a` und `b` mit zwei Zahlenwerten vom Typ `long` und initialisieren Sie die Variablen. Denken Sie sich beispielhafte Werte aus.
 
 <details>
     <summary>Lösung</summary>
@@ -253,15 +272,23 @@ a = 12L; // Variable a bekommt den Wert 12 zugewiesen
 Es gibt Fälle, wo eine Variable bei der Deklaration initialisiert werden muss.
 </details>
 
-**Geht das?**: Sie haben soeben `a` und `b` deklariert. Jemand tippert auf der JShell etwas ein, drückt aber noch nicht die Eingabetaste (ENTER). Was passiert, wenn Sie ENTER drücken?
+### Geht das?
+
+Sie haben soeben `a` und `b` deklariert. Jemand tippert auf der JShell etwas ein, drückt aber noch nicht die Eingabetaste (ENTER). Was passiert, wenn Sie ENTER drücken?
 
 ~~~ text
 jshell> a = b = b = a
 ~~~
 
-**Farbpunkt**: Gehen Sie davon aus, dass es die Klasse `Point` von gestern bereits gibt. Legen Sie einen Datentypen an, der einen Farbpunkt (`ColorPoint`) repräsentieren soll, der sich aus einem Punkt (`Point`) und einer Zahl für den Farbwert zusammensetzt. Zeigen Sie beispielhaft, wie Sie eine Variable namens `cp` anlegen, die einen solchen Datenwert speichert; denken Sie sich Beispielwerte aus.
+### Farbpunkt
 
-**Vorbereitung**: Als Delegierte:r sollen Sie vorbereitet beim Delegiertentreffen erscheinen. Was heißt es, _vorbereitet_ zu sein?
+Gehen Sie davon aus, dass es die Klasse `Point` von gestern bereits gibt. Legen Sie einen Datentypen an, der einen Farbpunkt (`ColorPoint`) repräsentieren soll, der sich aus einem Punkt (`Point`) und einer Zahl für den Farbwert zusammensetzt. Zeigen Sie beispielhaft, wie Sie eine Variable namens `cp` anlegen, die einen solchen Datenwert speichert; denken Sie sich Beispielwerte aus.
+
+### Vorbereitung
+
+Als Delegierte:r sollen Sie vorbereitet beim Delegiertentreffen erscheinen. Was heißt es, _vorbereitet_ zu sein?
+
+### Was am Mittwoch in der JShell geschah
 
 <details>
     <summary>Wollen Sie wissen, was heute in der JShell geschah?</summary>
@@ -329,13 +356,21 @@ Was wichtig ist zu unterscheiden: Die Variable `p` und die Variable `cp.p` sind 
 
 ## Dienstag
 
-**Zweimal A**: Was ist eine Anweisung, was ein Ausdruck, was ein Anweisungsausdruck?
+### Zweimal A
 
-**String**: Was ist ein `String` in Java? Wie sieht ein `String`-Literal aus?
+Was ist eine Anweisung, was ein Ausdruck, was ein Anweisungsausdruck?
 
-**Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. Legen Sie Instanzen mit Beispielwerten an.
+### String
 
-**Abstand**: (a) Geben Sie den Ausdruck an, der von einem Punkt (Klasse `Point` von VW2) den Abstand vom Ursprung des Koordinatensystems berechnet. (b) Packen Sie die Berechnung des Abstands in eine Methode.
+Was ist ein `String` in Java? Wie sieht ein `String`-Literal aus?
+
+### Firma
+
+Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. Legen Sie Instanzen mit Beispielwerten an.
+
+### Abstand
+
+(a) Geben Sie den Ausdruck an, der von einem Punkt (Klasse `Point` von VW2) den Abstand vom Ursprung des Koordinatensystems berechnet. (b) Packen Sie die Berechnung des Abstands in eine Methode.
 
 <details>
     <summary>Lösung: Abstand</summary>
@@ -469,11 +504,17 @@ Ist Ihnen was aufgefallen? In dieser Aufgabe geht es im Kern um die Kontexte von
 
 ## Mittwoch
 
-**Anweisung/Ausdruck**: Was ist eine Anweisung? Was ist ein Ausdruck? (Bitte geben Sie auch die englischen Begriffe dafür an.)
+### Anweisung/Ausdruck
 
-**Variable**: Was ist eine Instanz-, was eine Klassenvariable?
+Was ist eine Anweisung? Was ist ein Ausdruck? (Bitte geben Sie auch die englischen Begriffe dafür an.)
 
-**Linie**: Die Klassen `Point` (Punkt) und `Line` (Linie) sind gegeben. Eine Linie `line` habe den Startpunkt $(1,1)$ und den Endpunkt $(-3,2)$. (1) Schreiben Sie die notwendige Folge von Anweisungen auf, um `line` mit den angegebenen Werten aufzusetzen. (2) Zeichnen Sie das Objektbild zur entstandenen Situation.
+### Variable
+
+Was ist eine Instanz-, was eine Klassenvariable?
+
+### Linie
+
+Die Klassen `Point` (Punkt) und `Line` (Linie) sind gegeben. Eine Linie `line` habe den Startpunkt $(1,1)$ und den Endpunkt $(-3,2)$. (1) Schreiben Sie die notwendige Folge von Anweisungen auf, um `line` mit den angegebenen Werten aufzusetzen. (2) Zeichnen Sie das Objektbild zur entstandenen Situation.
 
 ~~~ java
 class Point {
@@ -486,7 +527,9 @@ class Line {
 }
 ~~~
 
-**Kofler, S.215f.**: In dem folgenden Text aus dem Kofler-Buch steckt ein Fehler: Finden und erklären Sie ihn!
+### Kofler, S.215f.
+
+In dem folgenden Text aus dem Kofler-Buch steckt ein Fehler: Finden und erklären Sie ihn!
 
 > Normalerweise gelten in einer Klasse deklarierte Variablen für eine konkrete
 > Instanz einer Klasse – daher rührt auch der Begriff _Instanzvariable_.
@@ -527,13 +570,13 @@ public class Rechteck {
 
 ## Dienstag
 
-**Zuweisung**: Was müssen Sie an der folgenden Zeile warum ändern, damit Sie lauffähig wird? Rechts vom Zuweisungsoperator dürfen Sie nichts löschen.
+### Zuweisung
+
+Was müssen Sie an der folgenden Zeile warum ändern, damit Sie lauffähig wird? Rechts vom Zuweisungsoperator dürfen Sie nichts löschen.
 
 ~~~ java 
 int a = 3 + b = 4 + a;
 ~~~
-
-**Gerade**: Schreiben Sie eine Methode namens `countEven`, die ein Array aus Ganzzahlen entgegennimmt und die Anzahl der geraden Zahlen in dem Array zurückgibt.
 
 <details>
     <summary>Lösung: Zuweisung</summary>
@@ -557,15 +600,15 @@ jshell> a = 3 + b = 4 + a
 ~~~
 </details>
 
+### Gerade
+
+Schreiben Sie eine Methode namens `countEven`, die ein Array aus Ganzzahlen entgegennimmt und die Anzahl der geraden Zahlen in dem Array zurückgibt.
+
 ## Mittwoch
 
-**Assoziativität**: Ist der Operator "`+`" rechts- oder linksassoziativ? Geben Sie ein Beispiel an, mit dem Sie Ihre Behauptung überprüfen können.
+### Assoziativität
 
-**Gerade?**: Schreiben Sie eine Methode `isEven`, die folgendes Verfahren umsetzt: Wenn die übergebene Zahl gleich `1` ist, dann beantwortet die Methode die Frage mit `false`, wenn die Zahl gleich `0` ist, dann lautet die Antwort `true`. Ansonsten wird der an `isEven` übergebene Zahlenwert um den Wert `2` vermindert und die Frage `isEven` wird erneut gestellt.
-
-Gehen Sie davon aus, dass die an `isEven` übergebene Zahl immer positiv ist.
-
-**Abstand**: (a) Geben Sie den Ausdruck an, der von einem Punkt (Klasse `Point` von VW2) den Abstand vom Ursprung des Koordinatensystems berechnet. (b) Packen Sie die Berechnung des Abstands in eine Methode. (Wiederholung zur Aufarbeitung, siehe VW3)
+Ist der Operator "`+`" rechts- oder linksassoziativ? Geben Sie ein Beispiel an, mit dem Sie Ihre Behauptung überprüfen können.
 
 <details>
 <summary>Lösung: Assoziativität</summary>
@@ -596,6 +639,12 @@ Können Sie auch ein Beispiel für Ganzzahlen konstruieren?
 Es ist eine Besonderheit bei Java, dass die verwendete Modulo-Arithmetik bei Ganzzahlen neutral gegenüber der Reihenfolge bei der Addition ist. Bei Fließkommazahlen spielt es eine entscheidende Rolle, welche Zahlen zuerst berechnet werden, weil die Ungenauigkeiten in den Nachkommastellen unterschiedlich ausfallen können -- so zeigt es auch das Beispiel.
 </details>
 </details>
+
+### Gerade?
+
+Schreiben Sie eine Methode `isEven`, die folgendes Verfahren umsetzt: Wenn die übergebene Zahl gleich `1` ist, dann beantwortet die Methode die Frage mit `false`, wenn die Zahl gleich `0` ist, dann lautet die Antwort `true`. Ansonsten wird der an `isEven` übergebene Zahlenwert um den Wert `2` vermindert und die Frage `isEven` wird erneut gestellt.
+
+Gehen Sie davon aus, dass die an `isEven` übergebene Zahl immer positiv ist.
 
 <details>
     <summary>Lösung: Gerade?</summary>
@@ -648,23 +697,29 @@ boolean isEven(int n) {
 Überlegen Sie sich selbst mögliche Umsetzungen mit der `for`-Schleife! (Die hier, nebenbei gesagt, nicht das beste Mittel der Wahl ist. Jede Schleifenart hat ihre eigenen kleinen Vorzüge und kleinen Nachteile.)
 </details>
 
+### Abstand
+
+(a) Geben Sie den Ausdruck an, der von einem Punkt (Klasse `Point` von VW2) den Abstand vom Ursprung des Koordinatensystems berechnet. (b) Packen Sie die Berechnung des Abstands in eine Methode. (Wiederholung zur Aufarbeitung, siehe VW3)
+
 # VW5
 
 ## Dienstag
 
-**Zuweisung**: Sie sehen in einem Java-Programm folgende Codezeile. Begründen Sie, was Sie davon halten!
+### Zuweisung
+
+Sie sehen in einem Java-Programm folgende Codezeile. Begründen Sie, was Sie davon halten!
 
 ~~~ java
 int i = j % 1;
 ~~~
 
-**`doit`**: Sie sehen die folgende Implementierung einer Methode namens `doit`. Was macht die Methode und was wäre folglich ein besserer Name für sie?
+### `doit`
+
+Sie sehen die folgende Implementierung einer Methode namens `doit`. Was macht die Methode und was wäre folglich ein besserer Name für sie?
 
 ~~~ java
 boolean doit(int n) { return (n & 1) > 0; }
 ~~~
-
-**Zahl**: Erstellen Sie eine Klasse namens `Zahl`. Eine Instanz von Zahl steht für eine Ganzzahl und kann mit einem `int`-Wert initialisiert werden. Implementieren Sie neben dem Konstruktor eine Methode `addiere`, um zwei Zahlen addieren zu können; das Ergebnis soll eine neue Zahl sein. Ergänzen Sie ein Methode `negiere`, um eine neue Zahl mit dem negierten Zahlenwert zu generieren. Implementieren Sie die `toString`-Methode, um Zahlen in der Form `Zahl(3)` oder `Zahl(-17)` darzustellen. 
 
 <details>
     <summary>Lösung: doit</summary>
@@ -686,6 +741,10 @@ Man kann an diesem kleinen Programm einen weiteren interessanten Aspekt der Prog
 In diesem speziellen Fall sollten Sie nicht ohne sehr trifftige Gründe bei der Verwendung des Modulo-Operators bleiben. Die `%`-Operation kostet die Hardware genauso viel Zeit, wie die `&`-Operation.
 </details>
 
+### Zahl
+
+Erstellen Sie eine Klasse namens `Zahl`. Eine Instanz von Zahl steht für eine Ganzzahl und kann mit einem `int`-Wert initialisiert werden. Implementieren Sie neben dem Konstruktor eine Methode `addiere`, um zwei Zahlen addieren zu können; das Ergebnis soll eine neue Zahl sein. Ergänzen Sie ein Methode `negiere`, um eine neue Zahl mit dem negierten Zahlenwert zu generieren. Implementieren Sie die `toString`-Methode, um Zahlen in der Form `Zahl(3)` oder `Zahl(-17)` darzustellen. 
+
 <details>
     <summary>Lösung: Zahl</summary>
 Diese Aufgabe möchte eine bestimmte Lösung von Ihnen sehen. Hier zeige ich Ihnen auf, welche grundsätzlichen Sichtweisen verschiedene Arten der Implementierung z.B. der Addition mit sich bringen. Ich habe in der Veranstaltung von verschiedenen "Erzählungen" gesprochen, die Sie in den Code einschreiben können.
@@ -702,7 +761,7 @@ Diese Aufgabe möchte eine bestimmte Lösung von Ihnen sehen. Hier zeige ich Ihn
     
 Im Kern geht es darum, ob man ein Objekt als _mutabel_ (veränderlich) oder _immutabel_ (unveränderlich) auslegt und ob man den Umgang mit den Objekten als Klassen- oder Instanzmethoden implementiert. 
 
-### Die Veränderlichkeitserzählung (1. Variante)
+#### Die Veränderlichkeitserzählung (1. Variante)
 
 Traditionell versteht sich die Objektorientierung als Veränderlichkeitserzählung: Objekte können die Werte ihrer Instanzvariablen ändern. Man sagt, ein Objekt hat einen Zustand. Unter dem Zustand sind -- formal gesprochen -- all die Werte derjenigen Instanzvariablen gemeint, die nicht ableitbar sind (heißt: nicht berechenbar aus anderen Werten) und die sich über die Zeit ändern können. Die traditionelle Veränderlichkeitserzählung deklariert die Methoden, die den Zustand eines Objekts ändern, typischerweise als `void`. Eine Methode, die `void` als Rückgabetyp hat, muss einen (Seiten)Effekt haben. Ein häufiger Effekt ist die Änderung des Zustands eines Objekts.
 
@@ -740,7 +799,7 @@ jshell> z
 z ==> Zahl(-20)
 ~~~
 
-### Die Unveränderlichkeitserzählung
+#### Die Unveränderlichkeitserzählung
 
 Mittlerweile ist die Unveränderlichkeitserzählung sehr modern geworden, da sie softwaretechnisch einige Vorteile mit sich bringt. Um anzuzeigen, dass eine Variable nur einmal eine Wertzuweisung erhalten kann, deklariert man sie als `final`. Da eine Instanz von `Zahl` den Wert `value` gar nicht mehr ändern kann, bleibt einem gar nichts anderes mehr übrig als eine neue Instanz von `Zahl` mit einem neuen Zahlenwert zu erzeugen.
 
@@ -776,7 +835,7 @@ jshell> z
 z ==> Zahl(13)
 ~~~
 
-### Die Veränderlichkeitserzählung (2. Variante)
+#### Die Veränderlichkeitserzählung (2. Variante)
 
 Die Eleganz der Verkettung von Methodenaufrufen kann man auch bei der Programmierung mit mutablen Objekten nutzen.
 
@@ -813,7 +872,7 @@ jshell> z
 z ==> Zahl(-20)
 ~~~
 
-### Die Klassenerzählung
+#### Die Klassenerzählung
 
 Man kann die Methoden `addiere` und `negiere` als Klassenmethoden auslegen, dann notwendigerweise mit zwei bzw. einem `Zahl`-Parameter. Es macht bei diesem Programmierstil nur begrenzt Sinn mutabel zu programmieren. Soll das Ergebnis bei der Addition den Wert von `z1` oder `z2` verändern? Egal, wie die Antwort ausfällt, wenn man eines der Objekte mutieren möchte, dann bietet sich ganz klar die Veränderlichkeitserzählung an -- die erzählt dann, was man tatsächlich vorhat, statt den Vorgang über die Klassenerzählung zu verschleiern. 
 
@@ -850,7 +909,9 @@ Bei der Implementierung von `addiere` als Klassenmethode bringt die Klasse zwei 
 
 ## Mittwoch
 
-**Array**: Gegeben sei die folgende Folge von Anweisungen:
+### Array
+
+Gegeben sei die folgende Folge von Anweisungen:
 
 ~~~ text 
 int[] a = {1,2,3,4};
@@ -867,7 +928,9 @@ Welchen Wert hat `a`?
 -[ ] `17`
 -[ ] `b`
 
-**Nibble**: Eine Folge von vier Bits nennt man Nibble. Schreiben Sie eine Klasse `Nibble`, die ihre vier Bits in einer Variablen namens `bits` durch ein Array aus vier Ganzzahlen repräsentiert; jede dieser Ganzzahlen hat entweder den Wert 0 oder 1. Ein Hinweis: `bits[0]` repräsentiere das _Most Significant Bit_ (MSB), `bits[3]` das _Least Significant Bit_ (LSB).
+### Nibble
+
+Eine Folge von vier Bits nennt man Nibble. Schreiben Sie eine Klasse `Nibble`, die ihre vier Bits in einer Variablen namens `bits` durch ein Array aus vier Ganzzahlen repräsentiert; jede dieser Ganzzahlen hat entweder den Wert 0 oder 1. Ein Hinweis: `bits[0]` repräsentiere das _Most Significant Bit_ (MSB), `bits[3]` das _Least Significant Bit_ (LSB).
 
 1. Implementieren Sie die Konstruktoren und eine `toString`-Methode, so dass die folgenden Verwendungen möglich sind:
 
@@ -1050,7 +1113,9 @@ Ich informiere Sie noch kurz über Moodle und Slack.
 
 ## Dienstag
 
-**Identität und Gleichheit**: Gegeben sei die folgende Klasse namens `Point`:
+### Identität und Gleichheit
+
+Gegeben sei die folgende Klasse namens `Point`:
 
 ~~~ java
 class Point {
@@ -1063,8 +1128,6 @@ class Point {
 ~~~
 
 Erklären Sie anhand der Beispielklasse, was es bedeutet, wenn zwei Instanzen der Klasse `Point` identisch sind! Und was bedeutet es, wenn sie gleich sind?
-
-**Trinkflasche**: Eine Flasche (_bottle_) kann ein bestimmtes Volumen haben. Eine Flasche kann man befüllen, man kann auch einen Teil ihres Inhalts oder den gesamten Inhalt ausschütten. Außerdem ist eine Flasche mit einem Deckel verschließbar. Ihre Aufgabe ist es, die Flasche, ihre Eigenschaften und das, was man mit ihr tun kann, in Form eines Java-Programms zu modellieren und abzubilden. 
 
 <details>
     <summary>Lösung: Identität und Gleichheit</summary>
@@ -1094,16 +1157,16 @@ Ganz viel von dem Denken in Objekten als Instanzen von Klassen lässt sich auf d
 [Reflexivität](https://de.wikipedia.org/wiki/Reflexive_Relation)
 : Für alle Instanzen `obj` der Klasse `K` gilt: `obj.equals(obj) == true` (`obj != null`)
 
-
 Wichtige Quellen zu `equals`:
 
 * Kapitel 9.3.1 ("Objektgleichheit mit equals(…) und Identität") aus "Java ist auf eine Insel": http://openbook.rheinwerk-verlag.de/javainsel/09_001.html#u9.1.3
 * Die Dokumentation zu `equals` der Klasse `Object`: https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)
 * Die Dokumentation zu `hashCode` der Klasse `Object`: https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html#hashCode()
-
-
 </details>
 
+### Trinkflasche
+
+Eine Flasche (_bottle_) kann ein bestimmtes Volumen haben. Eine Flasche kann man befüllen, man kann auch einen Teil ihres Inhalts oder den gesamten Inhalt ausschütten. Außerdem ist eine Flasche mit einem Deckel verschließbar. Ihre Aufgabe ist es, die Flasche, ihre Eigenschaften und das, was man mit ihr tun kann, in Form eines Java-Programms zu modellieren und abzubilden. 
 
 <details>
     <summary>Lösung: Trinkflasche</summary>
@@ -1119,7 +1182,9 @@ Diese Fragen zum Verständnis einer Flache sind das eine. Das andere ist der Kon
 
 ## Mittwoch
 
-**Datum**: Erstellen Sie eine Klasse `Date`, um Datumsangaben zu repräsentieren. Der Konstruktor erfordert zur Initialisierung die Angabe des Jahrs (_year_), des Monats (_month_), des Tags (_day_) und des Wochentags (_weekday_); der Wochentag ist als Aufzählungstyp realisiert mit den Werten `MON` bis `SUN` (englisch abgekürzt auf drei Buchstaben).
+### Datum
+
+Erstellen Sie eine Klasse `Date`, um Datumsangaben zu repräsentieren. Der Konstruktor erfordert zur Initialisierung die Angabe des Jahrs (_year_), des Monats (_month_), des Tags (_day_) und des Wochentags (_weekday_); der Wochentag ist als Aufzählungstyp realisiert mit den Werten `MON` bis `SUN` (englisch abgekürzt auf drei Buchstaben).
 
 !!! WARNING
     Ich habe die Aufgabe ein klein wenig überarbeitet. Das ist nur relevant, wenn Sie am Mittwoch, 20. Nov. 2019 in der OOP-Veranstaltung waren: Der Enumerationstyp hat Werte, die drei Buchstaben lang sind; `isLeapYear` ist `static`, `compareTo` habe ich angepasst von den Rückgabewerten an die Methode des Interfaces `Comparable`; die Methode `add` ist dazugekommen.
@@ -1334,13 +1399,17 @@ Finden Sie Fehler im Code? -- Falls ja, schreiben Sie mich auf Slack oder per Em
 
 ## Dienstag
 
-**Ausführung Codezeile**: Erklären Sie so detailliert wie möglich die Ausführung der folgenden Codezeile; die Zeile stammt aus der Klasse `Date` der letzten Woche.
+### Ausführung Codezeile
+
+Erklären Sie so detailliert wie möglich die Ausführung der folgenden Codezeile; die Zeile stammt aus der Klasse `Date` der letzten Woche.
 
 ~~~ java
 int nextDay = day == daysPerMonth(year)[month - 1] ? 1 : day + 1;
 ~~~
 
-**Ausführung `Date`**: Erklären Sie, wie der folgende Code ausgeführt wird -- es geht hier um das Ausführungsverhalten. Seien Sie so detailliert wie möglich in den Beschreibungen der Details. Der Code setzt die Kenntnis der Klasse `Date` der letzten Woche voraus und geht davon aus, dass der Code in der JShell geladen ist. Gehen Sie bei Ihren Erläuterungen bis zur Ebene der Implementierung der Methode `add`.
+### Ausführung `Date`
+
+Erklären Sie, wie der folgende Code ausgeführt wird -- es geht hier um das Ausführungsverhalten. Seien Sie so detailliert wie möglich in den Beschreibungen der Details. Der Code setzt die Kenntnis der Klasse `Date` der letzten Woche voraus und geht davon aus, dass der Code in der JShell geladen ist. Gehen Sie bei Ihren Erläuterungen bis zur Ebene der Implementierung der Methode `add`.
 
 ~~~ text
 jshell> Date d = new Date(20191126, Weekday.TUE)
@@ -1356,7 +1425,9 @@ Anweisungen, Schlüsselwörter, Kontrollstrukturen, Operatoren, Namen, Typen, Li
 
 ## Mittwoch
 
-**Baum-Auswertung**: (1) Wie sieht der Java-Ausdruck im Code aus, der dieser Baum-Darstellung entspricht? (2) Beschreiben Sie die Ausführungsregel für jeden im Bild vorkommenden Operator! (3) Nummerieren Sie, welcher Teilausdruck in welcher Reihenfolge ausgewertet wird?
+### Baum-Auswertung
+
+(1) Wie sieht der Java-Ausdruck im Code aus, der dieser Baum-Darstellung entspricht? (2) Beschreiben Sie die Ausführungsregel für jeden im Bild vorkommenden Operator! (3) Nummerieren Sie, welcher Teilausdruck in welcher Reihenfolge ausgewertet wird?
 
 ![Baum-Darstellung eines Ausdrucks](pics/nextDay.Ausdrucksbaum.jpg with="80%")
 
@@ -1366,7 +1437,9 @@ Anweisungen, Schlüsselwörter, Kontrollstrukturen, Operatoren, Namen, Typen, Li
 
 </details>
 
-**`while`-Frage**: Gegeben sei folgender Codeausschnitt, der in die JShell eingegeben wird.
+### `while`-Frage
+
+Gegeben sei folgender Codeausschnitt, der in die JShell eingegeben wird.
 
 ~~~ java
 int counter = 7;
@@ -1391,7 +1464,9 @@ Welche Ausgabe sehen Sie, wenn überhaupt? Welche Antwort trifft zu?
 -[ ] `ABCABCAD`
 -[ ] `ABCABCABC...` (unendliche Wiederholung von `ABC`)
 
-**`while`-Ausführung**: Gegeben sei das folgende Codefragment einer `while`-Anweisung, wobei die Details von `BooleanExpression` und `StatementA` bis `StatementD` nicht interessieren. Angenommen, die Schleife werde genau 3x durchlaufen. Und weiter angenommen, `BooleanExpression` und `StatementA` bis `StatementD` würden während der Ausführung protokolliert. Wie sieht das Protokoll aus?  
+### `while`-Ausführung
+
+Gegeben sei das folgende Codefragment einer `while`-Anweisung, wobei die Details von `BooleanExpression` und `StatementA` bis `StatementD` nicht interessieren. Angenommen, die Schleife werde genau 3x durchlaufen. Und weiter angenommen, `BooleanExpression` und `StatementA` bis `StatementD` würden während der Ausführung protokolliert. Wie sieht das Protokoll aus?  
 
 ~~~ text
 StatementA;
@@ -1402,7 +1477,9 @@ while(BooleanExpression) {
 StatementD;
 ~~~
 
-**`for` mit `while`**: Angenommen, Java würde nur die `while`-Anweisung kennen und die `for`-Anweisung intern in eine `while`-Anweisung übersetzen. Wie würde die Übersetzung der `for`-Anweisung aussehen, wenn Sie von folgendem Aufbau der `for`-Anweisung ausgehen?
+### `for` mit `while`
+
+Angenommen, Java würde nur die `while`-Anweisung kennen und die `for`-Anweisung intern in eine `while`-Anweisung übersetzen. Wie würde die Übersetzung der `for`-Anweisung aussehen, wenn Sie von folgendem Aufbau der `for`-Anweisung ausgehen?
 
     `for(`_VarDeklaration_ `=` _InitExpression_ `;` _BooleanExpression_ `;` _Update_) _ForBody_
 
@@ -1413,7 +1490,9 @@ StatementD;
 
 ## Dienstag
 
-**Syntaxbaum: `while`**: Zeichnen Sie den Syntaxbaum zu dem folgenden Codefragment.
+### Syntaxbaum: `while`
+
+Zeichnen Sie den Syntaxbaum zu dem folgenden Codefragment.
 
 ~~~ java
 while(days != 0) {
@@ -1422,14 +1501,18 @@ while(days != 0) {
 }
 ~~~
 
-**Vererbt**: Luise ist das Kind von Julia. Luise kann alles, was ihre Mutter kann, z.B. tanzen. Was ihre Mutter nicht kann, ist, ein gegebenes Wort rückwärts wiederzugeben. Luise hingegen gelingt das mühelos. Schreiben Sie die entsprechenden Klassen und Methoden. Setzen Sie das Tanzen als Methode um, die die Zeichenkette `"Ich tanze"` zurückgibt. Und setzen Sie das Rückwärtssprechen so um, dass eine gegebene Zeichenkette in ein `char`-Array gewandelt wird, in dem die Buchstabenfolge umgekehrt wird; die entsprechende Methode gibt das Array zurück.
+### Vererbt
+
+Luise ist das Kind von Julia. Luise kann alles, was ihre Mutter kann, z.B. tanzen. Was ihre Mutter nicht kann, ist, ein gegebenes Wort rückwärts wiederzugeben. Luise hingegen gelingt das mühelos. Schreiben Sie die entsprechenden Klassen und Methoden. Setzen Sie das Tanzen als Methode um, die die Zeichenkette `"Ich tanze"` zurückgibt. Und setzen Sie das Rückwärtssprechen so um, dass eine gegebene Zeichenkette in ein `char`-Array gewandelt wird, in dem die Buchstabenfolge umgekehrt wird; die entsprechende Methode gibt das Array zurück.
 
 ## Mittwoch
 
 !!!
     Auch wenn ich heute den Termin nicht wahrnehmen kann: Üben Sie ein wenig mit den folgenden Aufgaben!
 
-**Anonyme Klasse**: Erstellen Sie ein Interface namens `ArithmeticOperation` mit der Methode `double square(double x)`. Erzeugen Sie eine Instanz dieses Interfaces mit einer Implementierung von `square`, ohne sich des Schlüsselworts `class` zu bedienen. Demonstrieren Sie die Verwendung der Methode an einem Beispiel.
+### Anonyme Klasse
+
+Erstellen Sie ein Interface namens `ArithmeticOperation` mit der Methode `double square(double x)`. Erzeugen Sie eine Instanz dieses Interfaces mit einer Implementierung von `square`, ohne sich des Schlüsselworts `class` zu bedienen. Demonstrieren Sie die Verwendung der Methode an einem Beispiel.
 
 <details>
     <summary>Lösung: Anonyme Klasse</summary>
@@ -1455,7 +1538,9 @@ $20 ==> 529.0
 
 </details>
 
-**Syntaxbaum: `for`**: Zeichnen Sie den Syntaxbaum zu dem folgenden Codefragment.
+## Syntaxbaum: `for`
+
+Zeichnen Sie den Syntaxbaum zu dem folgenden Codefragment.
 
 ~~~ java
 for(Date d = this;
@@ -1471,11 +1556,68 @@ for(Date d = this;
 
 ## Dienstag
 
-**Zahlenstapel**: Es geht um den Entwurf eines Zahlenstapels von `int`-Werten. Auf dem Stapel kann man eine Zahl mit `push` ablegen, mit `pop` entfernen und mit `top` abrufen. Das Prädikat `isEmpty` verrät, ob der Stapel leer ist oder nicht. Entwerfen Sie ein dazu passendes Interface namens `Stackable`. Implementieren Sie das Interface in Form einer Klasse namens `IntStack`. 
+(Wir haben unter anderem die Aufgaben von letzter Woche Mittwoch besprochen.)
+
+### Zahlenstapel
+
+Es geht um den Entwurf eines Zahlenstapels von `int`-Werten. Auf dem Stapel kann man eine Zahl mit `push` ablegen, mit `pop` entfernen und mit `top` abrufen. Das Prädikat `isEmpty` verrät, ob der Stapel leer ist oder nicht. Entwerfen Sie ein dazu passendes Interface namens `Stackable`. Implementieren Sie das Interface in Form einer Klasse namens `IntStack`.
+
+<details>
+    <summary>Lösung: Zahlenstapel</summary>
+~~~ java
+interface Stackable {
+    boolean isEmpty();
+    Stackable push(int number);
+    int top();
+    Stackable pop();
+}
+
+class Stapel implements Stackable {
+    Stapel previous;
+    int carries;
+    Stapel() {
+        previous = null;
+    }
+    public boolean isEmpty() {
+        return previous == null;
+    }
+    public Stapel push(int number) {
+        Stapel s = new Stapel();
+        s.previous = this;
+        s.carries = number;
+        return s;
+    }
+    public int top() {
+        assert !this.isEmpty();
+        return carries;
+    }
+    public Stapel pop() {
+        return previous;
+    }
+}
+~~~
+
+Eine generische Implementierung zum Stapel stellt Ihnen dieses Video von Dan Rosen vor. Schauen Sie da mal rein, so schwer ist das gar nicht, den Code so zu erweitern, dass Instanzen eines gegebenen Typs gestapelt werden können.
+
+![Stack Implementation](https://www.youtube.com/watch?v=KtltiBfvqCE&t=745)
+
+</details>
+
+## Mittwoch
+
+* Sie haben heute von einem Kommilitonen[^KeinName] den Tipp erhalten, mit dem [Java-Editor](http://javaeditor.org) eine leichtgewichtige Entwicklungsumgebung zu haben, die Ihnen eine Hilfe bei der Arbeit mit Processing sein könnte. Wenn Sie das JDK in dem Editor konfigurieren und z.B. das OpenJDK mit scoop installiert haben, dann geben Sie als JDK-Ordner `C:\Users\Dominikus\scoop\apps\openjdk\current` an -- natürlich müssen Sie bei sich den User anpassen. Die Pfade können Sie mit `scoop info openjdk` ermitteln. 
+* Wir haben heute die gestrige Stapelaufgabe bearbeitet.
+* Den Katalog an Java-Lernfragen, von dem ich sprach, finden Sie hier: https://github.com/denkspuren/JavaLernfragen
+
+[^KeinName]: Da ich Ihren Kommilitonen nicht um Erlaubnis einer öffentlich Namensnennung gebeten habe, bleibt er hier anonym. Dennoch vielen Dank für die Anregung!
 
 # Ablage und Verschiebebahnhof
 
 **Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
+
+# Informationen zur Projektwoche
+
+
 
 # Gruppenarbeit und Delegiertentreffen
 
