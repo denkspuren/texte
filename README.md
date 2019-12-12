@@ -23,6 +23,6 @@ Dominikus Herzberg, [www.thm.de/mni](https://www.thm.de/mni/)
 
 ### Alte Klausuren
 
-* https://denkspuren.github.io/texte/oop/klausuren/WS2018.Klausur.Aufgabenteil.md.pdf
-* https://denkspuren.github.io/texte/oop/klausuren/WS2018.Klausur.Lösungsteil.pdf
+* WS2018/19: [Aufgabenteil](https://github.com/denkspuren/texte/blob/master/oop/Klausuren/WS2018.Klausur.Aufgabenteil.md.pdf) (PDF-Download)
+* WS2018/19: [Lösungsteil](https://github.com/denkspuren/texte/blob/master/oop/Klausuren/WS2018.Klausur.L%C3%B6sungsteil.pdf) (PDF-Download)
 
