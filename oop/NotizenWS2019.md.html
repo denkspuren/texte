@@ -1605,19 +1605,85 @@ Eine generische Implementierung zum Stapel stellt Ihnen dieses Video von Dan Ros
 
 ## Mittwoch
 
-* Sie haben heute von einem Kommilitonen[^KeinName] den Tipp erhalten, mit dem [Java-Editor](http://javaeditor.org) eine leichtgewichtige Entwicklungsumgebung zu haben, die Ihnen eine Hilfe bei der Arbeit mit Processing sein könnte. Wenn Sie das JDK in dem Editor konfigurieren und z.B. das OpenJDK mit scoop installiert haben, dann geben Sie als JDK-Ordner `C:\Users\Dominikus\scoop\apps\openjdk\current` an -- natürlich müssen Sie bei sich den User anpassen. Die Pfade können Sie mit `scoop info openjdk` ermitteln. 
+* Sie haben heute von einem Kommilitonen (Herrn Samir Faycal Tahar M'Sallem)[^Dank] den Tipp erhalten, mit dem [Java-Editor](http://javaeditor.org) eine leichtgewichtige Entwicklungsumgebung zu haben, die Ihnen eine Hilfe bei der Arbeit mit Processing sein könnte. Wenn Sie das JDK in dem Editor konfigurieren und z.B. das OpenJDK mit scoop installiert haben, dann geben Sie als JDK-Ordner `C:\Users\Dominikus\scoop\apps\openjdk\current` an -- natürlich müssen Sie bei sich den User anpassen. Die Pfade können Sie mit `scoop info openjdk` ermitteln. 
 * Wir haben heute die gestrige Stapelaufgabe bearbeitet.
 * Den Katalog an Java-Lernfragen, von dem ich sprach, finden Sie hier: https://github.com/denkspuren/JavaLernfragen
 
-[^KeinName]: Da ich Ihren Kommilitonen nicht um Erlaubnis einer öffentlich Namensnennung gebeten habe, bleibt er hier anonym. Dennoch vielen Dank für die Anregung!
+[^Dank]: Vielen Dank für die Anregung!
+
+# VW11
+
+## Dienstag
+
+### Stapelbild
+
+Gegeben sei der Stapelcode von letzter Woche. Zeichnen Sie ein Bild, das veranschaulicht, dass eine Variable namens `s` drei Zahlen auf dem Stapel "sieht", während eine Variable `p` nur die zwei darunter liegenden Zahlen "sieht".
+
+### Ausnahmefakultät
+
+(1) Programmieren Sie die Fakultätsfunktion `factorial` rekursiv. (2) Ändern Sie die Abbruchbedingung, indem Sie eine Ausnahme werfen, diese auffangen und dort den Rückgabewert zurückgeben.
+
+### Main-Fakultät
+
+Entwickeln Sie ein Java-Programm, das Sie über die Konsole aufrufen und die zum übergebenen Argument die Fakultät berechnet und auf der Konsole ausgibt und das Programm beendet.
+
+<details>
+    <summary>Lösung</summary>
+~~~ java
+class App {
+    public static void main(String[] args) {
+        int n; 
+        try {
+            n = Integer.parseInt(args[0]);
+        } catch (NumberFormatException e) {
+            n = 0;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            n = 0;
+        }
+        int result = new App().factorial(n);
+        System.out.println(result);
+    }
+
+    int factorial(int n) {
+        if (n == 0) return 1;
+        return n * factorial(n - 1);
+    }
+}
+~~~
+</details>
+
+## Mittwoch
+
+### Consize
+
+In der "Weihnachtsvorlesung" habe ich Ihnen Consize vorgestellt: https://github.com/denkspuren/consize
+
+# VW12: Informationen zur Projektwoche
+
+!!! WARNING
+    Die Projektwoche findet statt im Bürgerhaus Wieseck, Philosophenstraße 26,
+    35396 Gießen-Wieseck, siehe http://www.shg-giessen.de/buergerhaus-wieseck/.
+
+Wenn Sie eine Klausurzulassung für OOP erlangen möchten und noch nicht aus OOP ausgestiegen sind, dann ist die Teilnahme an der Projektwoche vom 6.-10. Januar 2020 für Sie Pflicht (von Montag bis Freitag inklusive).
+
+Die Projektwoche wird von Nadja Krümmel durchgeführt und von ihr zusammen mit einigen Tutoren betreut. Falls Sie noch Fragen haben, wenden Sie sich an Frau Krümmel per Email oder via Slack.
+
+Das Wichtigste in Kürze:
+
+* Die Projektwoche findet täglich von 9 bis 16 Uhr statt; Pause ist von 12 - 13 Uhr. Es herrscht durchgängig Anwesenheitspflicht.
+* Die Anwesenheit wird kontrolliert, bitte bringen Sie Ihren Studierendenausweis mit.
+* Sie benötigen einen Laptop zum Programmieren. Wir sorgen für den Strom!
+* Wer die Processing-Bibliothek nicht installiert hat, wird von der Teilnahme ausgeschlossen.
+* Am ersten Tag (Montag) liefern Sie schriftlich eine Skizze Ihres Projektvorhabens ab.
+* Sie setzen Ihre Projektidee in Java 13 um und verwenden dazu die Processing-Bibliothek.
+* Neben Ihrer Applikationsklasse sollen Sie Ihren Code mithilfe zweier Klassen strukturieren und ein Interface deklarieren und implementieren. Hintergrund ist, dass Sie versuchen sollen, Ihre "Logik" von der graphischen Repräsentation und Interaktion so weit wie möglich zu trennen. Das ist nicht so einfach, wenn man das das erste Mal macht. Probieren Sie es und sprechen Sie mit Ihren Ansprechpartnern.
+* Studierende, die eine Processing-Idee überzeugend umgesetzt haben, können vorzeitig die Zulassung erhalten und sind vom weiteren Besuch der Projektwoche freigestellt.
+
+Das Ziel für die Zulassung ist eine Umsetzung einer kleinen Spiel- oder Simulationsidee mit Hilfe der Processing-Bibliothek. Sie sollen mit Ihrer Umsetzung zeigen, dass Sie die Java-Sprachkonzepte anwenden können und in der Lage sind, ein Programm damit zu entwickeln. Sie können Ihren Programmcode erklären und von uns vorgeschlagene Änderungen oder Erweiterungen am Code in angemessener Zeit selbstständig umsetzen.
 
 # Ablage und Verschiebebahnhof
 
 **Firma**: Legen Sie eine Klasse namens `Person` an; eine Person hat ein Alter (`age`) und einen Namen (`name`). Legen Sie eine Klasse namens `Firm` an, die einen Namen `name` hat und ein Array vom Typ `Person`, das die Angestellten (`employees`) repräsentiert. (1) Legen Sie Instanzen mit Beispielwerten an. (2) Zeichnen Sie das Objektbild dazu.
-
-# Informationen zur Projektwoche
-
-
 
 # Gruppenarbeit und Delegiertentreffen
 
