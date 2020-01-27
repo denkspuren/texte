@@ -25,5 +25,5 @@ Dominikus Herzberg, [www.thm.de/mni](https://www.thm.de/mni/)
 
 Bitte beachten Sie: Die Klausuren sind angepasst an die Inhalte und die gesetzten Schwerpunkte und Vertiefungen des jeweiligen Semesters.
 
-* WS2018/19: [Aufgaben](https://github.com/denkspuren/texte/blob/master/oop/Klausuren/WS2018.Klausur.Aufgabenteil.md.pdf) und [Bearbeitungsblätter](https://github.com/denkspuren/texte/blob/master/oop/Klausuren/WS2018.Klausur.L%C3%B6sungsteil.pdf)
+* WS2018/19: [Aufgaben](https://github.com/denkspuren/texte/blob/master/oop/Klausuren/WS2018.Klausur.Aufgabenteil.md.pdf) und [Bearbeitungsblätter](https://github.com/denkspuren/texte/blob/master/oop/Klausuren/WS2018.Klausur.L%C3%B6sungsteil.pdf), [Musterlösung](https://github.com/denkspuren/texte/blob/master/oop/Klausuren/WS2018.Klausur.Musterl%C3%B6sung.md.pdf)
 * WS2017/18: [Aufgaben](https://github.com/denkspuren/texte/blob/master/oop/Klausuren/WS2017.Klausur.OOP.pdf) und [Bearbeitungsblätter](https://github.com/denkspuren/texte/blob/master/oop/Klausuren/WS2017.Klausur.OOP.L%C3%B6sungen.pdf)
