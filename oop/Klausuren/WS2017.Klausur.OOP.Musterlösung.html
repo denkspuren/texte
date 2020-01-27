@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="nrstyle.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="musterlösung-zur-oop-klausur-ws201718">Musterlösung zur OOP-Klausur, WS2017/18</h2>
+<!-- pandoc -t html5 -o Testat3und4.Musterloesung.html --css nrstyle.css Testat3und4.Musterloesung.md -->
+<h3 id="fragenteil-33-punkte">Fragenteil (33 Punkte)</h3>
+<ul>
+<li>1D, 2C, 3A, 4B, 5D, 6C</li>
+<li>7C, 8D, 9BC, 10AD, 11ACD</li>
+<li>12BC, 13BC, 14B, 15BC, 16B, 17A</li>
+<li>18BC, 19B, 20AC, 21A, 22ABC</li>
+</ul>
+<h3 id="größenvergleich-10-punkte">Größenvergleich (10 Punkte)</h3>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="dt">boolean</span> <span class="fu">isGreater</span>(<span class="dt">int</span> i, <span class="dt">int</span> j) { <span class="co">// 2</span>
+    assert i &gt;= <span class="dv">0</span> &amp;&amp; j &gt;= <span class="dv">0</span>;      <span class="co">// assert nicht gefordert</span>
+    <span class="kw">if</span> (i == <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">false</span>;     <span class="co">// 2</span>
+    <span class="kw">if</span> (j == <span class="dv">0</span>) <span class="kw">return</span> <span class="kw">true</span>;      <span class="co">// 4</span>
+    <span class="kw">return</span> <span class="fu">isGreater</span>(--i, --j);   <span class="co">// 2</span>
+}</code></pre></div>
+<h3 id="punktdistanz-20-punkte">Punktdistanz (20 Punkte)</h3>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import</span><span class="im"> java.lang.Math;</span> <span class="co">// 2</span>
+
+<span class="kw">class</span> <span class="bu">Point</span> {
+    <span class="kw">private</span> <span class="dt">double</span> x, y;         <span class="co">// 2</span>
+    <span class="bu">Point</span>(<span class="dt">double</span> x, <span class="dt">double</span> y) {  <span class="co">// 2</span>
+        <span class="kw">this</span>.<span class="fu">x</span> = x;              <span class="co">// 2</span>
+        <span class="kw">this</span>.<span class="fu">y</span> = y;              <span class="co">// 2</span>
+    }
+    <span class="kw">public</span> <span class="dt">double</span> <span class="fu">dist</span>(<span class="bu">Point</span> p) { <span class="co">// 2</span>
+        assert p != <span class="kw">null</span>;         <span class="co">// nicht gefordert</span>
+        <span class="kw">return</span> <span class="bu">Math</span>.<span class="fu">sqrt</span>(<span class="bu">Math</span>.<span class="fu">pow</span>(x - p.<span class="fu">x</span>,<span class="dv">2</span>) + <span class="bu">Math</span>.<span class="fu">pow</span>(y - p.<span class="fu">y</span>,<span class="dv">2</span>)); <span class="co">// 4</span>
+    }
+    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">toString</span>() {           <span class="co">// 2</span>
+        <span class="kw">return</span> <span class="st">&quot;P(&quot;</span> + x + <span class="st">&quot;,&quot;</span> + y + <span class="st">&quot;)&quot;</span>; <span class="co">// 2</span>
+    }
+}</code></pre></div>
+<h3 id="schranke-37-punkte">Schranke (37 Punkte)</h3>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> Ticket { } <span class="co">// nicht Teil der Bewertung</span></code></pre></div>
+<h4 id="geprüfte-ausnahme-erstellen-5-punkte">Geprüfte Ausnahme erstellen (5 Punkte)</h4>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> GateException <span class="kw">extends</span> <span class="bu">Exception</span> {
+    <span class="fu">GateException</span>(<span class="bu">String</span> msg) { <span class="kw">super</span>(msg); }
+}</code></pre></div>
+<h4 id="schranke-implementieren-20-punkte">Schranke implementieren (20 Punkte)</h4>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> Gate <span class="kw">implements</span> Passable { <span class="co">// 5 für Kopf und Variablen</span>
+    <span class="kw">public</span> <span class="dt">final</span> <span class="dt">int</span> capacity;
+    <span class="kw">private</span> <span class="bu">Set</span>&lt;Ticket&gt; tickets = <span class="kw">new</span> <span class="bu">HashSet</span>&lt;&gt;();
+
+    <span class="kw">public</span> <span class="fu">Gate</span>(<span class="dt">int</span> capacity) { <span class="co">// 5</span>
+        assert capacity &gt;= <span class="dv">0</span> : <span class="st">&quot;specify appropriate capacity&quot;</span>;
+        <span class="kw">this</span>.<span class="fu">capacity</span> = capacity;
+    }
+
+    <span class="kw">public</span> Ticket <span class="fu">checkIn</span>() <span class="kw">throws</span> GateException { <span class="co">// 5 </span>
+        <span class="kw">if</span> (tickets.<span class="fu">size</span>() &gt;= capacity) 
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">GateException</span>(<span class="st">&quot;capacity exceeded&quot;</span>); 
+        Ticket t = <span class="kw">new</span> <span class="fu">Ticket</span>(); 
+        tickets.<span class="fu">add</span>(t); 
+        <span class="kw">return</span> t; 
+    }
+
+    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">checkOut</span>(Ticket t) { <span class="co">// 5 zusammen mit `remove`-Angabe</span>
+    <span class="co">// `boolean remove(Object o)` ist benötigte Methode</span>
+        <span class="kw">return</span> tickets.<span class="fu">remove</span>(t);
+    } 
+}</code></pre></div>
+<h4 id="interface-aufstellen-und-nutzen-7-punkte">Interface aufstellen und nutzen (7 Punkte)</h4>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">interface</span> Passable {
+    Ticket <span class="fu">checkIn</span>() <span class="kw">throws</span> GateException; <span class="co">// -2 wenn `throws` fehlt</span>
+    <span class="dt">boolean</span> <span class="fu">checkOut</span>(Ticket t);
+}</code></pre></div>
+<p>Die Nutzung des Interfaces erfordert folgende Änderungen in Implementierung:</p>
+<ul>
+<li><code>Gate implements Passable</code></li>
+<li>beide Methoden sind als <code>public</code> zu deklarieren</li>
+</ul>
+<h4 id="szenario-mit-jshell-eingaben-5-punkte">Szenario mit JShell-Eingaben (5 Punkte)</h4>
+<ul>
+<li>Pro korrekter Eingabe = 1 Punkt</li>
+<li>Hier sind zusätzlich Ausgaben auf JShell angegeben, nicht relevant</li>
+</ul>
+<pre><code>jshell&gt; Gate g = new Gate(1)
+g ==&gt; Gate@4d3167f4
+
+jshell&gt; Ticket t = g.checkIn()
+t ==&gt; Ticket@6121c9d6
+
+jshell&gt; g.checkIn()
+|  REPL.$JShell$12$GateException thrown: no access granted
+|        at Gate.checkIn (#95:12)
+|        at (#98:1)
+
+jshell&gt; g.checkOut(new Ticket())
+$99 ==&gt; false
+
+jshell&gt; g.checkOut(t)
+$100 ==&gt; true</code></pre>
+<h3 id="bonus-aufgabe-palindrom-erkennung-max.-15-10-punkte">Bonus-Aufgabe: Palindrom-Erkennung (max. 15 + 10 Punkte)</h3>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="dt">boolean</span> <span class="fu">isPalindrome</span>(<span class="bu">String</span> s) {
+    <span class="dt">char</span>[] word = s.<span class="fu">toLowerCase</span>().<span class="fu">toCharArray</span>();
+    <span class="dt">int</span> i = <span class="dv">0</span>, j = word.<span class="fu">length</span> - <span class="dv">1</span>;
+    <span class="kw">while</span>(i &lt;= j) { <span class="kw">if</span> (word[i++] != word[j--]) <span class="kw">return</span> <span class="kw">false</span>; }
+    <span class="kw">return</span> <span class="kw">true</span>;
+}</code></pre></div>
+</body>
+</html>
