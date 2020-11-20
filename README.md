@@ -4,7 +4,7 @@ Auf dieser Seite finden Sie Materialien zu meinen Veranstaltungen.
 
 Viel Erfolg,
 
-Dominikus Herzberg, [www.thm.de/mni](https://www.thm.de/mni/)
+Dominikus Herzberg, [www.thm.de/mni/dominikus-herzberg](https://www.thm.de/mni/dominikus-herzberg)
 
 ---
 
